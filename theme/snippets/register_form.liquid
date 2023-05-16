@@ -125,7 +125,7 @@
         <div class="clearfix form-row register-form__fieldset ac-block__right--none" style="display: none;" data-upload-image-block>
           <label for="distributor" class="login ac-text--truncate">upload image of your business license*</label>
           <div class="ac-upload__field" data-upload-file>
-            <input type="file" id="file-input" onchange="imagePreview()">
+            <input type="file" id="file-input" accept="image/jpeg, image/jpg, application/pdf, image/png" onchange="imagePreview()">
             <label for="file-input" style="display: flex;" сlass="ac-upload__wrap">
               <span class="ac-upload-field__input ac-text--truncate">Choose file <i>(cosmetology license not accepted)</i></span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -136,10 +136,10 @@
           </div>
           <div class="ac-upload__preview" style="display: none;" data-remove-img>
             <div>
-              <div class="ac-upload-preview__image-wrap">
+              <div class="ac-upload-preview__image-wrap" data-upload-image-wrap>
                 <img class="ac-upload-preview__image " id="preview"/>
               </div>
-              <span class="ac-upload-preview__text" data-upload-text></span>
+              <span class="ac-upload-preview__text ac-text--truncate" data-upload-text></span>
             </div>
             <button class="ac-remove__btn" type="button" onclick="removePreview()">remove</button>
           </div>
@@ -232,10 +232,13 @@
         .ac-upload__preview {
           dispaly: flex;
           justify-content: space-between;
+            min-height: 47px;
         }
         .ac-upload__preview > div{
           display: inline-flex;
           align-items: center;
+            max-width: 100%;
+            overflow: hidden;
         }
         .ac-upload-preview__text {
           font-weight: 400;

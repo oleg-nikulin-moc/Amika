@@ -32,12 +32,14 @@
         const labelText = document.querySelector("[data-upload-text]");
         const labelRemove = document.querySelector("[data-remove-img]");
         const uploadWrap = document.querySelector("[data-upload-file]");
+        const uploadImageWrap = document.querySelector("[ data-upload-image-wrap]");
         const labelDefault = labelText.textContent;
         const preview = document.getElementById("preview");
 
         // on file change
         // file.addEventListener("change", (event) => {
         const file = fileField.files[0];
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'application/pdf', 'image/png'];
 
         // Перевірити, чи вибраний файл і його розмір не перевищує 5 МБ
         if (file && file.size > 5 * 1024 * 1024) {
@@ -45,25 +47,35 @@
             // Очистити значення елемента вводу файлу (необов'язково)
             fileField.value = '';
         }
-        const fileName = fileField.value.split("\\").pop();
-        if (fileName) {
-            console.log(file);
-            labelText.textContent = fileName;
-            labelRemove.style.display = "flex";
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                preview.setAttribute("src", e.target.result);
+        if (allowedTypes.includes(file.type)) {
+            const fileName = fileField.value.split("\\").pop();
+            if (fileName) {
+                console.log(file);
+                labelText.textContent = fileName;
+                labelRemove.style.display = "flex";
                 preview.style.display = "block";
-                uploadWrap.style.display = "none";
-            };
-            console.log('file.files', file)
-            reader.readAsDataURL(file);
-        } else {
-            labelText.textContent = labelDefault;
-            labelRemove.style.display = "none";
-            preview.style.display = "none";
-            uploadWrap.style.display = "block";
+
+                console.log('file.files', file)
+                if (file.type === "application/pdf") {
+                    console.log('1')
+                    uploadImageWrap.style.display = "none";
+                    uploadWrap.style.display = "none";
+                } else {
+                    console.log('2')
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        preview.setAttribute("src", e.target.result);
+                        uploadWrap.style.display = "none";
+                        uploadImageWrap.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                labelText.textContent = labelDefault;
+                labelRemove.style.display = "none";
+                preview.style.display = "none";
+                uploadWrap.style.display = "block";
+            }
         }
         // });
     }
@@ -214,50 +226,47 @@
 
         event.preventDefault(); // Stop the default form submission
         const fileInput = document.getElementById('file-input');
-        const formData = {
-            customer: {
-                first_name: form.firstName.value,
-                last_name: form.lastName.value,
-                email: form.email.value,
-                password: form.password.value,
-                password_confirmation: form.confirmPassword.value,
-                phone: form.phone.value,
-                salon_name: form.salonName.value,
-                distributor_name: form.distributorName.value,
-                is_suit: form.isSuit.value,
-                addresses: [{
-                    salon_address: form.salonAddress.value,
-                    country: form.country.value,
-                    province: form.province.value,
-                    city: form.city.value,
-                    zip: form.zip.value
-                }]
-            }
-        };
-
         // const formData = {
-        //     customer :{
-        //         first_name: "Seven",
-        //         last_name: "Teen",
-        //         email:"asq1вqxndd47ddxerууnd@example.com",
-        //         password:"123456789",
-        //         password_confirmation:"123456789",
-        //         phone:"+14142746026",
-        //         salon_name:"Mirror",
-        //         distributor_name:"John Doe",
-        //         is_suit:"false",
-        //         addresses:[{
-        //             salon_address: "123 Oak St",
-        //             country:"Canada",
-        //             province:"ON",
-        //             city:"Ontario",
-        //             zip:"18000"
+        //     customer: {
+        //         first_name: form.firstName.value,
+        //         last_name: form.lastName.value,
+        //         email: form.email.value,
+        //         password: form.password.value,
+        //         password_confirmation: form.confirmPassword.value,
+        //         phone: form.phone.value,
+        //         salon_name: form.salonName.value,
+        //         distributor_name: form.distributorName.value,
+        //         is_suit: form.isSuit.value,
+        //         addresses: [{
+        //             salon_address: form.salonAddress.value,
+        //             country: form.country.value,
+        //             province: form.province.value,
+        //             city: form.city.value,
+        //             zip: form.zip.value
         //         }]
         //     }
-        // }
+        // };
 
-        // console.log('formData', formData);
-        // console.log('fileInput', fileInput)
+        const formData = {
+            customer :{
+                first_name: "Seven",
+                last_name: "Teen",
+                email:"asq1вhdxerуsdуskіddуnd@example.com",
+                password:"123456789",
+                password_confirmation:"123456789",
+                phone:"+14142746038",
+                salon_name:"Mirror",
+                distributor_name:"John Doe",
+                is_suit:"false",
+                addresses:[{
+                    salon_address: "123 Oak St",
+                    country:"Canada",
+                    province:"ON",
+                    city:"Ontario",
+                    zip:"18000"
+                }]
+            }
+        }
 
         fetch('https://mj8tucu3k1.execute-api.us-east-1.amazonaws.com/default/registration', {
             method: 'POST',
@@ -291,10 +300,8 @@
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const fileName = btoa(form.email) + '&' + file.name;
-                const fileSize = file.size;
-                const uploadUrl = `https://68wo6ynut4.execute-api.eu-north-1.amazonaws.com/dd/profilesphotos/${fileName}`;
-                console.log('fileSize', fileSize)
-                console.log('file', file)
+                const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
+
                 return fetch(uploadUrl, {
                     method: 'POST',
                     // mode: 'no-cors',
@@ -302,34 +309,49 @@
                         'Content-Type': 'multipart/form-data'
                     },
                     body: file
+                })
+                .then(function(response) {
+                    console.log(response)
+                    if (response.status === 200) {
+                        window.loginRegisterAlertPopup.close(); // Закриття попапу
+                        window.location.hash = '';
+                    } else {
+                        alert('Image not uploaded.'); // Виклик функції для виведення повідомлення про незавантажений імедж
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error); // Обробка помилок при виконанні запиту
                 });
             } else {
                 // Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії
                 // ...
                 console.log('Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії');
+                window.loginRegisterAlertPopup.close();
+                window.location.hash = '';
                 return Promise.resolve();
             }
         })
-            .then(response => {
-                if (response && response.ok) {
-                    console.log('Зображення успішно завантажено');
-                    document.getElementById('customer-register').style.display='none';
-                    return response.json();
-
-                } else {
-                    throw new Error('Помилка під час завантаження зображення');
-                }
-            })
-            .then(data => {
-                document.getElementById('customer-register').style.display='none';
-                console.log('Обробка даних, які повернув сервер після завантаження зображення');
-                // Обробка даних, які повернув сервер після завантаження зображення
-                // ...
-            })
+            // .then(response => {
+            //     if (response && response.ok) {
+            //         console.log('Зображення успішно завантажено');
+            //         return response.json();
+            //
+            //     } else {
+            //         throw new Error('Помилка під час завантаження зображення');
+            //     }
+            // })
+            // .then(data => {
+            //     document.getElementById('customer-register').style.display='none';
+            //     console.log('Обробка даних, які повернув сервер після завантаження зображення');
+            //     // Обробка даних, які повернув сервер після завантаження зображення
+            //     // ...
+            // })
             .catch(error => {
                 // Error handling
                 console.log(error);
             });
     }
 </script>
+
+null
 
