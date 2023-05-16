@@ -1,0 +1,484 @@
+{% if form_heading == nil %}
+  {% assign form_heading = 'Customer Login' %}
+{% endif %}
+{% if container_id == nil %}
+  {% assign container_id = 'customer-login' %}
+{% endif %}
+<!-- Customer Account Login -->
+
+<div id="customer-login" class="register-login test2">
+
+  <h1>{{form_heading}}</h1>
+
+  <p id="success_pw" style="font-weight: bold;"></p>
+
+  {% form 'customer_login', class: "ac-form--login"%}
+  {{ form.errors | default_errors }}
+
+  <div id="login_email" class="clearfix form-row">
+    <label for="customer_email" class="login">email</label>
+    <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large ac-form__field" size="30" />
+  </div>
+
+  {% if form.password_needed %}
+  <div id="login_password" class="clearfix form-row ac-password__field">
+    <label for="customer_password" class="login">Password</label>
+    <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large ac-form__field password" size="16" />
+  </div>
+  <div class="register_wrap">
+    <div id="forgot_password" class="ac-form__link">
+      <p class="ac-text--fogot">don't have an account?</p>
+    </div>
+    <div id="forgot_password" class="ac-form__link">
+      <a href="#" onclick="showRecoverPasswordForm(); return false">forgot password?</a>
+    </div>
+  </div>
+  {% endif %}
+   <div class="register_wrap">
+    <div class="action-bottom">
+      <a href="#" class="ac-form__btn ac-form__btn--solid" onclick="showRegisterForm(); return false">Register</a>
+    </div>
+    <div class="action-bottom">
+      <button class="ac-form__btn ac-form__btn--black" type="submit">Sign In</button>
+    </div>
+   </div>
+  {% endform %}
+</div>
+
+<style>
+  .tingle-modal__close {
+    width: 32px;
+    height: 32px;
+  }
+  #customer-register {
+    margin-top: 0!important;
+  }
+  .ac-form--login {
+    min-width: 348px;
+  }
+  .ac-form__note {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 14px;
+    text-transform: lowercase;
+    color: #666666;
+  }
+  .ac-form__btn {
+    background-color: transparent;
+    border-color: transparent;
+    color: #000;
+    font-family: FuturaND;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    border-radius: 100px;
+    min-width: 162px;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px;
+  }
+  .ac-form__btn--black {
+    background-color: #000;
+    border-color: #000;
+    color: #fefaf0;
+  }
+
+  .ac-form__btn--solid {
+    border: 1px solid #000;
+  }
+  .ac-form__selector {
+    width: 100%;
+  }
+  .ac-text--fogot {
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+  .form-btn:hover {
+    background: #FEFAF0;
+    color: #000;
+    opacity: 1;
+  }
+  .register_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .register-login {
+    margin-bottom: 0!important;
+  }
+  .register-login.register-login h1 {
+    margin-bottom: 32px;
+  }
+  .tingle-modal.login-register-alert-popup .tingle-modal-box.tingle-modal-box {
+    max-width: 584px;
+    padding: 94px 120px 80px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  .tingle-modal.login-register-alert-popup .tingle-modal-box.tingle-modal-box__lg {
+    max-width: 894px;
+    padding-left: 90px;
+    padding-right: 90px;
+  }
+  .ac-password__field.ac-password__field.ac-password__field {
+    margin-bottom: 32px;
+  }
+  .ac-form__link {
+    margin-top: 0!important;
+    margin-bottom: 4px!important;
+    margin-right: 24px!important;
+  }
+  .ac-block__right--none {
+    margin-right: 0!important;
+  }
+  .ac-form_feild.ac-form_feild.ac-form_feild {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 13px 15px 12px;
+    height: 47px;
+    background-color: transparent!important;
+    box-shadow: none!important;
+  }
+  .register-login.register-login {
+    float: none!important;
+    width: 100%!important;
+  }
+  .tingle-modal-box.tingle-modal-box {
+       padding-bottom: 85px!important;
+  }
+  /* Create account */
+  .ac-form-title__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+   .ac-form-title {
+     margin-bottom: 0!important;
+   }
+    .ac-from__step {
+    font-family: 'Futura ND';
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
+    margin-bottom: 0;
+  }
+   .ac-from__step span {
+     color: #FF6B26;
+   }
+  
+  .register-form__fieldset {
+    width: calc((100% - 20px)/2);
+    margin-bottom: 30px!important;
+  }
+  .register-form__fieldset:nth-child(odd) {
+    margin-right: 20px;
+  }
+  
+  /*  Tabs  */
+  #regForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+/* Style the input fields */
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+  .tab {
+    display: none;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+  
+  /* Mark the active step: */
+  .step.active {
+    opacity: 1;
+  }
+  
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #04AA6D;
+  }
+  /* reset */
+  .ac-reset__note {
+    font-size: 16px!important;
+  }
+</style>
+<!-- Password Recovery -->
+
+<div id="recover-password" class="register-login" >
+
+  <h1>Reset Password</h1>
+
+
+  <p class="note ac-reset__note">we will send you an email to reset your password</p>
+
+  <form id="resetPassword">
+    {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+    <p class="note">You will receive an email with clear instructions</p>
+    {% endif %}
+
+    <div id="recover_email" class="clearfix large ac-form__field_form">
+      <label for="email" class="large ac-form__field">Email*</label>
+      <input type="email" value="" size="30" placeholder="Email Address" name="email" id="recover-email" class="large ac-form__field ac-form__field--recover" />
+    </div>
+    <div style="padding:10px 0;" id="resetPasswordMessage"></div>
+    <div class="register_wrap">
+      <div class="action-bottom">
+        <a href="#" class="ac-form__btn ac-form__btn--solid" onclick="hideRecoverPasswordForm(); return false">Cancel</a>
+      </div>
+      <div class="action-bottom">
+        <button class="ac-form__btn ac-form__btn--black" type="submit">Submit</button>
+      </div>
+     </div>
+  </form>
+
+</div>
+
+{% render 'register_form'%}
+    
+<script type="text/javascript">
+$("#resetPassword").on('submit', function(e){
+  e.preventDefault();
+  $form = $(this);
+  customerAccount.resetPassword($form.find('[name="email"]').val())
+})
+
+
+const customerAccount = {
+  emailFailed: true, 
+  validateEmail: function(emailAddress){
+      let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let passed = regex.test(emailAddress);
+      this.emailFailed = passed ? false : true;
+      return passed; 
+  },
+  resetPassword: async function(email){
+    let validEmail = this.validateEmail(email); 
+    if(!validEmail){
+      $('#resetPasswordMessage').html('<span class="error">Please enter a valid email address.</span>') 
+      return;
+    }else{
+      $('#resetPasswordMessage').html('') 
+    }
+
+    let payload = {
+      query: `mutation customerRecover($email: String!) {
+        customerRecover(email: $email) {
+          customerUserErrors { field, message, code }
+        }
+      }`,
+      variables: {
+        "email": email      
+      }
+    };
+    
+    let results = await fetch(`https://amika-pro.myshopify.com/api/2021-10/graphql.json`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        'X-Shopify-Storefront-Access-Token': '1429b9687e3bacae6c679260935ad4cd',
+      },
+      body: JSON.stringify(payload)
+    });
+
+    await results.json().then(response => {
+      if(!response.data) return false; 
+      if(response.errors && response.errors.length > 0){ 
+        $('#resetPasswordMessage').html(`<span class="error">${response.errors[0].message}</span>`) 
+      }else{
+        $('#resetPasswordMessage').html('<span class="success">Success! Please check your email for further instructions')
+      }
+    }).catch(error => {
+      $('#resetPasswordMessage').html('<span class="error">There was an error when submitting your request.</span>') 
+    })
+  }
+}
+
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+  if (window.location.hash == '#register') { showRegisterForm() }
+  function registerFormFirst() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('customer-login').style.display='none';
+  }
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('customer-login').style.display='none';
+    window.location.hash = '#recover';
+    return false;
+  }
+  function showRegisterForm() {
+    document.querySelector('.tingle-modal-box').classList.add('tingle-modal-box__lg')
+    document.getElementById('customer-register').style.display = 'block';
+    document.getElementById('customer-login').style.display = 'none';
+    document.getElementById('submitBtn').style.display='none';
+    window.location.hash = '#register';
+    return false;
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('customer-register').style.display='none';
+    document.getElementById('customer-login').style.display = 'block';
+    window.location.hash = '';
+    return false;
+  }
+
+  $(window).load(function() {
+    var message = $('.success_pw').html();
+    $('#success_pw').html(message);
+  });
+
+  // Contact tabs
+
+  var currentTab = 0; // Current tab is set to be the first tab (0)
+
+  showTab(currentTab); // Display the current tab
+  console.log('currentTab:', currentTab);
+
+// Helper function to display a tab
+function showTab(n) {
+  const tabs = document.getElementsByClassName("tab");
+
+  // Display or hide the tab based on the value of n
+  if (n < 3) {
+    tabs[n].style.display = "flex";
+  } else {
+    tabs[n].style.display = "none";
+  }
+
+  const prevBtn = document.getElementById("prevBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const submitBtn = document.getElementById('submitBtn');
+
+  // Update buttons and step indicator based on the current tab
+  if (n === 0) {
+    prevBtn.style.display = "none";
+    cancelBtn.style.display = "inline";
+    step(n)
+  } else if (n < 3) {
+    cancelBtn.style.display = "none";
+    prevBtn.style.display = "inline";
+    prevBtn.innerHTML = `back to step ${n}`;
+    nextBtn.innerHTML = `move to step ${n + 1}`;
+    submitBtn.style.display = 'none';
+    nextBtn.style.display = 'block';
+    step(n);
+  }
+
+  // Update buttons based on the last tab
+  if (n === 2) {
+    nextBtn.style.display = "none";
+    submitBtn.style.display = 'block';
+  } else {
+    nextBtn.innerHTML = `move to step ${n + 1}`;
+  }
+}
+
+// Change tab step in header
+function step(n){
+  const stepIndicator = document.querySelector('.js-step');
+  stepIndicator.innerHTML = n + 1;
+}
+
+
+function nextPrev(n) {
+  const tabs = document.getElementsByClassName("tab");
+  // console.log('validate', validateForm());
+
+  // if (n === 1 && !validateForm()) {
+  //   console.log('not validate');
+  //   return false;
+  // }
+
+  hideTab(currentTab);
+  currentTab = currentTab + n;
+
+  if (currentTab >= tabs.length) {
+    submitForm();
+    console.log('submit');
+    return false;
+  }
+
+  showTab(currentTab);
+}
+
+function hideTab(tabIndex) {
+  const tabs = document.getElementsByClassName("tab");
+  tabs[tabIndex].style.display = "none";
+}
+
+
+
+</script>
+<style>
+  @media screen and (max-width: 430.98px) {
+    .tingle-modal-box {
+      width :100%!important;
+      max-width: 100%!important;
+      margin: 20px 0 0 !important;
+      padding: 40px 32px!important;
+      max-height: 100%!important;
+      height: 100%!important;
+    }
+    .tingle-modal {
+      background: transparent!important;
+    }
+    .tab {
+      flex-direction: column;
+    }
+    .register-form__fieldset {
+      width: 100%;
+      margin-right: 0;
+    }
+    .ac-form-title__wrap {
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .ac-form-title {
+      margin-bottom: 32px!important;
+    }
+    .ac-submit__wrap {
+      float: none!important;
+      justify-content: space-between;
+    }
+    .ac-form__checkbox--small {
+      width: 100%;
+    }
+  }
+  </style>

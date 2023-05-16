@@ -1,0 +1,66 @@
+
+
+<div id="login-register-popup-container" style="display:none;">
+  {% render 'customer-login-form-new', form_heading: 'Pro Login' %}
+</div>
+
+{% unless request.page_type == 'customers/activate_account' or request.page_type == 'customers/reset_password' or request.design_mode%}
+<script>
+  var loginRegisterAlertPopup = new tingle.modal({
+      footer: false,
+      stickyFooter: false,
+      closeMethods: [],
+      cssClass: ['login-register-alert-popup'],
+    });
+
+  // set content
+  var content = $('#login-register-popup-container').html();
+  loginRegisterAlertPopup.setContent( content );
+  // $('#login-register-popup-container').empty();
+
+
+  // open modal
+  loginRegisterAlertPopup.open();
+  
+  $('.tingle-modal.login-register-alert-popup').on('click', function (event) {
+
+    var $createAccountNextButton = $(event.target).closest('.cf-next-step');
+
+    if ( $createAccountNextButton.length ) {
+      setTimeout(function () {
+        if (loginRegisterAlertPopup.isOverflow()) {
+          loginRegisterAlertPopup.checkOverflow();
+        }
+      }, 300)
+    }
+  })
+</script>
+{% endunless %}
+<style>
+  .tingle-modal-box{
+    padding-bottom: 0!important;
+  }
+  .register-alert-popup-verbiage {
+    clear: both;
+    color: gray;
+    text-align: center;
+    margin: 0 0px 10px 0;
+    padding-top: 38px;
+  }
+  .register-alert-popup-verbiage .second-verbiage-line{
+    margin-top: 2px;
+  }
+  .register-alert-popup-verbiage .second-verbiage-line a{
+    cursor: pointer;
+    color: red;
+  }
+  @media(max-width: 749px){
+    .register-alert-popup-verbiage {
+      padding-bottom: 15px;
+      margin: 0 -64px;
+    }
+    .register-alert-popup-verbiage .second-verbiage-line{
+      margin-top: 5px;
+    }
+  }
+</style>
