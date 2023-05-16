@@ -214,47 +214,47 @@
 
         event.preventDefault(); // Stop the default form submission
         const fileInput = document.getElementById('file-input');
-        // const formData = {
-        //     customer: {
-        //         first_name: form.firstName.value,
-        //         last_name: form.lastName.value,
-        //         email: form.email.value,
-        //         password: form.password.value,
-        //         password_confirmation: form.confirmPassword.value,
-        //         phone: form.phone.value,
-        //         salon_name: form.salonName.value,
-        //         distributor_name: form.distributorName.value,
-        //         is_suit: form.isSuit.value,
-        //         addresses: [{
-        //             salon_address: form.salonAddress.value,
-        //             country: form.country.value,
-        //             province: form.province.value,
-        //             city: form.city.value,
-        //             zip: form.zip.value
-        //         }]
-        //     }
-        // };
-
         const formData = {
-            customer :{
-                first_name: "Seven",
-                last_name: "Teen",
-                email:"asq1вqxndd47ddxerууnd@example.com",
-                password:"123456789",
-                password_confirmation:"123456789",
-                phone:"+14142746026",
-                salon_name:"Mirror",
-                distributor_name:"John Doe",
-                is_suit:"false",
-                addresses:[{
-                    salon_address: "123 Oak St",
-                    country:"Canada",
-                    province:"ON",
-                    city:"Ontario",
-                    zip:"18000"
+            customer: {
+                first_name: form.firstName.value,
+                last_name: form.lastName.value,
+                email: form.email.value,
+                password: form.password.value,
+                password_confirmation: form.confirmPassword.value,
+                phone: form.phone.value,
+                salon_name: form.salonName.value,
+                distributor_name: form.distributorName.value,
+                is_suit: form.isSuit.value,
+                addresses: [{
+                    salon_address: form.salonAddress.value,
+                    country: form.country.value,
+                    province: form.province.value,
+                    city: form.city.value,
+                    zip: form.zip.value
                 }]
             }
-        }
+        };
+
+        // const formData = {
+        //     customer :{
+        //         first_name: "Seven",
+        //         last_name: "Teen",
+        //         email:"asq1вqxndd47ddxerууnd@example.com",
+        //         password:"123456789",
+        //         password_confirmation:"123456789",
+        //         phone:"+14142746026",
+        //         salon_name:"Mirror",
+        //         distributor_name:"John Doe",
+        //         is_suit:"false",
+        //         addresses:[{
+        //             salon_address: "123 Oak St",
+        //             country:"Canada",
+        //             province:"ON",
+        //             city:"Ontario",
+        //             zip:"18000"
+        //         }]
+        //     }
+        // }
 
         // console.log('formData', formData);
         // console.log('fileInput', fileInput)
