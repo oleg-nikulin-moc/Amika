@@ -1,6 +1,4 @@
 <script>
-
-
     function validateForm() {
         const tabs = document.getElementsByClassName("tab");
         const requiredFields = tabs[currentTab].querySelectorAll("[required]");
@@ -9,13 +7,48 @@
         const passwordError = document.getElementById("passwordError");
         let valid = true;
 
+        const termsCheckbox = document.querySelector("[data-terms-field]");
+        const submitButton = document.getElementById("submitBtn");
+
+        const phoneNumberInput = document.getElementById('phone');
+        const errorSpan = document.getElementById('phoneError');
+
+        // Event listener for the terms checkbox
+        termsCheckbox.addEventListener('change', function() {
+            if (termsCheckbox.checked) {
+                submitButton.disabled = false; // Enable the button
+            } else {
+                submitButton.disabled = true; // Disable the button
+            }
+        });
+
+        // Event listener for the phone number input
+        phoneNumberInput.addEventListener('input', function(event) {
+            const phoneNumber = event.target.value;
+
+            if (validatePhoneNumber(phoneNumber)) {
+                errorSpan.style.display = 'none';
+                phoneNumberInput.classList.remove('invalid');
+                errorSpan.textContent = "";
+            } else {
+                errorSpan.textContent = "Incorrect phone number";
+                phoneNumberInput.classList.add('invalid');
+                errorSpan.style.display = 'block';
+                valid = false;
+            }
+        });
+
+        // Loop through each required field and check if it's empty
         for (let i = 0; i < requiredFields.length; i++) {
             if (requiredFields[i].value === "") {
-                requiredFields[i].classList.add("invalid");
+                requiredFields[i].classList.add("invalid"); // Add the "invalid" class
                 valid = false;
+            } else {
+                requiredFields[i].classList.remove("invalid"); // Remove the "invalid" class
             }
         }
 
+        // Check if the passwords match
         if (passwordInput.value !== confirmPasswordInput.value) {
             passwordError.textContent = "Passwords do not match";
             valid = false;
@@ -24,6 +57,75 @@
         }
 
         return valid;
+    }
+
+
+
+    // function validateForm() {
+    //     const tabs = document.getElementsByClassName("tab");
+    //     const requiredFields = tabs[currentTab].querySelectorAll("[required]");
+    //     const passwordInput = document.getElementById("password");
+    //     const confirmPasswordInput = document.getElementById("confirmPassword");
+    //     const passwordError = document.getElementById("passwordError");
+    //     let valid = true;
+    //
+    //     const termsCheckbox = document.querySelector("[data-terms-field]");
+    //     const submitButton = document.getElementById("submitBtn");
+    //
+    //     const phoneNumberInput = document.getElementById('phone');
+    //     const errorSpan = document.getElementById('phoneError');
+    //
+    //
+    //     termsCheckbox.addEventListener('change', function() {
+    //         if (termsCheckbox.checked) {
+    //             submitButton.disabled = false; // Включити кнопку
+    //         } else {
+    //             submitButton.disabled = true; // Вимкнути кнопку
+    //         }
+    //     });
+    //
+    //     // phoneNumberInput.addEventListener('input', function(event) {
+    //     //     console.log('test')
+    //     const phoneNumber = phoneNumberInput.value;
+    //
+    //     if (validatePhoneNumber(phoneNumber)) {
+    //         errorSpan.style.display = 'none';
+    //         phoneNumberInput.classList.remove('invalid');
+    //         errorSpan.textContent = "";
+    //     } else {
+    //         errorSpan.textContent = "incorrect phone number";
+    //         phoneNumberInput.classList.add('invalid');
+    //         errorSpan.style.display = 'block';
+    //         valid = false;
+    //     }
+    //     // });
+    //
+    //     for (let i = 0; i < requiredFields.length; i++) {
+    //         if (requiredFields[i].value === "") {
+    //             requiredFields[i].classList.add("invalid");
+    //             valid = false;
+    //         }
+    //     }
+    //
+    //     if (passwordInput.value !== confirmPasswordInput.value) {
+    //         passwordError.textContent = "Passwords do not match";
+    //         valid = false;
+    //     } else {
+    //         passwordError.textContent = "";
+    //     }
+    //
+    //     return valid;
+    // }
+
+    function validatePhoneNumber(phoneNumber) {
+        // Remove all non-digit characters
+        const cleanedNumber = phoneNumber.replace(/\D/g, '');
+
+        // Check if the number matches the USA or Canada format
+        const usaRegex = /^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$/;
+        const canadaRegex = /^(\+?1)?[2-9](?:[02-9]\d|1[02-9]|1[02-9]\d{2}|[02-9]\d{3})[2-9]\d{6}$/;
+
+        return usaRegex.test(cleanedNumber) || canadaRegex.test(cleanedNumber);
     }
 
     // Upload function
@@ -176,9 +278,9 @@
         ]
     };
 
-        stateSelect.disabled = true;
-        citySelect.disabled = true;
-        zipField.disabled = true;
+    stateSelect.disabled = true;
+    citySelect.disabled = true;
+    zipField.disabled = true;
 
         function renderStates(country) {
             stateSelect.innerHTML = ''; //очищаємо список штатів перед додаванням нових елементів
@@ -219,6 +321,24 @@
             uoploadBlock.style.display = 'none';
         }
     }
+    function formResize(size) {
+        const popup = document.querySelector('.tingle-modal-box');
+        if (size === "lg") {
+            popup.classList.add('tingle-modal-box__lg');
+        } else {
+            popup.classList.remove('tingle-modal-box__lg');
+        }
+    }
+
+    function showSpinner() {
+        const spinner = document.querySelector('[data-spinner-wrap]');
+        spinner.style.display = 'block';
+    }
+
+    function hideSpinner() {
+        const spinner = document.querySelector('[data-spinner-wrap]');
+        spinner.style.display = 'none';
+    }
 
     function submitForm(event) {
         const form = document.getElementById('create_customer');
@@ -226,48 +346,48 @@
 
         event.preventDefault(); // Stop the default form submission
         const fileInput = document.getElementById('file-input');
-        // const formData = {
-        //     customer: {
-        //         first_name: form.firstName.value,
-        //         last_name: form.lastName.value,
-        //         email: form.email.value,
-        //         password: form.password.value,
-        //         password_confirmation: form.confirmPassword.value,
-        //         phone: form.phone.value,
-        //         salon_name: form.salonName.value,
-        //         distributor_name: form.distributorName.value,
-        //         is_suit: form.isSuit.value,
-        //         addresses: [{
-        //             salon_address: form.salonAddress.value,
-        //             country: form.country.value,
-        //             province: form.province.value,
-        //             city: form.city.value,
-        //             zip: form.zip.value
-        //         }]
-        //     }
-        // };
-
         const formData = {
-            customer :{
-                first_name: "Seven",
-                last_name: "Teen",
-                email:"asq1вhdxerуsdуskіddуnd@example.com",
-                password:"123456789",
-                password_confirmation:"123456789",
-                phone:"+14142746038",
-                salon_name:"Mirror",
-                distributor_name:"John Doe",
-                is_suit:"false",
-                addresses:[{
-                    salon_address: "123 Oak St",
-                    country:"Canada",
-                    province:"ON",
-                    city:"Ontario",
-                    zip:"18000"
+            customer: {
+                first_name: form.firstName.value,
+                last_name: form.lastName.value,
+                email: form.email.value,
+                password: form.password.value,
+                password_confirmation: form.confirmPassword.value,
+                phone: form.phone.value,
+                salon_name: form.salonName.value,
+                distributor_name: form.distributorName.value,
+                is_suit: form.isSuit.value,
+                addresses: [{
+                    salon_address: form.salonAddress.value,
+                    country: form.country.value,
+                    province: form.province.value,
+                    city: form.city.value,
+                    zip: form.zip.value
                 }]
             }
-        }
+        };
 
+        // const formData = {
+        //     customer :{
+        //         first_name: "Seven",
+        //         last_name: "Teen",
+        //         email:"asq1вhdxerуdsdуskіddуnd@example.com",
+        //         password:"123456789",
+        //         password_confirmation:"123456789",
+        //         phone:"+14142746039",
+        //         salon_name:"Mirror",
+        //         distributor_name:"John Doe",
+        //         is_suit:"false",
+        //         addresses:[{
+        //             salon_address: "123 Oak St",
+        //             country:"Canada",
+        //             province:"ON",
+        //             city:"Ontario",
+        //             zip:"18000"
+        //         }]
+        //     }
+        // }
+        showSpinner();
         fetch('https://mj8tucu3k1.execute-api.us-east-1.amazonaws.com/default/registration', {
             method: 'POST',
             headers: {
@@ -313,8 +433,10 @@
                 .then(function(response) {
                     console.log(response)
                     if (response.status === 200) {
-                        window.loginRegisterAlertPopup.close(); // Закриття попапу
-                        window.location.hash = '';
+                        window.showSuccessForm();
+                        hideSpinner();
+                        // window.loginRegisterAlertPopup.close(); // Закриття попапу
+                        // window.location.hash = '';
                     } else {
                         alert('Image not uploaded.'); // Виклик функції для виведення повідомлення про незавантажений імедж
                     }
@@ -326,8 +448,10 @@
                 // Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії
                 // ...
                 console.log('Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії');
-                window.loginRegisterAlertPopup.close();
-                window.location.hash = '';
+                // window.loginRegisterAlertPopup.close();
+                // window.location.hash = '';
+                window.showSuccessForm();
+                hideSpinner();
                 return Promise.resolve();
             }
         })
@@ -352,6 +476,4 @@
             });
     }
 </script>
-
-null
 

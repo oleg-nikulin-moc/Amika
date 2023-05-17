@@ -5,6 +5,25 @@
   {% assign container_id = 'customer-login' %}
 {% endif %}
 <!-- Customer Account Login -->
+<div id="customer-register-success" style="display: none;" class="" >
+  {% form 'customer_login', class: "ac-form--login"%}
+    {{ form.errors | default_errors }}
+    <div class="ac-block--horizontal" data-login-message>
+      <h2>congratulations!</h2>
+      <p class="">you've successfully applied for an amika pro account!</p>
+      <p class="">you'll receive an email confirmation to verify that</p>
+      <p class="ac-offset__bottom--md">we've approved your account.</p>
+      <svg class="ac-form__icon--success ac-offset__bottom--md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 81" fill="none">
+        <path d="M30.5027 78.1876C30.3603 74.2236 28.2372 70.42 24.5415 68.3002C20.8459 66.1804 16.4906 66.2649 12.9955 68.1413C14.8538 64.637 14.9178 60.2823 12.7792 56.5982C10.641 52.9146 6.82688 50.8107 2.86263 50.6885C6.22411 48.5825 8.45571 44.8431 8.44637 40.5852V40.5849C8.4347 36.325 6.18425 32.5965 2.81319 30.5082C6.77693 30.3656 10.5801 28.2425 12.6998 24.5471C14.8198 20.8534 14.735 16.4984 12.8586 13.0021C16.3629 14.8612 20.7178 14.9233 24.4018 12.7848C28.0854 10.6465 30.1893 6.83244 30.3115 2.86819C32.4175 6.22967 36.1569 8.46126 40.4148 8.45193L40.4154 8.45193C44.6784 8.43792 48.4078 6.18426 50.4973 2.8114C50.6393 6.77578 52.7625 10.5798 56.4585 12.6998C60.1527 14.8201 64.5084 14.735 68.005 12.8577C66.1463 16.3621 66.082 20.7174 68.2208 24.4018C70.359 28.0854 74.1731 30.1893 78.1374 30.3115C74.7759 32.4175 72.5443 36.1569 72.5536 40.4148V40.4151C72.5653 44.675 74.8158 48.4035 78.1868 50.4918C74.2231 50.6344 70.4199 52.7575 68.3002 56.4529C66.1804 60.1486 66.2649 64.5039 68.1413 67.9989C64.637 66.1407 60.2823 66.0767 56.5982 68.2152C52.9146 70.3535 50.8107 74.1676 50.6885 78.1318C48.5825 74.7703 44.8431 72.5387 40.5852 72.5481H40.5846C36.3217 72.5621 32.5922 74.8139 30.5027 78.1876Z" stroke="black"/>
+        <path d="M15.3923 44.3077L14.8093 45.0337C15.2713 46.0237 16.4263 46.6177 17.6913 46.6177C19.1213 46.6177 20.2213 45.8697 20.2213 44.6047C20.2213 43.4167 19.4403 42.9437 18.4283 42.7017L17.2073 42.4157C16.4923 42.2507 16.0303 42.0307 16.0303 41.3817C16.0303 40.6337 16.5913 40.2157 17.4383 40.2157C18.3623 40.2157 19.0553 40.7327 19.3743 41.4587L19.9903 40.7877C19.5613 40.0067 18.6813 39.4237 17.4383 39.4237C16.0743 39.4237 15.1283 40.2487 15.1283 41.4257C15.1283 42.5147 15.8763 43.0317 16.7893 43.2407L18.1643 43.5707C18.9013 43.7467 19.3303 43.9997 19.3303 44.6267C19.3303 45.4297 18.6263 45.8257 17.6913 45.8257C16.7453 45.8257 15.8213 45.3087 15.3923 44.3077ZM25.3822 46.6177C26.7792 46.6177 27.9782 45.7267 27.9782 43.7027V39.5557H27.0322V43.6367C27.0322 45.0557 26.4492 45.7817 25.3822 45.7817C24.2932 45.7817 23.7322 45.0557 23.7322 43.6367V39.5557H22.7752V43.7027C22.7752 45.7267 23.9632 46.6177 25.3822 46.6177ZM35.9 44.5167L34.987 44.0547C34.789 45.1547 34.228 45.7927 33.249 45.7927C32.204 45.7927 31.324 44.7257 31.324 43.0207C31.324 41.3157 32.193 40.2487 33.271 40.2487C34.151 40.2487 34.701 40.8647 34.932 41.7777L35.801 41.2497C35.416 40.1277 34.547 39.4237 33.304 39.4237C31.632 39.4237 30.334 40.8867 30.334 43.0207C30.334 45.1547 31.632 46.6177 33.282 46.6177C34.668 46.6177 35.57 45.7927 35.9 44.5167ZM43.6569 44.5167L42.7439 44.0547C42.5459 45.1547 41.9849 45.7927 41.0059 45.7927C39.9609 45.7927 39.0809 44.7257 39.0809 43.0207C39.0809 41.3157 39.9499 40.2487 41.0279 40.2487C41.9079 40.2487 42.4579 40.8647 42.6889 41.7777L43.5579 41.2497C43.1729 40.1277 42.3039 39.4237 41.0609 39.4237C39.3889 39.4237 38.0909 40.8867 38.0909 43.0207C38.0909 45.1547 39.3889 46.6177 41.0389 46.6177C42.4249 46.6177 43.3269 45.7927 43.6569 44.5167ZM51.1057 46.4857V45.6717H47.4647V43.3067H49.9837V42.4817H47.4647V40.3697H51.0067V39.5557H46.5187V46.4857H51.1057ZM54.1765 44.3077L53.5935 45.0337C54.0555 46.0237 55.2105 46.6177 56.4755 46.6177C57.9055 46.6177 59.0055 45.8697 59.0055 44.6047C59.0055 43.4167 58.2245 42.9437 57.2125 42.7017L55.9915 42.4157C55.2765 42.2507 54.8145 42.0307 54.8145 41.3817C54.8145 40.6337 55.3755 40.2157 56.2225 40.2157C57.1465 40.2157 57.8395 40.7327 58.1585 41.4587L58.7745 40.7877C58.3455 40.0067 57.4655 39.4237 56.2225 39.4237C54.8585 39.4237 53.9125 40.2487 53.9125 41.4257C53.9125 42.5147 54.6605 43.0317 55.5735 43.2407L56.9485 43.5707C57.6855 43.7467 58.1145 43.9997 58.1145 44.6267C58.1145 45.4297 57.4105 45.8257 56.4755 45.8257C55.5295 45.8257 54.6055 45.3087 54.1765 44.3077ZM61.9334 44.3077L61.3504 45.0337C61.8124 46.0237 62.9674 46.6177 64.2324 46.6177C65.6624 46.6177 66.7624 45.8697 66.7624 44.6047C66.7624 43.4167 65.9814 42.9437 64.9694 42.7017L63.7484 42.4157C63.0334 42.2507 62.5714 42.0307 62.5714 41.3817C62.5714 40.6337 63.1324 40.2157 63.9794 40.2157C64.9034 40.2157 65.5964 40.7327 65.9154 41.4587L66.5314 40.7877C66.1024 40.0067 65.2224 39.4237 63.9794 39.4237C62.6154 39.4237 61.6694 40.2487 61.6694 41.4257C61.6694 42.5147 62.4174 43.0317 63.3304 43.2407L64.7054 43.5707C65.4424 43.7467 65.8714 43.9997 65.8714 44.6267C65.8714 45.4297 65.1674 45.8257 64.2324 45.8257C63.2864 45.8257 62.3624 45.3087 61.9334 44.3077Z" fill="black"/>
+      </svg>
+    </div>
+    <div style="float:right;" class="ac-submit__wrap">
+      <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset" type="button" id="cancelSuccessBtn" onclick="loginRegisterAlertPopup.close(); return false;">Back to site</button>
+      <button class="ac-form__btn ac-form__btn--black" type="submit" id="submitSuccessBtn">Sign In</button>
+    </div>
+  {% endform %}
+</div>
 
 <div id="customer-login" class="register-login">
 
@@ -45,203 +64,10 @@
   {% endform %}
 </div>
 
-<style>
-  .tingle-modal__close {
-    width: 32px;
-    height: 32px;
-  }
-  #customer-register {
-    margin-top: 0!important;
-  }
-  .ac-form--login {
-    min-width: 348px;
-  }
-  .ac-form__note {
-    font-style: italic;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 14px;
-    text-transform: lowercase;
-    color: #666666;
-  }
-  .ac-form__btn {
-    background-color: transparent;
-    border-color: transparent;
-    color: #000;
-    font-family: FuturaND;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 18px;
-    border-radius: 100px;
-    min-width: 162px;
-    display: inline-block;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 10px;
-  }
-  .ac-form__btn--black {
-    background-color: #000;
-    border-color: #000;
-    color: #fefaf0;
-  }
-
-  .ac-form__btn--solid {
-    border: 1px solid #000;
-  }
-  .ac-form__selector {
-    width: 100%;
-  }
-  .ac-text--fogot {
-    margin: 0;
-    font-size: 13px;
-    letter-spacing: 0.05em;
-  }
-  .form-btn:hover {
-    background: #FEFAF0;
-    color: #000;
-    opacity: 1;
-  }
-  .register_wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .register-login {
-    margin-bottom: 0!important;
-  }
-  .register-login.register-login h1 {
-    margin-bottom: 32px;
-  }
-  .tingle-modal.login-register-alert-popup .tingle-modal-box.tingle-modal-box {
-    max-width: 584px;
-    padding: 94px 120px 80px;
-    max-height: 600px;
-    overflow-y: auto;
-  }
-  .tingle-modal.login-register-alert-popup .tingle-modal-box.tingle-modal-box__lg {
-    max-width: 894px;
-    padding-left: 90px;
-    padding-right: 90px;
-  }
-  .ac-password__field.ac-password__field.ac-password__field {
-    margin-bottom: 32px;
-  }
-  .ac-form__link {
-    margin-top: 0!important;
-    margin-bottom: 4px!important;
-    margin-right: 24px!important;
-  }
-  .ac-block__right--none {
-    margin-right: 0!important;
-  }
-  .ac-form_feild.ac-form_feild.ac-form_feild {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 13px 15px 12px;
-    height: 47px;
-    background-color: transparent!important;
-    box-shadow: none!important;
-  }
-  .register-login.register-login {
-    float: none!important;
-    width: 100%!important;
-  }
-  .tingle-modal-box.tingle-modal-box {
-       padding-bottom: 85px!important;
-  }
-  /* Create account */
-  .ac-form-title__wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
-  }
-   .ac-form-title {
-     margin-bottom: 0!important;
-   }
-    .ac-from__step {
-    font-family: 'Futura ND';
-    font-size: 12px;
-    line-height: 16px;
-    color: #666666;
-    margin-bottom: 0;
-  }
-   .ac-from__step span {
-     color: #FF6B26;
-   }
-  
-  .register-form__fieldset {
-    width: calc((100% - 20px)/2);
-    margin-bottom: 30px!important;
-  }
-  .register-form__fieldset:nth-child(odd) {
-    margin-right: 20px;
-  }
-  
-  /*  Tabs  */
-  #regForm {
-  background-color: #ffffff;
-  margin: 100px auto;
-  padding: 40px;
-  width: 70%;
-  min-width: 300px;
-}
-
-/* Style the input fields */
-input {
-  padding: 10px;
-  width: 100%;
-  font-size: 17px;
-  font-family: Raleway;
-  border: 1px solid #aaaaaa;
-}
-
-/* Mark input boxes that gets an error on validation: */
-input.invalid {
-  background-color: #ffdddd;
-}
-
-/* Hide all steps by default: */
-  .tab {
-    display: none;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-  
-  /* Make circles that indicate the steps of the form: */
-  .step {
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbbbbb;
-    border: none;
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 0.5;
-  }
-  
-  /* Mark the active step: */
-  .step.active {
-    opacity: 1;
-  }
-  
-  /* Mark the steps that are finished and valid: */
-  .step.finish {
-    background-color: #04AA6D;
-  }
-  /* reset */
-  .ac-reset__note {
-    font-size: 16px!important;
-  }
-</style>
 <!-- Password Recovery -->
 
 <div id="recover-password" class="register-login" >
-
   <h1>Reset Password</h1>
-
-
   <p class="note ac-reset__note">we will send you an email to reset your password</p>
 
   <form id="resetPassword">
@@ -341,7 +167,7 @@ const customerAccount = {
     return false;
   }
   function showRegisterForm() {
-    document.querySelector('.tingle-modal-box').classList.add('tingle-modal-box__lg')
+    window.formResize('lg');
     document.getElementById('customer-register').style.display = 'block';
     document.getElementById('customer-login').style.display = 'none';
     document.getElementById('submitBtn').style.display='none';
@@ -349,7 +175,18 @@ const customerAccount = {
     return false;
   }
 
+  function showSuccessForm() {
+    window.formResize('sm');
+    document.getElementById('customer-register-success').style.display = 'block';
+    document.getElementById('customer-register').style.display = 'none';
+    document.getElementById('customer-login').style.display = 'none';
+    document.getElementById('submitBtn').style.display='none';
+    window.location.hash = '';
+    return false;
+  }
+
   function hideRecoverPasswordForm() {
+    window.formResize('sm');
     document.getElementById('recover-password').style.display = 'none';
     document.getElementById('customer-register').style.display='none';
     document.getElementById('customer-login').style.display = 'block';
@@ -370,27 +207,22 @@ const customerAccount = {
   console.log('currentTab:', currentTab);
 
 // Helper function to display a tab
-function showTab(n) {
-  const tabs = document.getElementsByClassName("tab");
 
-  // Display or hide the tab based on the value of n
-  if (n < 3) {
-    tabs[n].style.display = "flex";
-  } else {
-    tabs[n].style.display = "none";
-  }
-
+// Update buttons and step indicator based on the current tab
+function showActiveButtons(n) {
   const prevBtn = document.getElementById("prevBtn");
   const cancelBtn = document.getElementById("cancelBtn");
   const nextBtn = document.getElementById("nextBtn");
   const submitBtn = document.getElementById('submitBtn');
-
-  // Update buttons and step indicator based on the current tab
+  console.log(n);
   if (n === 0) {
+    console.log('fiest')
     prevBtn.style.display = "none";
     cancelBtn.style.display = "inline";
     step(n)
-  } else if (n < 3) {
+  } else {
+    console.log('next')
+    console.log('cancelBtn')
     cancelBtn.style.display = "none";
     prevBtn.style.display = "inline";
     prevBtn.innerHTML = `back to step ${n}`;
@@ -407,6 +239,18 @@ function showTab(n) {
   } else {
     nextBtn.innerHTML = `move to step ${n + 1}`;
   }
+}
+
+function showTab(n) {
+  const tabs = document.getElementsByClassName("tab");
+
+  // Display or hide the tab based on the value of n
+  if (n < 3) {
+    tabs[n].style.display = "flex";
+  } else {
+    tabs[n].style.display = "none";
+  }
+  showActiveButtons(n);
 }
 
 // Change tab step in header
@@ -441,44 +285,4 @@ function hideTab(tabIndex) {
   const tabs = document.getElementsByClassName("tab");
   tabs[tabIndex].style.display = "none";
 }
-
-
-
 </script>
-<style>
-  @media screen and (max-width: 430.98px) {
-    .tingle-modal-box {
-      width :100%!important;
-      max-width: 100%!important;
-      margin: 20px 0 0 !important;
-      padding: 40px 32px!important;
-      max-height: 100%!important;
-      height: 100%!important;
-    }
-    .tingle-modal {
-      background: transparent!important;
-    }
-    .tab {
-      flex-direction: column;
-    }
-    .register-form__fieldset {
-      width: 100%;
-      margin-right: 0;
-    }
-    .ac-form-title__wrap {
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-    .ac-form-title {
-      margin-bottom: 32px!important;
-    }
-    .ac-submit__wrap {
-      float: none!important;
-      justify-content: space-between;
-    }
-    .ac-form__checkbox--small {
-      width: 100%;
-    }
-  }
-  </style>
