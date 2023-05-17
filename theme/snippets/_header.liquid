@@ -1,5 +1,50 @@
 <header id="header" class="header animation {% if settings.header_behavior == "drop-over" and template == "index" %}over-carousel{% endif %}">
   {% include 'utility_bar' %}
+
+  <script>
+      console.log("Test message");
+      const customerId = '{{ customer.id }}';
+      const customerEmail = '{{ customer.email }}';
+      const cartItems = cartJson.items;
+      
+      const result = {
+        order: {
+          line_items: [],
+          customer: {
+            shipping_address:{
+            address: "Some street 11",
+            city: 'Toronto',
+            country: 'Canada',
+            country_code: 'ON',
+            first_name: 'Rameno',
+            last_name: 'Lukaky',
+            phone: '555-625-1199',
+            zip: 'K2P0V6'
+            }
+          }
+        }
+      };
+
+      cartItems.forEach(item => {
+        const cartItem = {
+          variant_id: item.variant_id,
+          quantity: item.quantity
+        };
+
+        result.order.line_items.push(cartItem);
+      });
+
+    console.log("Cart ITEM: " + JSON.stringify(result));
+  </script>  
+
+
+
+
+
+
+
+
+  
   <div class="container-fluid">
     {% if settings.show_social_header %}
       <div class="top-header clearfix medium--hide small--hide">
