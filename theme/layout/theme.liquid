@@ -363,7 +363,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         {{ content_for_layout }}
         <!-- login alert -->
         {% section 'login-register-alert-new' %}
-        {%# section 'login-register-alert' %}
+        {% comment %}
+          {% section 'login-register-alert' %}
+        {% endcomment %}
       {% else %}
         <script>
           document.location = window.location.origin;
