@@ -4,61 +4,99 @@
         const requiredFields = tabs[currentTab].querySelectorAll("[required]");
         const passwordInput = document.getElementById("password");
         const confirmPasswordInput = document.getElementById("confirmPassword");
+        const confirmPasswordError = document.getElementById("confirmPasswordError");
         const passwordError = document.getElementById("passwordError");
         let valid = true;
 
         const termsCheckbox = document.querySelector("[data-terms-field]");
         const submitButton = document.getElementById("submitBtn");
-
+        const nextButton = document.getElementById("nextBtn");
+        const salonName = document.getElementById("salonName");
+        const salonNameError = document.getElementById("salonNameError");
         const phoneNumberInput = document.getElementById('phone');
-        const errorSpan = document.getElementById('phoneError');
+        const phoneNumberError = document.getElementById('phoneError');
 
-        // Event listener for the terms checkbox
-        termsCheckbox.addEventListener('change', function() {
-            if (termsCheckbox.checked) {
-                submitButton.disabled = false; // Enable the button
+        const passwordPattern = /^[a-zA-Z0-9]{8,50}$/;
+        const textFieldPattern = /^[A-Za-z ]{2,50}$/
+
+        termsCheckbox.addEventListener('change', function () {
+            if (termsCheckbox.checked && valid) {
+                submitButton.disabled = false; // Enable the "Submit" button
+                // nextButton.disabled = false; // Enable the "Next" button
             } else {
-                submitButton.disabled = true; // Disable the button
+                submitButton.disabled = true; // Disable the "Submit" button
+                // nextButton.disabled = true; // Disable the "Next" button
             }
         });
 
-        // Event listener for the phone number input
-        phoneNumberInput.addEventListener('input', function(event) {
+        phoneNumberInput.addEventListener('input', function (event) {
             const phoneNumber = event.target.value;
 
             if (validatePhoneNumber(phoneNumber)) {
-                errorSpan.style.display = 'none';
+                phoneNumberError.style.display = 'none';
                 phoneNumberInput.classList.remove('invalid');
-                errorSpan.textContent = "";
+                phoneNumberError.textContent = "";
+                valid = true;
             } else {
-                errorSpan.textContent = "Incorrect phone number";
+                phoneNumberError.textContent = "Incorrect phone number";
                 phoneNumberInput.classList.add('invalid');
-                errorSpan.style.display = 'block';
+                phoneNumberError.style.display = 'block';
                 valid = false;
             }
+
+            checkFormValidity();
         });
 
-        // Loop through each required field and check if it's empty
-        for (let i = 0; i < requiredFields.length; i++) {
-            if (requiredFields[i].value === "") {
-                requiredFields[i].classList.add("invalid"); // Add the "invalid" class
+        function checkFormValidity() {
+            valid = true;
+
+            requiredFields.forEach(function (field) {
+                if (field.value === "") {
+                    field.classList.add("invalid");
+                    valid = false;
+                    field.nextElementSibling.textContent = "Empty field"; // Display the "Empty field" message in the span
+                } else {
+                    field.classList.remove("invalid");
+                    field.nextElementSibling.textContent = ""; // Clear the span message
+                }
+            });
+
+            // if (!textFieldPattern.test(salonName.value)) {
+            //     salonNameError.textContent = "text field must be at least 2 characters";
+            //     valid = false;
+            // } else {
+            //     salonNameError.textContent = "";
+            // }
+
+            if (!passwordPattern.test(passwordInput.value)) {
+                passwordError.textContent = "Password must be at least 8 characters";
+                valid = false;
+            } else if (passwordInput.value !== confirmPasswordInput.value) {
+                confirmPasswordError.textContent = "Passwords do not match";
                 valid = false;
             } else {
-                requiredFields[i].classList.remove("invalid"); // Remove the "invalid" class
+                passwordError.textContent = "";
+                confirmPasswordError.textContent = "";
             }
+
+            // if (valid) {
+            //     nextButton.disabled = false; // Enable the "Next" button
+            // } else {
+            //     nextButton.disabled = true; // Disable the "Next" button
+            // }
         }
 
-        // Check if the passwords match
-        if (passwordInput.value !== confirmPasswordInput.value) {
-            passwordError.textContent = "Passwords do not match";
-            valid = false;
-        } else {
-            passwordError.textContent = "";
-        }
+        requiredFields.forEach(function (field) {
+            field.addEventListener('input', checkFormValidity);
+        });
 
+        passwordInput.addEventListener('input', checkFormValidity);
+        confirmPasswordInput.addEventListener('input', checkFormValidity);
+        termsCheckbox.addEventListener('change', checkFormValidity);
+
+        checkFormValidity();
         return valid;
     }
-
 
 
     // function validateForm() {
@@ -66,7 +104,7 @@
     //     const requiredFields = tabs[currentTab].querySelectorAll("[required]");
     //     const passwordInput = document.getElementById("password");
     //     const confirmPasswordInput = document.getElementById("confirmPassword");
-    //     const passwordError = document.getElementById("passwordError");
+    //     const confirmPasswordError = document.getElementById("confirmPasswordError");
     //     let valid = true;
     //
     //     const termsCheckbox = document.querySelector("[data-terms-field]");
@@ -108,10 +146,10 @@
     //     }
     //
     //     if (passwordInput.value !== confirmPasswordInput.value) {
-    //         passwordError.textContent = "Passwords do not match";
+    //         confirmPasswordError.textContent = "Passwords do not match";
     //         valid = false;
     //     } else {
-    //         passwordError.textContent = "";
+    //         confirmPasswordError.textContent = "";
     //     }
     //
     //     return valid;
@@ -119,13 +157,16 @@
 
     function validatePhoneNumber(phoneNumber) {
         // Remove all non-digit characters
-        const cleanedNumber = phoneNumber.replace(/\D/g, '');
+        const cleanedPhoneNumber = phoneNumber.replace(/-/g, '');
 
         // Check if the number matches the USA or Canada format
-        const usaRegex = /^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$/;
-        const canadaRegex = /^(\+?1)?[2-9](?:[02-9]\d|1[02-9]|1[02-9]\d{2}|[02-9]\d{3})[2-9]\d{6}$/;
+        const phoneRegex = /^[+]\d{1,3}\s?\d{3}\s?\d{3}\s?\d{4}$/;
 
-        return usaRegex.test(cleanedNumber) || canadaRegex.test(cleanedNumber);
+        if (phoneRegex.test(cleanedPhoneNumber)) {
+            return true; // Номер є валідним
+        } else {
+            return false; // Номер не відповідає формату
+        }
     }
 
     // Upload function
@@ -311,13 +352,17 @@
     // Show or hide the image upload value
 
     function toggleDivVisibility() {
+        console.log('upload-image');
         const selectBox = document.querySelectorAll('[data-upload-image]')[0];
         const uoploadBlock = document.querySelectorAll('[data-upload-image-block]')[0];
         const selectedValue = selectBox.value;
+        console.log('upload-image', selectBox, 'uoploadBlock', uoploadBlock);
 
-        if (selectedValue === 'yes') {
+        if (selectedValue === 'true') {
+            console.log('true')
             uoploadBlock.style.display = 'block';
         } else {
+            console.log('false')
             uoploadBlock.style.display = 'none';
         }
     }
@@ -353,14 +398,15 @@
                 email: form.email.value,
                 password: form.password.value,
                 password_confirmation: form.confirmPassword.value,
-                phone: form.phone.value,
+                phone: form.phone.value.replace(/\s|-/g, ''),
                 salon_name: form.salonName.value,
                 distributor_name: form.distributorName.value,
+                distributor_email: form.email.value,
                 is_suit: form.isSuit.value,
                 addresses: [{
                     salon_address: form.salonAddress.value,
-                    country: form.country.value,
-                    province: form.province.value,
+                    country: form.country.value.toUpperCase(),
+                    state: form.province.value,
                     city: form.city.value,
                     zip: form.zip.value
                 }]
@@ -371,17 +417,17 @@
         //     customer :{
         //         first_name: "Seven",
         //         last_name: "Teen",
-        //         email:"asq1вhdxerуdsdуskіddуnd@example.com",
+        //         email:"asівq1вnd@example.com",
         //         password:"123456789",
         //         password_confirmation:"123456789",
-        //         phone:"+14142746039",
+        //         phone:"+14142746043",
         //         salon_name:"Mirror",
         //         distributor_name:"John Doe",
         //         is_suit:"false",
         //         addresses:[{
         //             salon_address: "123 Oak St",
         //             country:"Canada",
-        //             province:"ON",
+        //             state:"ON",
         //             city:"Ontario",
         //             zip:"18000"
         //         }]
@@ -398,12 +444,55 @@
             .then(response => response.json())
             .then(response => {
                 if (response.success) {
+                    if (fileInput.files.length > 0) {
+                        const file = fileInput.files[0];
+                        const fileName = btoa(form.email) + '&' + file.name;
+                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
+
+                        return fetch(uploadUrl, {
+                            method: 'POST',
+                            // mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            },
+                            body: file
+                        })
+                            .then(function(response) {
+                                if (response.status === 200) {
+                                    console.log('Response success');
+                                    window.showSuccessForm();
+                                    hideSpinner();
+                                    // window.loginRegisterAlertPopup.close(); // Закриття попапу
+                                    // window.location.hash = '';
+                                } else {
+                                    alert('Image not uploaded.'); // Виклик функції для виведення повідомлення про незавантажений імедж
+                                }
+                            })
+                            .catch(function(error) {
+                                console.error('Error:', error); // Обробка помилок при виконанні запиту
+                            });
+                    } else if (response.success){
+                        // Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії
+                        // ...
+                        console.log('Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії');
+                        // window.loginRegisterAlertPopup.close();
+                        // window.location.hash = '';
+                        window.showSuccessForm();
+                        hideSpinner();
+                        return Promise.resolve();
+                    }
+                    else {
+                        console.log('fieldName', response.errors[0].field_name);
+                        console.log('error_message', response.errors[0].error_message);
+                        hideSpinner();
+                        window.hideRecoverPasswordForm();
+                    }
                     // Success response
                     console.log('Form submitted successfully');
                 } else {
                     // Error response
                     console.log('Form submission error:', response.error_message);
-
+                    hideSpinner();
                     // Highlight invalid fields
                     const emailField = form.email;
                     const emailError = document.getElementById("emailError");
@@ -417,43 +506,6 @@
                         emailError.textContent = "";
                     });
                 }
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                const fileName = btoa(form.email) + '&' + file.name;
-                const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
-
-                return fetch(uploadUrl, {
-                    method: 'POST',
-                    // mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    body: file
-                })
-                .then(function(response) {
-                    console.log(response)
-                    if (response.status === 200) {
-                        window.showSuccessForm();
-                        hideSpinner();
-                        // window.loginRegisterAlertPopup.close(); // Закриття попапу
-                        // window.location.hash = '';
-                    } else {
-                        alert('Image not uploaded.'); // Виклик функції для виведення повідомлення про незавантажений імедж
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error:', error); // Обробка помилок при виконанні запиту
-                });
-            } else {
-                // Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії
-                // ...
-                console.log('Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії');
-                // window.loginRegisterAlertPopup.close();
-                // window.location.hash = '';
-                window.showSuccessForm();
-                hideSpinner();
-                return Promise.resolve();
-            }
         })
             // .then(response => {
             //     if (response && response.ok) {
@@ -472,8 +524,10 @@
             // })
             .catch(error => {
                 // Error handling
+                hideSpinner();
                 console.log(error);
             });
     }
 </script>
+
 
