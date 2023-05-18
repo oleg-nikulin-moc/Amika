@@ -58,7 +58,7 @@
       <a href="#" class="ac-form__btn ac-form__btn--solid" onclick="showRegisterForm(); return false">Register</a>
     </div>
     <div class="action-bottom">
-      <button class="ac-form__btn ac-form__btn--black" type="submit">Sign In</button>
+      <button class="ac-form__btn ac-form__btn--black" type="submit" id="submit">Sign In</button>
     </div>
    </div>
   {% endform %}
@@ -216,13 +216,10 @@ function showActiveButtons(n) {
   const submitBtn = document.getElementById('submitBtn');
   console.log(n);
   if (n === 0) {
-    console.log('fiest')
     prevBtn.style.display = "none";
     cancelBtn.style.display = "inline";
     step(n)
   } else {
-    console.log('next')
-    console.log('cancelBtn')
     cancelBtn.style.display = "none";
     prevBtn.style.display = "inline";
     prevBtn.innerHTML = `back to step ${n}`;
@@ -265,7 +262,6 @@ function nextPrev(n) {
   console.log('validate', validateForm());
   // Validate form
   if (n === 1 && ! validateForm()) {
-    console.log('not validate');
     return false;
   }
 
@@ -274,7 +270,6 @@ function nextPrev(n) {
 
   if (currentTab >= tabs.length) {
     submitForm();
-    console.log('submit');
     return false;
   }
 

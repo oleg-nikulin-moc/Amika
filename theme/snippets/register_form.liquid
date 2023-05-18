@@ -30,14 +30,14 @@
 
         <div id="password-wrap" class="clearfix form-row register-form__fieldset">
           <label for="password" class="ac-form__label login">Password*</label>
-          <input type="password" name="password" id="password" class="large ac-form__field password{% if form.errors contains 'password' %} error{% endif %}" size="30"required />
-          <span id="passError" class="ac-text--error"></span>
+          <input type="password" name="password" id="password" pattern="^[a-zA-Z0-9]{8,50}$" class="large ac-form__field password{% if form.errors contains 'password' %} error{% endif %}" size="30"required />
+          <span id="passwordError" class="ac-text--error"></span>
         </div>
 
         <div id="confirm-password-wrap" class="clearfix form-row register-form__fieldset">
           <label for="confirmPassword" class="ac-form__label login">Confirm Password*</label>
           <input type="password" name="confirmPassword" id="confirmPassword" class="large ac-form__field password{% if form.errors contains 'confirm-password' %} error{% endif %}" size="30"required />
-          <span id="passwordError" class="ac-text--error"></span>
+          <span id="confirmPasswordError" class="ac-text--error"></span>
         </div>
 
         <div id="email-wrap" class="clearfix form-row register-form__fieldset">
@@ -48,14 +48,14 @@
 
         <div id="phone-wrap" class="clearfix form-row register-form__fieldset">
           <label for="phone" class="ac-form__label login">Mobile Number*</label>
-          <input type="text" id="phone" name="phone" pattern="^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$|^(\+?1)?[2-9](?:[02-9]\d|1[02-9]|1[02-9]\d{2}|[02-9]\d{3})[2-9]\d{6}$" title="Будь ласка, введіть телефонний номер у форматі +X XXX-XXX-XXXX" placeholder="+X XXX-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
+          <input type="text" id="phone" name="phone" pattern="^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$|^(\+?1)?[2-9](?:[02-9]\d|1[02-9]|1[02-9]\d{2}|[02-9]\d{3})[2-9]\d{6}$" title="Будь ласка, введіть телефонний номер у форматі +XXXXXXXXXXX" placeholder="+X XXX-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
           <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
       <div id="step-second" class="tab">
         <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset">
           <label for="salon_name" class="ac-form__label login">Salon Name*</label>
-          <input type="text" name="salonName" id="salonName" placeholder="Salon Name" required class="large ac-form__field" size="30" />
+          <input type="text" name="salonName" id="salonName" pattern="/^[A-Za-z ]{2,50}$/" placeholder="Salon Name" required class="large ac-form__field" size="30" />
           <span id="salonNameError" class="ac-text--error"></span>
         </div>
         <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset"></div>
@@ -67,8 +67,8 @@
         </div>
 
         <div id="salon-adress_wrap_2" class="clearfix form-row register-form__fieldset">
-          <label for="salonAddress2" class="ac-form__label login">Salon address line 2*</label>
-          <input type="text" name="salonAddress2" id="salonAddress2" required placeholder="Salon address line 2" class="large ac-form__field password{% if form.errors contains '' %} error{% endif %}" size="30"/>
+          <label for="salonAddress2" class="ac-form__label login">Salon address line 2</label>
+          <input type="text" name="salonAddress2" id="salonAddress2" placeholder="Salon address line 2" class="large ac-form__field password{% if form.errors contains '' %} error{% endif %}" size="30"/>
           <span id="salonAddress2Error" class="ac-text--error"></span>
         </div>
 
@@ -131,8 +131,8 @@
         <div id="distributor_wrap" class="clearfix form-row register-form__fieldset ac-offset-right--sm">
           <label for="isSuit" class="ac-form__label login ac-text--truncate">are you a Suite?* <span class="ac-form__note">(select yes or no)</span></label>
           <select id="isSuit" name="isSuit" class="ac-form__selector form-control" onchange="toggleDivVisibility()" required data-upload-image>
-              <option value="no">No</option>
-              <option value="yes">Yes</option>
+              <option value="false">No</option>
+              <option value="true">Yes</option>
           </select>
           <span id="isSuitError" class="ac-text--error"></span>
           <!--<input type="text" value="" name="customer[distributor]" required placeholder="primary distributor name" id="distributor-salon" class="large ac-form__field {% if form.errors contains 'distributor' %} error{% endif %}" size="30" />-->
@@ -186,6 +186,6 @@
             <!-- onclick="submit(); return false" -->
           </div>
       </div>
-        <input type="hidden" id="register_return_to" name="return_to" value="" />
+        {% comment %}<input type="hidden" id="register_return_to" name="return_to" value="" />{% endcomment %}
         </form>
     </div>
