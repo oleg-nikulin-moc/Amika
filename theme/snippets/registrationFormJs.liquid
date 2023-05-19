@@ -417,10 +417,10 @@
         //     customer :{
         //         first_name: "Seven",
         //         last_name: "Teen",
-        //         email:"asівq1вnd@example.com",
+        //         email:"asівq1ksddвdnd@example.com",
         //         password:"123456789",
         //         password_confirmation:"123456789",
-        //         phone:"+14142746043",
+        //         phone:"+14142746047",
         //         salon_name:"Mirror",
         //         distributor_name:"John Doe",
         //         is_suit:"false",
@@ -446,7 +446,8 @@
                 if (response.success) {
                     if (fileInput.files.length > 0) {
                         const file = fileInput.files[0];
-                        const fileName = btoa(form.email) + '&' + file.name;
+
+                        const fileName = btoa(form.email.value) + '&' + file.name;
                         const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
 
                         return fetch(uploadUrl, {
