@@ -1,6 +1,4 @@
-
-
-<div id="login-register-popup-container" style="display:none;">
+<div id="login-register-popup-container" style="">
   {% render 'customer-login-form-new', form_heading: 'Pro Login' %}
   {% comment %}
   <div style="display: none!important;">
@@ -21,7 +19,7 @@
   var loginRegisterAlertPopup = new tingle.modal({
       footer: false,
       stickyFooter: false,
-      closeMethods: [],
+      closeMethods: ['overlay', 'button', 'escape'],
       cssClass: ['login-register-alert-popup'],
     });
 
@@ -31,7 +29,14 @@
 
 
   // open modal
-  loginRegisterAlertPopup.open();
+  $('.my-account.animation').on('click', function (event) {
+    event.preventDefault();
+    loginRegisterAlertPopup.open();
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    loginRegisterAlertPopup.open();
+  });
   
   $('.tingle-modal.login-register-alert-popup').on('click', function (event) {
 

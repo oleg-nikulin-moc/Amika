@@ -68,46 +68,45 @@
       </a>
       <div class="price-desc-options">
         <p class="subtitle">{{currentProdTitleSubtitle}}</p>
+          {% if customer %}
+              {% if currentProduct.price_min == currentProduct.price_max %}
+              <div class="price clearfix">
+                <span class="nihar deal">
+                  {% if currentProduct.price_min < currentProduct.compare_at_price_min %}
+                  {% unless currentProduct.handle == 'polished-perfection-straightening-brush' %}
+                  <div class="retail">
+                    <span>{{ currentProduct.compare_at_price | money | remove: '.00' | remove: ' ' }}</span>
+                  </div>
+                  {% endunless %}
+                  {% endif %}
 
-        
-          {% if currentProduct.price_min == currentProduct.price_max %}
-          <div class="price clearfix">
-            <span class="nihar deal">
-              {% if currentProduct.price_min < currentProduct.compare_at_price_min %}
-              {% unless currentProduct.handle == 'polished-perfection-straightening-brush' %}
-              <div class="retail">
-                <span>{{ currentProduct.compare_at_price | money | remove: '.00' | remove: ' ' }}</span>
+                  {% if currentProduct.price_min < currentProduct.compare_at_price_min %}<div class="deal disc">{% endif %}
+                    <span class="red-price" style="{% if product.handle == 'polished-perfection-straightening-brush' %}color:#F16573; {%endif%}">{{ currentProduct.price_min | money | remove: '.00' }}</span>
+                  {% if currentProduct.price_min < currentProduct.compare_at_price_min %}</div>{% endif %}
+                </span>
               </div>
-              {% endunless %}
-              {% endif %}
 
-              {% if currentProduct.price_min < currentProduct.compare_at_price_min %}<div class="deal disc">{% endif %}
-                <span class="red-price" style="{% if product.handle == 'polished-perfection-straightening-brush' %}color:#F16573; {%endif%}">{{ currentProduct.price_min | money | remove: '.00' }}</span>
-              {% if currentProduct.price_min < currentProduct.compare_at_price_min %}</div>{% endif %}
-            </span>
-          </div>
-
-          {% elsif currentProduct.price_min < currentProduct.compare_at_price_min %}
-          <p class="price clearfix">
-            <!-- <span class="retail">
-              <span class="red-price">{{ product.compare_at_price_min | money | remove: '.00' }} <span class="endash">-</span> {{ product.compare_at_price_max | money | remove: '.00' }}</span>
-            </span> -->
-            <span class="deal disc">
-              <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} <span class="endash">-</span> {{ currentProduct.price_max | money | remove: '.00' }}</span>
-            </span>
-          </p>
-          {% else %}
-          <p class="price clearfix">
-            <span class="hugh deal">
-              {% if customer.tags contains 'Pro' or customer.tags contains 'HMS'%}
-              <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} <span class="endash">-</span> {{ currentProduct.price_max | money | remove: '.00' }}</span>
+              {% elsif currentProduct.price_min < currentProduct.compare_at_price_min %}
+              <p class="price clearfix">
+                <!-- <span class="retail">
+                  <span class="red-price">{{ product.compare_at_price_min | money | remove: '.00' }} <span class="endash">-</span> {{ product.compare_at_price_max | money | remove: '.00' }}</span>
+                </span> -->
+                <span class="deal disc">
+                  <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} <span class="endash">-</span> {{ currentProduct.price_max | money | remove: '.00' }}</span>
+                </span>
+              </p>
               {% else %}
-              {{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}
-              {% endif%}
-            </span>
-          </p>
+              <p class="price clearfix">
+                <span class="hugh deal">
+                  {% if customer.tags contains 'Pro' or customer.tags contains 'HMS'%}
+                  <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} <span class="endash">-</span> {{ currentProduct.price_max | money | remove: '.00' }}</span>
+                  {% else %}
+                  {{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}
+                  {% endif%}
+                </span>
+              </p>
+              {% endif %}
           {% endif %}
-
           {% if quickview and currentProduct.available %}
           {% if currentProduct.has_only_default_variant != true and currentProduct.options.size == 1 %}
             <div class="layer quickbuy__options ease-animation">

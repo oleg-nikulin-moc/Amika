@@ -117,32 +117,36 @@
             {% endif %}
             </div>
             <div class="f6-12 medium--f12-12 small--f4-12">
-              {% assign is_discounted = false %}
-              {% if product.compare_at_price_max > product.price_max or product.compare_at_price_min > product.price_min %}{% assign is_discounted = true %}{% endif %}
-              <div class="price {% if is_discounted %}price-discounted{% endif %}">
-                <div class="price-discounted__compare-at">
-                  <span class="product-price">
-                    {{ product.compare_at_price_min | money_without_trailing_zeros }}
-                  </span>
-                  {% unless product.has_only_default_variant or product.compare_at_price_max == product.compare_at_price_min %}
-                  <span>&ndash;</span>
-                  <span class="product-price">
-                    {{ product.compare_at_price_max | money_without_trailing_zeros }}
-                  </span>
-                  {% endunless %}
+              <style>.price { display: none; }</style>
+              {% if customer %}
+
+                {% assign is_discounted = false %}
+                {% if product.compare_at_price_max > product.price_max or product.compare_at_price_min > product.price_min %}{% assign is_discounted = true %}{% endif %}
+                <div class="price {% if is_discounted %}price-discounted{% endif %}">
+                  <div class="price-discounted__compare-at">
+                    <span class="product-price">
+                      {{ product.compare_at_price_min | money_without_trailing_zeros }}
+                    </span>
+                    {% unless product.has_only_default_variant or product.compare_at_price_max == product.compare_at_price_min %}
+                    <span>&ndash;</span>
+                    <span class="product-price">
+                      {{ product.compare_at_price_max | money_without_trailing_zeros }}
+                    </span>
+                    {% endunless %}
+                  </div>
+                  <div class="price-discounted__discount">
+                    <span class="product-price">
+                      {{ product.price_min | money_without_trailing_zeros }}
+                    </span>
+                    {% unless product.has_only_default_variant or product.price_max == product.price_min %}
+                    <span>&ndash;</span>
+                    <span class="product-price">
+                      {{ product.price_max | money_without_trailing_zeros }}
+                    </span>
+                    {% endunless %}
+                  </div>
                 </div>
-                <div class="price-discounted__discount">
-                  <span class="product-price">
-                    {{ product.price_min | money_without_trailing_zeros }}
-                  </span>
-                  {% unless product.has_only_default_variant or product.price_max == product.price_min %}
-                  <span>&ndash;</span>
-                  <span class="product-price">
-                    {{ product.price_max | money_without_trailing_zeros }}
-                  </span>
-                  {% endunless %}
-                </div>
-              </div>
+              {% endif %}
             </div>
           </div>
 
@@ -222,7 +226,10 @@
                     {% comment %} {{ 'products.product.sold_out' | t }} {% endcomment %}
                     notify me when available
                   {% endif %}
-                  <span class="price">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
+                tetst
+                  {% if customer %}
+                    <span class="price flex">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
+                  {% endif %}
               </button>
 
               <a href="#" onclick="openKlaviyoPDPBisPopup(this); return false;" class="cta bis-trigger notify__me button--primary" handle="{{ product.handle }}" style="display:none;">notify me when available</a>
@@ -248,7 +255,9 @@
                     {% comment %} {{ 'products.product.sold_out' | t }} {% endcomment %}
                     notify me when available
                   {% endif %}
-                  <span class="price">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
+                {% if customer %}
+                  <span class="price fixed">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
+                {% endif %}
               </button>
               <a href="#" onclick="openKlaviyoPDPBisPopup(this); return false;" class="cta bis-trigger notify__me button--primary" handle="{{ product.handle }}" style="display:none;">notify me when available</a>
             </div>

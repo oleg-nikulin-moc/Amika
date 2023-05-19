@@ -170,39 +170,40 @@
         <div class="title animation {{ currentProduct.tags }}">{{ currentProduct.title | replace_first: '|', '<span>' }}{% if currentProduct.tags contains 'final sale' %}<p class="final-sale">**Final Sale**</p>{% endif %}</div>
       </a>
       <div class="price clearfix">
+          {% if customer %}
 
+            {% if currentProduct.price_min == currentProduct.price_max %}
+            <div class="nihar deal">
+              {% if currentProduct.price_min < currentProduct.compare_at_price_min %}
+              {% unless currentProduct.handle == 'polished-perfection-straightening-brush' %}
+              <div class="retail">
+                <span>{{ currentProduct.compare_at_price | money | remove: '.00' | remove: ' ' }}</span>
+              </div>
+              {% endunless %}
+              {% endif %}
 
-        {% if currentProduct.price_min == currentProduct.price_max %}
-        <div class="nihar deal">
-          {% if currentProduct.price_min < currentProduct.compare_at_price_min %}
-          {% unless currentProduct.handle == 'polished-perfection-straightening-brush' %}
-          <div class="retail">
-            <span>{{ currentProduct.compare_at_price | money | remove: '.00' | remove: ' ' }}</span>
-          </div>
-          {% endunless %}
-          {% endif %}
+              {% if currentProduct.price_min < currentProduct.compare_at_price_min %}<div class="deal disc">{% endif %}
+                <span class="red-price" style="{% if currentProduct.handle == 'polished-perfection-straightening-brush' %}color:#F16573; {%endif%}">{{ currentProduct.price_min | money | remove: '.00' }}</span>
+              {% if currentProduct.price_min < currentProduct.compare_at_price_min %}</div>{% endif %}
+            </div>
 
-          {% if currentProduct.price_min < currentProduct.compare_at_price_min %}<div class="deal disc">{% endif %}
-            <span class="red-price" style="{% if currentProduct.handle == 'polished-perfection-straightening-brush' %}color:#F16573; {%endif%}">{{ currentProduct.price_min | money | remove: '.00' }}</span>
-          {% if currentProduct.price_min < currentProduct.compare_at_price_min %}</div>{% endif %}
-        </div>
-
-        {% elsif currentProduct.price_min < currentProduct.compare_at_price_min %}
-          <div class="retail">
-            <span class="red-price">{{ currentProduct.compare_at_price_min | money | remove: '.00' }} - {{ currentProduct.compare_at_price_max | money | remove: '.00' }}</span>
-          </div>
-          <div class="deal disc">
-            <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}</span>
-          </div>
-        {% else %}
-          <div class="hugh deal">
-            {% if customer.tags contains 'Pro' or customer.tags contains 'HMS'%}
-            <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}</span>
+            {% elsif currentProduct.price_min < currentProduct.compare_at_price_min %}
+              <div class="retail">
+                <span class="red-price">{{ currentProduct.compare_at_price_min | money | remove: '.00' }} - {{ currentProduct.compare_at_price_max | money | remove: '.00' }}</span>
+              </div>
+              <div class="deal disc">
+                <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}</span>
+              </div>
             {% else %}
-            {{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}
-            {% endif%}
-          </div>
-        {% endif %}
+              <div class="hugh deal">
+                {% if customer.tags contains 'Pro' or customer.tags contains 'HMS'%}
+                <span class="red-price">{{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}</span>
+                {% else %}
+                {{ currentProduct.price_min | money | remove: '.00' }} - {{ currentProduct.price_max | money | remove: '.00' }}
+                {% endif%}
+              </div>
+            {% endif %}
+          {% endif %}
       </div>
     </div>
 
