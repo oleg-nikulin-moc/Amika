@@ -20,7 +20,7 @@
     </div>
     <div style="float:right;" class="ac-submit__wrap">
       <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset" type="button" id="cancelSuccessBtn" onclick="loginRegisterAlertPopup.close(); return false;">Back to site</button>
-      <button class="ac-form__btn ac-form__btn--black" type="submit" id="submitSuccessBtn">Sign In</button>
+      <input class="ac-form__btn ac-form__btn--black animation" type="submit" value="Sign In" id="submitSuccessBtn" />
     </div>
   {% endform %}
 </div>
@@ -58,7 +58,8 @@
       <a href="#" class="ac-form__btn ac-form__btn--solid" onclick="showRegisterForm(); return false">Register</a>
     </div>
     <div class="action-bottom">
-      <button class="ac-form__btn ac-form__btn--black" type="submit" id="submit">Sign In</button>
+      {% comment %}<button " type="submit" id="submit">Sign In</button>{% endcomment %}
+      <input class="ac-form__btn ac-form__btn--black animation" type="submit" id="submitBtnLogin"  value="Sign In" />
     </div>
    </div>
   {% endform %}
@@ -194,11 +195,6 @@ const customerAccount = {
     return false;
   }
 
-  $(window).load(function() {
-    var message = $('.success_pw').html();
-    $('#success_pw').html(message);
-  });
-
   // Contact tabs
 
   var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -280,4 +276,9 @@ function hideTab(tabIndex) {
   const tabs = document.getElementsByClassName("tab");
   tabs[tabIndex].style.display = "none";
 }
+
+$(window).load(function() {
+  var message = $('.success_pw').html();
+  $('#success_pw').html(message);
+});
 </script>
