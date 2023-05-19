@@ -2,6 +2,18 @@
 
 <div id="login-register-popup-container" style="display:none;">
   {% render 'customer-login-form-new', form_heading: 'Pro Login' %}
+  {% comment %}
+  <div style="display: none!important;">
+    <div id="customer-register" class="register-login" >
+      <h1>Create Account</h1>
+      {% render "customer-fields", form_id: "9YtJ7k" %}
+    </div>
+    <div class="register-alert-popup-verbiage">
+      <div>Online friends with benefits rewards for salons serviced by goldwell of NY and qualifying jewel accounts</div>
+      <div class='second-verbiage-line'>Contact us at <a href="mailto:info@loveamikapro.com">info@loveamikapro.com</a></div>
+    </div>
+  </div>
+  {% endcomment %}
 </div>
 
 {% unless request.page_type == 'customers/activate_account' or request.page_type == 'customers/reset_password' or request.design_mode%}
@@ -16,7 +28,6 @@
   // set content
   var content = $('#login-register-popup-container').html();
   loginRegisterAlertPopup.setContent( content );
-  // $('#login-register-popup-container').empty();
 
 
   // open modal
