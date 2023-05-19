@@ -34,14 +34,18 @@
   {% form 'customer_login', class: "ac-form--login"%}
   {{ form.errors | default_errors }}
 
+    <div class="ac-block--horizontal">
+      <p class="ac-offset__bottom--md" style="font-weight: 700;">the amika pro site is strictly for rewards redemption as part of our friends with benefits+ loyalty program. these products are not intended for resale.</p>
+    </div>
+
   <div id="login_email" class="clearfix form-row">
-    <label for="customer_email" class="login">email</label>
+    <label for="customer_email" class="login">email*</label>
     <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large ac-form__field" size="30" />
   </div>
 
   {% if form.password_needed %}
   <div id="login_password" class="clearfix form-row ac-password__field">
-    <label for="customer_password" class="login">Password</label>
+    <label for="customer_password" class="login">Password*</label>
     <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large ac-form__field password" size="16" />
   </div>
   <div class="register_wrap">
