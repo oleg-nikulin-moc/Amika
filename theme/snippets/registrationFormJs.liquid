@@ -11,10 +11,21 @@
         const termsCheckbox = document.querySelector("[data-terms-field]");
         const submitButton = document.getElementById("submitBtn");
         const nextButton = document.getElementById("nextBtn");
-        const salonName = document.getElementById("salonName");
+        const salonName = document.getElementById("salon_name");
         const salonNameError = document.getElementById("salonNameError");
         const phoneNumberInput = document.getElementById('phone');
         const phoneNumberError = document.getElementById('phoneError');
+        const phoneNumber = phoneNumberInput.value;
+
+        const emailInput = document.getElementById("email");
+        const emailError = document.getElementById("emailError");
+        const emailValue = emailInput.value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const zipCodes = tabs[currentTab].querySelector("#zip");
+        const zipInput = document.getElementById("zip");
+        const zipError = document.getElementById("zipError");
+        const zipValue = emailInput.value;
 
         const passwordPattern = /^[a-zA-Z0-9]{8,50}$/;
         const textFieldPattern = /^[A-Za-z ]{2,50}$/
@@ -29,23 +40,12 @@
             }
         });
 
-        phoneNumberInput.addEventListener('input', function (event) {
-            const phoneNumber = event.target.value;
+        function validateZipCode(zipCode) {
+            const zipPatternUSA = /^\d{5}(?:-\d{4})?$/;
+            const zipPatternCanada =  /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
 
-            if (validatePhoneNumber(phoneNumber)) {
-                phoneNumberError.style.display = 'none';
-                phoneNumberInput.classList.remove('invalid');
-                phoneNumberError.textContent = "";
-                valid = true;
-            } else {
-                phoneNumberError.textContent = "Incorrect phone number";
-                phoneNumberInput.classList.add('invalid');
-                phoneNumberError.style.display = 'block';
-                valid = false;
-            }
-
-            checkFormValidity();
-        });
+            return zipPatternUSA.test(zipCode) || zipPatternCanada.test(zipCode);
+        }
 
         function checkFormValidity() {
             valid = true;
@@ -54,29 +54,71 @@
                 if (field.value === "") {
                     field.classList.add("invalid");
                     valid = false;
-                    field.nextElementSibling.textContent = "Empty field"; // Display the "Empty field" message in the span
-                } else {
+                    field.nextElementSibling.textContent = "Empty value";
+                } else if( field.value.length < 2) {
+                    field.classList.add("invalid");
+                    valid = false;
+                    field.nextElementSibling.textContent = "Text must be at least 2 characters";
+                }else {
                     field.classList.remove("invalid");
-                    field.nextElementSibling.textContent = ""; // Clear the span message
+                    field.nextElementSibling.textContent = "";
                 }
             });
 
-            // if (!textFieldPattern.test(salonName.value)) {
-            //     salonNameError.textContent = "text field must be at least 2 characters";
-            //     valid = false;
-            // } else {
-            //     salonNameError.textContent = "";
-            // }
+            // Phone validation
+            if (!validatePhoneNumber(phoneNumber)) {
+                console.log('phone not valid')
+                phoneNumberError.style.display = 'block';
+                phoneNumberError.textContent = "Incorrect phone number";
+                phoneNumberInput.classList.add('invalid');
+                valid = false;
+            } else {
+                phoneNumberError.style.display = 'none';
+                phoneNumberError.textContent = "";
+                phoneNumberInput.classList.remove('invalid');
+            }
 
+            // Email validation
+            if (!emailPattern.test(emailValue)) {
+                console.log('email not valid')
+                emailError.textContent = "Invalid email format";
+                emailError.style.display = 'block';
+                emailInput.classList.add("invalid");
+                valid = false;
+            } else {
+                emailError.textContent = "";
+                emailError.style.display = 'none';
+                emailInput.classList.remove("invalid");
+            }
+
+            // Password validation
             if (!passwordPattern.test(passwordInput.value)) {
+                console.log('Password must be at least 8 characters')
                 passwordError.textContent = "Password must be at least 8 characters";
                 valid = false;
             } else if (passwordInput.value !== confirmPasswordInput.value) {
+                console.log('Passwords do not match')
                 confirmPasswordError.textContent = "Passwords do not match";
                 valid = false;
             } else {
                 passwordError.textContent = "";
                 confirmPasswordError.textContent = "";
+            }
+
+            // Zip Code validation
+            if (zipCodes === !null) {
+
+                if (!validateZipCode(zipValue)) {
+                    console.log('zip not valid')
+                    zipError.textContent = "Invalid zip code format";
+                    zipError.style.display = 'block';
+                    zipInput.classList.add("invalid");
+                    valid = false;
+                } else {
+                    zipError.textContent = "";
+                    zipError.style.display = 'none';
+                    zipInput.classList.remove("invalid");
+                }
             }
 
             // if (valid) {
@@ -90,9 +132,12 @@
             field.addEventListener('input', checkFormValidity);
         });
 
+        emailInput.addEventListener('input', checkFormValidity);
+        phoneNumberInput.addEventListener('input', checkFormValidity);
         passwordInput.addEventListener('input', checkFormValidity);
         confirmPasswordInput.addEventListener('input', checkFormValidity);
         termsCheckbox.addEventListener('change', checkFormValidity);
+        zipInput.addEventListener('change', checkFormValidity);
 
         checkFormValidity();
         return valid;
@@ -251,6 +296,7 @@
     const zipField = document.getElementById('zip');
     const statesData = {
         usa: [
+            'Select State',
             'Alabama',
             'Alaska',
             'Arizona',
@@ -303,6 +349,7 @@
             'Wyoming'
         ],
         canada: [
+            'Select State',
             'Alberta',
             'British Columbia',
             'Manitoba',
@@ -394,17 +441,17 @@
         const formData = {
             customer: {
                 first_name: form.firstName.value,
-                last_name: form.lastName.value,
+                last_name: form.last_name.value,
                 email: form.email.value,
                 password: form.password.value,
                 password_confirmation: form.confirmPassword.value,
                 phone: form.phone.value.replace(/\s|-/g, ''),
-                salon_name: form.salonName.value,
+                salon_name: form.salon_name.value,
                 distributor_name: form.distributorName.value,
                 distributor_email: form.email.value,
                 is_suit: form.isSuit.value,
                 addresses: [{
-                    salon_address: form.salonAddress.value,
+                    salon_address: form.salon_address.value,
                     country: form.country.value.toUpperCase(),
                     state: form.province.value,
                     city: form.city.value,
@@ -496,16 +543,44 @@
                     hideSpinner();
                     // Highlight invalid fields
                     const emailField = form.email;
-                    const emailError = document.getElementById("emailError");
+                    // const emailError = document.getElementById("emailError");
+                    //
+                    // console.log('emailField', emailField);
+                    // window.nextPrev(-2);
+                    // // window.showTab(0);
+                    // emailField.classList.add('invalid');
+                    // uoploadBlock.style.display = 'block';
+                    // emailError.textContent = "Email already exists";
 
-                    console.log('emailField', emailField);
-                    emailField.classList.add('invalid');
-                    emailError.textContent = "Email already exists";
                     window.nextPrev(-2);
-                    emailField.addEventListener('input', function() {
-                        emailField.classList.remove('invalid');
-                        emailError.textContent = "";
+                    const responseErrors = response.errors
+                    console.log('responseErrors', responseErrors)
+                    responseErrors.forEach(function(error) {
+                        const fieldId = error.field_name;
+                        const errorMessage = error.error_message;
+
+                        const fieldElement = document.getElementById(fieldId);
+                        const errorElement = fieldElement.nextElementSibling;
+                        console.log('el', fieldElement);
+                        fieldElement.classList.add("invalid");
+                        errorElement.style.display = "block";
+                        errorElement.textContent = errorMessage;
                     });
+
+                    // responseErrors.forEach(function (field) {
+                    //     const fieldId =  field.field_name;
+                    //     const errorMessage = field.error_message;
+                    //     const el = document.getElementById(fieldId);
+                    //     console.log('el', el);
+                    //     el.classList.add('invalid');
+                    //     el.nextElementSibling.textContent = errorMessage;
+                    // });
+
+                    // emailField.addEventListener('input', function() {
+                    //     emailField.classList.remove('invalid');
+                    //     emailError.textContent = "";
+                    // });
+                    // emailField.addEventListener('input', window.checkFormValidity);
                 }
         })
             // .then(response => {

@@ -217,13 +217,15 @@ function showActiveButtons(n) {
   console.log(n);
   if (n === 0) {
     prevBtn.style.display = "none";
+    submitBtn.style.display = 'none';
     cancelBtn.style.display = "inline";
+    nextBtn.style.display = 'block';
     step(n)
   } else {
     cancelBtn.style.display = "none";
     prevBtn.style.display = "inline";
     prevBtn.innerHTML = `back to step ${n}`;
-    nextBtn.innerHTML = `move to step ${n + 1}`;
+    nextBtn.innerHTML = `move to step ${n + 2}`;
     submitBtn.style.display = 'none';
     nextBtn.style.display = 'block';
     step(n);
@@ -234,12 +236,13 @@ function showActiveButtons(n) {
     nextBtn.style.display = "none";
     submitBtn.style.display = 'block';
   } else {
-    nextBtn.innerHTML = `move to step ${n + 1}`;
+    nextBtn.innerHTML = `move to step ${n + 2}`;
   }
 }
 
 function showTab(n) {
   const tabs = document.getElementsByClassName("tab");
+  console.log(n)
 
   // Display or hide the tab based on the value of n
   if (n < 3) {
@@ -259,9 +262,10 @@ function step(n){
 
 function nextPrev(n) {
   const tabs = document.getElementsByClassName("tab");
-  console.log('validate', validateForm());
+
   // Validate form
-  if (n === 1 && ! validateForm()) {
+  if ( n === 1 && !validateForm()) {
+    console.log('Not valid', validateForm());
     return false;
   }
 
