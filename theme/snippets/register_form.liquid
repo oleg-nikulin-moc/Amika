@@ -23,8 +23,8 @@
         </div>
   
         <div id="last_name-wrap" class="clearfix form-row register-form__fieldset">
-          <label for="lastName" class="ac-form__label login">Last Name*</label>
-          <input type="text" placeholder="Last Name" name="last_name" id="lastName" class="large ac-form__field{% if form.errors contains 'last_name' %} error{% endif %}" size="30" required/>
+          <label for="last_name" class="ac-form__label login">Last Name*</label>
+          <input type="text" placeholder="Last Name" name="last_name" id="last_name" class="large ac-form__field{% if form.errors contains 'last_name' %} error{% endif %}" size="30" required/>
             <span id="lastNameError" class="ac-text--error"></span>
         </div>
 
@@ -48,21 +48,21 @@
 
         <div id="phone-wrap" class="clearfix form-row register-form__fieldset">
           <label for="phone" class="ac-form__label login">Mobile Number*</label>
-          <input type="text" id="phone" name="phone" pattern="^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$|^(\+?1)?[2-9](?:[02-9]\d|1[02-9]|1[02-9]\d{2}|[02-9]\d{3})[2-9]\d{6}$" title="Будь ласка, введіть телефонний номер у форматі +XXXXXXXXXXX" placeholder="+X XXX-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
+          <input type="text" id="phone" name="phone" title="Please enter the phone number in the format +X XXX XXX XX XX" placeholder="+X XXX-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
           <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
       <div id="step-second" class="tab">
         <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset">
           <label for="salon_name" class="ac-form__label login">Salon Name*</label>
-          <input type="text" name="salonName" id="salonName" pattern="/^[A-Za-z ]{2,50}$/" placeholder="Salon Name" required class="large ac-form__field" size="30" />
+          <input type="text" name="salonName" id="salon_name" pattern="/^[A-Za-z ]{2,50}$/" placeholder="Salon Name" required class="large ac-form__field" size="30" />
           <span id="salonNameError" class="ac-text--error"></span>
         </div>
         <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset"></div>
 
         <div id="salon-adress_wrap_1" class="clearfix form-row register-form__fieldset">
-          <label for="salonAddress" class="ac-form__label login">Salon address line 1*</label>
-          <input type="text" name="salonAddress" id="salonAddress" required placeholder="Salon address line 1" class="large ac-form__field{% if form.errors contains 'password' %} error{% endif %}" size="30"/>
+          <label for="salon_address" class="ac-form__label login">Salon address line 1*</label>
+          <input type="text" name="salonAddress" id="salon_address" required placeholder="Salon address line 1" class="large ac-form__field{% if form.errors contains 'password' %} error{% endif %}" size="30"/>
           <span id="salonAddressError" class="ac-text--error"></span>
         </div>
 
@@ -110,6 +110,7 @@
          <div id="distributor_wrap" class="clearfix form-row register-form__fieldset">
             <label for="distributorName" class="ac-form__label login ac-text--truncate">primary distributor name*</label>
             <select id="distributorName" name="distributorName" class="ac-form__selector form-control" required>
+                <option value="armstrongMcCall">Armstrong McCall</option>
                 <option value="beautyCraft">Beauty Craft</option>
                 <option value="goldwellOfNY">Goldwell of NY</option>
                 <option value="Hairlines">Hairlines</option>
@@ -127,12 +128,12 @@
             <span id="distributorNameError" class="ac-text--error"></span>
             <!-- <input type="text" value="" name="customer[distributor]" required placeholder="primary distributor name" id="distributor" class="large ac-form__field {% if form.errors contains 'distributor' %} error{% endif %}" size="30" />-->
         </div>
-        <p class="ac-form-distributor__description--small">salons can only earn rewards based on the purchase totals reported by their designated primary distributor as purchase totals cannot be combined.​ once submitted, this field is unable to be modified.</p>
+        <p class="ac-form-distributor__description--small">country</p>
         <div id="distributor_wrap" class="clearfix form-row register-form__fieldset ac-offset-right--sm">
           <label for="isSuit" class="ac-form__label login ac-text--truncate">are you a Suite?* <span class="ac-form__note">(select yes or no)</span></label>
           <select id="isSuit" name="isSuit" class="ac-form__selector form-control" onchange="toggleDivVisibility()" required data-upload-image>
-              <option value="false">No</option>
-              <option value="true">Yes</option>
+              <option value="false">no</option>
+              <option value="true">yes</option>
           </select>
           <span id="isSuitError" class="ac-text--error"></span>
           <!--<input type="text" value="" name="customer[distributor]" required placeholder="primary distributor name" id="distributor-salon" class="large ac-form__field {% if form.errors contains 'distributor' %} error{% endif %}" size="30" />-->
@@ -168,7 +169,7 @@
             <span class="ac-form__checkbox__text" id="">subscribe to get the latest updates from amika pro <span class="ac-form-checkbox__note">(optional)</span>
           </label>
           <label class="ac-form__checkbox ac-form__checkbox--small control checkbox">
-            <input id="terms" type="checkbox" name="customer[terms]" value="" required data-terms-field>
+            <input id="terms" type="checkbox" name="customer[terms]" value="" data-terms-field>
             <span class="ac-form__control-indicator"></span>
             <span class="ac-form__checkbox__text" id="">I agree to the program terms + conditions* <br><span class="ac-form-checkbox__note">Please read our terms here: <a href="" class="">terms and conditions</a></span>
           </label>
