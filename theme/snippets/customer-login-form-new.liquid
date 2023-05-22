@@ -39,13 +39,13 @@
     </div>
 
   <div id="login_email" class="clearfix form-row">
-    <label for="customer_email" class="login">email*</label>
+    <label for="customer_email" class="login ac-form__label">email*</label>
     <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large ac-form__field" size="30" />
   </div>
 
   {% if form.password_needed %}
   <div id="login_password" class="clearfix form-row ac-password__field">
-    <label for="customer_password" class="login">Password*</label>
+    <label for="customer_password" class="login ac-form__label">Password*</label>
     <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large ac-form__field password" size="16" />
   </div>
   <div class="register_wrap">
@@ -82,7 +82,7 @@
     {% endif %}
 
     <div id="recover_email" class="clearfix large ac-form__field_form">
-      <label for="email" class="large ac-form__field">Email*</label>
+      <label for="email" class="large ac-form__label">Email*</label>
       <input type="email" value="" size="30" placeholder="Email Address" name="email" id="recover-email" class="large ac-form__field ac-form__field--recover" />
     </div>
     <div style="padding:10px 0;" id="resetPasswordMessage"></div>
