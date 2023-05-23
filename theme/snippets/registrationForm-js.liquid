@@ -541,15 +541,20 @@
                     console.log('Form submission error:', response.error_message);
                     hideSpinner();
                     // Highlight invalid fields
-                    const emailField = form.email;
+                    // const emailField = form.email;
                     // const emailError = document.getElementById("emailError");
-                    //
-                    // console.log('emailField', emailField);
+
                     // window.nextPrev(-2);
-                    // // window.showTab(0);
                     // emailField.classList.add('invalid');
                     // uoploadBlock.style.display = 'block';
                     // emailError.textContent = "Email already exists";
+                    // if (response.error_message.includes("Phone has already been taken")) {
+                    //     console.log("Phone number has already been taken.");
+                    //     console.log(response.error_message);
+                    // }
+                    // if (response.field_name === 'email') {
+                    //     console.log(response.error_message);
+                    // }
 
                     window.nextPrev(-2);
                     const responseErrors = response.errors
@@ -604,5 +609,11 @@
             });
     }
 </script>
+
+response > eroros > { field_name < er_message }
+response > eroros > {
+{ field_name < er_message }
+}
+{ field_name < er_message }
 
 
