@@ -417,8 +417,11 @@
         const popup = document.querySelector('.tingle-modal-box');
         if (size === "lg") {
             popup.classList.add('tingle-modal-box__lg');
+        } else if (size === "sm") {
+            popup.classList.add('tingle-modal-box__sm');
         } else {
             popup.classList.remove('tingle-modal-box__lg');
+            popup.classList.remove('tingle-modal-box__sm');
         }
     }
 

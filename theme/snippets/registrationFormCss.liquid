@@ -75,10 +75,13 @@
         opacity: 0.8;
         cursor: not-allowed;
     }
-    .ac-form__btn--black {
+    .ac-form__btn--black,
+    .button--primary:disabled {
         background-color: #000;
         border-color: #000;
         color: #fefaf0;
+        opacity: 0.8;
+        cursor: not-allowed;
     }
 
     .ac-form__btn--solid {
@@ -115,11 +118,15 @@
         overflow-y: auto;
         position: relative;
     }
-    .tingle-modal.login-register-alert-popup .tingle-modal-box.tingle-modal-box__lg {
+    .tingle-modal .tingle-modal-box.tingle-modal-box__lg {
         max-width: 894px;
         width: 100%;
-        padding-left: 90px;
-        padding-right: 90px;
+        padding: 80px 90px;
+    }
+    .tingle-modal .tingle-modal-box.tingle-modal-box__sm {
+        max-width: 527px;
+        width: 100%;
+        padding: 90px 120px;
     }
     .ac-password__field.ac-password__field.ac-password__field {
         margin-bottom: 32px;
