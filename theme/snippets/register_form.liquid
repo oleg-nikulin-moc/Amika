@@ -1,5 +1,5 @@
-{% render 'registrationForm-js' %}
-{% render 'registrationForm-css' %}
+{% render 'registrationFormJs' %}
+{% render 'registrationFormCss' %}
 <div class="spinner-wrap" style="display: none;" data-spinner-wrap>
     <div id="spinner"  class="spinner"></div>
 </div>
@@ -130,7 +130,7 @@
         </div>
         <p class="ac-form-distributor__description--small">Amika is excited to make Loyalty Rewards accessible to Suites! we define suites as the sole operators + service providers for the salon and we verify through submission of a business license for the establishment:</p>
         <div id="distributor_wrap" class="clearfix form-row register-form__fieldset ac-offset-right--sm">
-          <label for="isSuit" class="ac-form__label login ac-text--truncate">are you a Suite?* <span class="ac-form__note">(select yes or no)</span></label>
+          <label for="isSuit" class="ac-form__label login ac-text--truncate">are you a Suite?* <span class="ac-form__note ac-form__note--sm">(select yes or no)</span></label>
           <select id="isSuit" name="isSuit" class="ac-form__selector form-control" onchange="toggleDivVisibility()" required data-upload-image>
               <option value="false">no</option>
               <option value="true">yes</option>
@@ -144,7 +144,7 @@
           <div class="ac-upload__field" data-upload-file>
             <input type="file" id="file-input" accept="image/jpeg, image/jpg, application/pdf, image/png" onchange="imagePreview()">
             <label for="file-input" style="display: flex;" сlass="ac-upload__wrap">
-              <span class="ac-upload-field__input ac-text--truncate">Choose file <i>(cosmetology license not accepted)</i></span>
+                <span class="ac-upload-field__input ac-text--truncate"><span>Choose file </span><i>(cosmetology license not accepted)</i></span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 4.16666V15.8333" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M4.16602 10H15.8327" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -171,7 +171,7 @@
           <label class="ac-form__checkbox ac-form__checkbox--small control checkbox">
             <input id="terms" type="checkbox" name="customer[terms]" value="" data-terms-field>
             <span class="ac-form__control-indicator"></span>
-            <span class="ac-form__checkbox__text" id="">I agree to the program terms + conditions* <br><span class="ac-form-checkbox__note">Please read our terms here: <a href="" class="">terms and conditions</a></span>
+            <span class="ac-form__checkbox__text" id="">I agree to the program terms + conditions* <br><span class="ac-form-checkbox__note">Please read our terms here: <a href="https://loveamikapro.com/pages/terms-of-use-privacy" class="">terms and conditions</a></span>
           </label>
         </div>
 

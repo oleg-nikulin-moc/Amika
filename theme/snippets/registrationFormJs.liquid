@@ -493,7 +493,8 @@
                 if (response.success) {
                     if (fileInput.files.length > 0) {
                         const file = fileInput.files[0];
-                        const fileName = btoa(form.email) + '&' + file.name;
+                        const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
+                        const fileName = btoa(form.email) + '&' + validateFileName;
                         const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
 
                         return fetch(uploadUrl, {
@@ -609,11 +610,3 @@
             });
     }
 </script>
-
-response > eroros > { field_name < er_message }
-response > eroros > {
-{ field_name < er_message }
-}
-{ field_name < er_message }
-
-
