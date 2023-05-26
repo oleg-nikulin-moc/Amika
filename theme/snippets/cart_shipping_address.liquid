@@ -132,7 +132,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-
+        console.log('newCartItems', cartJson.items);
         // Отримання посилань на елементи форми
         const countrySelect = document.getElementById('country');
         const stateSelect = document.getElementById('state');
@@ -421,7 +421,7 @@
                     hideSubmitOrderPopup()
                     hideSpinner();
                     clearCart();
-                    window.location.href = '/account#customer_orders';
+
                 } else {
                     // Error response
                     console.log('Form submission error:', response.error_message);
@@ -463,6 +463,7 @@
                 // Error handling for cart clearing
             }
         });
+        window.location.href = '/account#customer_orders';
     }
     function formResize(size) {
         const popup = document.querySelector('.tingle-modal-box');

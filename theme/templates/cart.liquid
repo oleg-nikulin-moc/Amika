@@ -1,4 +1,4 @@
-{% assign loyaltyProgram = customer.metafields.anika_loyalty_program.points.value['points'] %}
+{% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
 
 <style>
   .main-menu .has-dropdown.active:after {display: none;}
@@ -429,7 +429,6 @@
             {% endif %}
             </form>
           </div>
-
           {% include 'cart_shipping_address', loyalty %}
         </div>
       </div>
@@ -515,6 +514,7 @@ REMOVE FREE GIFT IF HMS
 
 
 $(document).ready(function(){
+  console.log('Points Quantity: ', '{{ loyaltyProgram }}');
   $.ajax({
       type: 'GET',
       url: '/cart.json',
