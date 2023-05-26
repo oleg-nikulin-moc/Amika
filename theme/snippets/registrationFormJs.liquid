@@ -467,10 +467,10 @@
         //     customer :{
         //         first_name: "Seven",
         //         last_name: "Teen",
-        //         email:"asівq1ksddвdnd@example.com",
+        //         email:"asівq1вnd@example.com",
         //         password:"123456789",
         //         password_confirmation:"123456789",
-        //         phone:"+14142746047",
+        //         phone:"+14142746043",
         //         salon_name:"Mirror",
         //         distributor_name:"John Doe",
         //         is_suit:"false",
@@ -496,8 +496,8 @@
                 if (response.success) {
                     if (fileInput.files.length > 0) {
                         const file = fileInput.files[0];
-
-                        const fileName = btoa(form.email.value) + '&' + file.name;
+                        const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
+                        const fileName = btoa(form.email) + '&' + validateFileName;
                         const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
 
                         return fetch(uploadUrl, {
@@ -545,15 +545,20 @@
                     console.log('Form submission error:', response.error_message);
                     hideSpinner();
                     // Highlight invalid fields
-                    const emailField = form.email;
+                    // const emailField = form.email;
                     // const emailError = document.getElementById("emailError");
-                    //
-                    // console.log('emailField', emailField);
+
                     // window.nextPrev(-2);
-                    // // window.showTab(0);
                     // emailField.classList.add('invalid');
                     // uoploadBlock.style.display = 'block';
                     // emailError.textContent = "Email already exists";
+                    // if (response.error_message.includes("Phone has already been taken")) {
+                    //     console.log("Phone number has already been taken.");
+                    //     console.log(response.error_message);
+                    // }
+                    // if (response.field_name === 'email') {
+                    //     console.log(response.error_message);
+                    // }
 
                     window.nextPrev(-2);
                     const responseErrors = response.errors
@@ -608,5 +613,3 @@
             });
     }
 </script>
-
-

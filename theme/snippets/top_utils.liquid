@@ -49,11 +49,10 @@
         <input type="hidden" name="type" value="product" />
       </form>
     </li>
-
     {% if shop.customer_accounts_enabled %}
-    <li class="user">
+      <li class="user">
       {% if customer %}
-      <a href="/account" class="my-account animation">
+      {% comment %}<a href="/account" class="my-account animation tets">{% endcomment %}
         {% comment %}<i class="fa fa-user"></i>{% endcomment %}
         <!--         <svg class="img" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68.73 79.52"><defs><style>.cls-1{fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:4px;}</style></defs><title>user</title><circle class="cls-1" cx="34.36" cy="23.58" r="21.58"/><path class="cls-1" d="M138.64,213.8a32.36,32.36,0,0,1,64.73,0H138.64Z" transform="translate(-136.64 -136.28)"/></svg> -->
       <a href="/account" class="my-account animation">
@@ -94,6 +93,5 @@
       <div class="side__cart--overlay"></div>
       {% endif %}
     </li>
-    <a href="{{ routes.cart_url }}"> cart</a>
   </ul>
 </div>
