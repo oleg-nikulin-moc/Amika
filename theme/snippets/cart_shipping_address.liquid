@@ -14,12 +14,12 @@
             {% if customer.default_address.address2 != "" %}
                 <p>{{ customer.default_address.address2 }}</p>
             {% endif %}
-            <p class="ac-shipping-information__text">{{ customer.default_address.city}}</p>
+            <p class="ac-shipping-information__text city">{{ customer.default_address.city}}</p>
                 {% if customer.default_address.province != "" %}
-                    <p>{{ customer.default_address.province }}</p>
+                    <p class="ac-shipping-information__text">{{ customer.default_address.province }}</p>
                 {% endif %}
             <p class="ac-shipping-information__text">{{ customer.default_address.zip}}</p>
-            <p class="ac-shipping-information__text">{{customer.default_address.country}}</p>
+            <p class="ac-shipping-information__text country">{{customer.default_address.country}}</p>
             <button class="ac-form__btn ac-btn__edit" id="view_address" type="button" data-edit-address>EDIT</button>
         </div>
     {% endif %}
@@ -41,7 +41,7 @@
             <h1 class="address-information__title">submit order</h1>
             <p class="ac-address-information__text ac-offset__bottom--md">once submitted, orders are unable to be canceled or modified</p>
             <div class="ac-submit__wrap--vertical">
-                <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm()" data-submit-new-order {% if loyaltyPersentage %}disabled{% endif %}>Yes, submit order</button>
+                <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm()" data-submit-new-order {% if loyalty != true %}disabled{% endif %}>Yes, submit order</button>
                 <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" onclick="hideSubmitOrderPopup(); return false;">No, back to order</button>
             </div>
         </div>
@@ -127,6 +127,12 @@
     color: #FF6B26;
     margin-top: 0!important;
     height: auto;
+}
+
+.title.two-twelfths {
+    max-width: 100px;
+    overflow: hidden;
+    padding: 8px;
 }
 </style>
 
@@ -264,7 +270,7 @@
             title: item.title,
             product_id: item.product_id,
             variant_id: item.variant_id,
-            price: item.price,
+            price: item.price / 100,
             quantity: item.quantity,
             sku: item.sku
         };
@@ -272,13 +278,14 @@
     const formData = {
         order: {
             customer: {
+                id: '{{ customer.id }}',
                 email: '{{ customer.email }}'
             },
             line_items: newCartItems,
             shipping_address: {
-                address: '{{ customer.default_address.address1 }}',
+                address1: '{{ customer.default_address.address1 }}',
                 country: '{{ customer.default_address.country }}',
-                state: '{{ customer.default_address.province_code }}',
+                province: '{{ customer.default_address.province_code }}',
                 city: '{{ customer.default_address.city }}',
                 zip: '{{ customer.default_address.zip }}',
                 first_name: '{{ customer.first_name }}',
@@ -287,8 +294,6 @@
             }
         }
     }
-
-    console.log('cartItems', formData)
 
     // set content
     const content = $('#address-information-popup').html();
@@ -396,9 +401,9 @@
     function submitForm(event) {
         const form = document.getElementById('address_information');
         // event.preventDefault(); // Stop the default form submission
-        formData.order.shipping_address.address = form.salon_address.value;
+        formData.order.shipping_address.address1 = form.salon_address.value;
         formData.order.shipping_address.country = form.country.value.toUpperCase();
-        formData.order.shipping_address.state = form.province.value;
+        formData.order.shipping_address.province = form.province.value;
         formData.order.shipping_address.city = form.city.value;
         formData.order.shipping_address.zip = form.zip.value;
         formData.order.shipping_address.first_name = form.first_name.value;
