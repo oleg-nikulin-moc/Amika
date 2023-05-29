@@ -1,5 +1,4 @@
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
-
 <style>
   .main-menu .has-dropdown.active:after {display: none;}
   .main-menu .has-dropdown.active {background: initial;}
@@ -514,7 +513,6 @@ REMOVE FREE GIFT IF HMS
 
 
 $(document).ready(function(){
-  console.log('Points Quantity: ', '{{ loyaltyProgram }}');
   $.ajax({
       type: 'GET',
       url: '/cart.json',
