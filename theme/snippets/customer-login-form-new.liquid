@@ -1,3 +1,6 @@
+{% render 'registrationFormJs' %}
+{% render 'registrationFormCss' %}
+
 {% if form_heading == nil %}
   {% assign form_heading = 'Customer Login' %}
 {% endif %}
@@ -74,54 +77,17 @@
 <div id="recover-password" class="register-login" >
   <h1>Reset Password</h1>
   <p class="note ac-field__note">we will send you an email to reset your password</p>
-  {% comment %}
-    {% form 'recover_customer_password' %}
-      {{ form.errors | default_errors }}
-
-      {% if form.posted_successfully? %}
-        <p class="note">You will receive an email with clear instructions</p>
-      {% endif %}
-
-      <div id="recover_email" class="clearfix large_form">
-        <label for="email" class="large">Email</label>
-        <input type="email" value="" size="30" placeholder="Email Address" name="email" id="recover-email" class="large" />
-      </div>
-      <div class="action-bottom">
-        <input class="btn animation" type="submit" value="Submit" />
-        <span class="note">or <a href="#" onclick="hideRecoverPasswordForm()">Cancel</a></span>
-      </div>
-    {% endform %}
-   {% endcomment %}
-
-    {% comment %}
-      <form id="resetPassword1" action="/account/recover" method="post">
-        {% if form.posted_successfully? %}
-          <p class="note ac-field__note">You will receive an email with clear instructions</p>
-        {% endif %}
-        <div id="recover_email" class="clearfix large_form ac-form__field_form">
-          <label for="email" class="large ac-form__label">Email*</label>
-          <input type="email" value="" size="30" placeholder="Email Address" name="email" id="email" class="large ac-form__field ac-form__field--recover" />
-        </div>
-        <div style="padding:10px 0;" id="resetPasswordMessage"></div>
-        <div class="register_wrap">
-          <div class="action-bottom">
-            <a href="#" class="ac-form__btn ac-form__btn--solid" onclick="hideRecoverPasswordForm(); return false">Cancel</a>
-          </div>
-          <div class="action-bottom">
-            <input class="ac-form__btn ac-form__btn--black animation" type="submit" value="Submit" />
-          </div>
-        </div>
-      </form>
-    {% endcomment %}
-
-  <form id="resetPassword">
+  {% form 'recover_customer_password', id: 'recover-password-form' %}
     {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+      <p class="note">You will receive an email with clear instructions</p>
+    {% endif %}
     {% if form.posted_successfully? %}
       <p class="note">You will receive an email with clear instructions</p>
     {% endif %}
     <div id="recover_email" class="clearfix large_form ac-form__field_form">
       <label for="email" class="large ac-form__label">Email*</label>
-      <input type="email" value="" size="30" placeholder="Email Address" name="email" id="recover-email" class="large ac-form__field ac-form__field--recover" />
+      <input type="email" value="" size="30" placeholder="Email Address" name="email" id="email" class="large ac-form__field ac-form__field--recover" />
     </div>
     <div style="padding:10px 0;" id="resetPasswordMessage"></div>
     <div class="register_wrap">
@@ -129,38 +95,20 @@
         <a href="#" class="ac-form__btn ac-form__btn--solid" onclick="hideRecoverPasswordForm(); return false">Cancel</a>
       </div>
       <div class="action-bottom">
-        <input class="ac-form__btn ac-form__btn--black animation" type="submit" value="Submit" />
+        <button class="ac-form__btn ac-form__btn--black animation" type="submit">Submit</button>
       </div>
-     </div>
-  </form>
+    </div>
+  {% endform %}
 </div>
 
 {% render 'register_form'%}
     
 <script type="text/javascript">
-// $("#resetPassword").on('submit', function(e){
-//   e.preventDefault();
-//   $form = $(this);
-//   customerAccount.resetPassword($form.find('[name="email"]').val())
-// })
-
-$('#resetPassword').on('submit', function(event) {
-  event.preventDefault();
-
-  var email = $('#email').val();
-
-  // Use the Shopify Storefront API to handle the password recovery process
-  Shopify.customer.recover(email)
-          .then(function(response) {
-            // Password recovery successful
-            console.log('Password recovery email sent');
-          })
-          .catch(function(error) {
-            // Password recovery failed
-            console.error('Password recovery error:', error);
-          });
-});
-
+$("#resetPassword").on('submit', function(e){
+  e.preventDefault();
+  const $form = $(this);
+  customerAccount.resetPassword($form.find('[name="email"]').val())
+})
 
 const customerAccount = {
   emailFailed: true, 
@@ -178,37 +126,6 @@ const customerAccount = {
     }else{
       $('#resetPasswordMessage').html('') 
     }
-
-    let payload = {
-      collectedFormAction: "/account/recover",
-      collectedFormId: "resetPassword",
-      contactFields: {
-        "email": email      
-      },
-      formSelectorId: "#resetPassword",
-      pageTitle: "AmikaTestStore | AmikaTestStore",
-      pageUrl: "https://amikateststore.myshopify.com/#recover"
-    };
-    
-    let results = await fetch(`https://amikateststore.myshopify.com/account/recover`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        'X-Shopify-Storefront-Access-Token': '1429b9687e3bacae6c679260935ad4cd',
-      },
-      body: JSON.stringify(payload)
-    });
-
-    await results.json().then(response => {
-      if(!response.data) return false; 
-      if(response.errors && response.errors.length > 0){ 
-        $('#resetPasswordMessage').html(`<span class="error">${response.errors[0].message}</span>`) 
-      }else{
-        $('#resetPasswordMessage').html('<span class="success">Success! Please check your email for further instructions')
-      }
-    }).catch(error => {
-      $('#resetPasswordMessage').html('<span class="error">There was an error when submitting your request.</span>') 
-    })
   }
 }
 
