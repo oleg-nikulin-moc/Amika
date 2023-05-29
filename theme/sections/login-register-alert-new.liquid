@@ -14,7 +14,7 @@
   {% endcomment %}
 </div>
 
-{% unless request.page_type == 'customers/activate_account' or request.page_type == 'customers/reset_password' or request.design_mode%}
+{% unless customer or request.page_type == 'customers/activate_account' or request.page_type == 'customers/reset_password' or request.design_mode%}
 <script>
   var loginRegisterAlertPopup = new tingle.modal({
       footer: false,

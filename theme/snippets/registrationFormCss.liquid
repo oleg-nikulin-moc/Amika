@@ -116,19 +116,20 @@
     .register-login.register-login h1 {
         margin-bottom: 32px;
     }
-    .tingle-modal.login-register-alert-popup .tingle-modal-box.tingle-modal-box {
-        max-width: 528px;
-        padding: 80px 92px;
-        /*max-height: 600px;*/
+    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box {
         overflow-y: auto;
         position: relative;
-    }
-    .tingle-modal .tingle-modal-box.tingle-modal-box__lg {
-        max-width: 894px;
         width: 100%;
+    }
+    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box {
+        max-width: 528px;
+        padding: 80px 92px;
+    }
+    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box__lg {
+        max-width: 894px;
         padding: 80px 90px;
     }
-    .tingle-modal .tingle-modal-box.tingle-modal-box__sm {
+    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box__sm {
         max-width: 527px;
         width: 100%;
         padding: 90px 120px;
@@ -139,13 +140,12 @@
     .ac-form__link {
         margin-top: 0!important;
         margin-bottom: 4px!important;
-        margin-left: 10px!important;
         margin-right: 24px!important;
     }
-    .ac-form__link a,
-    .ac-form__link p {
-        font-size: 14px;
-    }
+
+    .ac-form__link  > p,
+    .ac-form__link > a { font-weight: 500; font-size: 14px;}
+
     .ac-block__right--none {
         margin-right: 0!important;
     }
