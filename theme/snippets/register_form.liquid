@@ -37,14 +37,14 @@
         </div>
 
         <div id="email-wrap" class="clearfix form-row register-form__fieldset">
-          <label for="email" class="ac-form__label login ac-text--truncate">Email* <span class="ac-form__note">identical to account email with primary distributor</span></label>
-          <input type="email"  name="email" id="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" placeholder="Email Address" class="large ac-form__field{% if form.errors contains 'email' %} error{% endif %}" size="30" required/>
+          <label for="emailMain" class="ac-form__label login ac-text--truncate">Email* <span class="ac-form__note">identical to account email with primary distributor</span></label>
+          <input type="email"  name="email" id="emailMain" placeholder="Email Address" class="large ac-form__field{% if form.errors contains 'email' %} error{% endif %}" size="30" required/>
           <span id="emailError" class="ac-text--error"></span>
         </div>
 
         <div id="phone-wrap" class="clearfix form-row register-form__fieldset">
           <label for="phone" class="ac-form__label login">Mobile Number*</label>
-          <input type="text" id="phone" name="phone" title="Please enter the phone number in the format +X XXX XXX XX XX" placeholder="+X XXX-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
+          <input type="text" id="phone" name="phone" title="Please enter the phone number in the format +1 XXX XXX XXXX or 1 XXX XXX-XXXX" placeholder="+X (XXX)-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
           <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
