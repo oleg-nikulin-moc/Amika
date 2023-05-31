@@ -2,7 +2,6 @@
 {% render 'spinner' %}
 {% assign cartItem = productsArray %}
 {% assign loyaltyPersentage = loyalty %}
-
 <div class="ac-shipping-information" id="shipping-information">
     <h3 class="ac-shipping-information__heading">shipping information</h3>
     <hr class="ac-shipping-information__divider">
@@ -138,7 +137,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        console.log('newCartItems', cartJson.items);
+        // console.log('newCartItems', cartJson.items);
         // Отримання посилань на елементи форми
         const countrySelect = document.getElementById('country');
         const stateSelect = document.getElementById('state');
