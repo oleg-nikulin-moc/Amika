@@ -532,13 +532,23 @@
                     responseErrors.forEach(function(error) {
                         const fieldId = error.field_name;
                         const errorMessage = error.error_message;
+                           console.log(fieldId)
+                        if (fieldId == 'email') {
+                            const fieldElement = document.getElementById('email');
+                            const errorElement = document.getElementById('emailError');
 
-                        const fieldElement = document.getElementById(fieldId);
-                        const errorElement = fieldElement.nextElementSibling;
-                        console.log('el', fieldElement);
-                        fieldElement.classList.add("invalid");
-                        errorElement.style.display = "block";
-                        errorElement.textContent = errorMessage;
+                            console.log('el', fieldElement);
+                            fieldElement.classList.add("invalid");
+                            errorElement.style.display = "block";
+                            errorElement.textContent = errorMessage;
+                        } else {
+                            const fieldElement = document.getElementById(fieldId);
+                            const errorElement = document.getElementById(`${fieldId}Error`);
+                            console.log('el', errorElement);
+                            fieldElement.classList.add("invalid");
+                            errorElement.style.display = "block";
+                            errorElement.textContent = errorMessage;
+                        }
                     });
 
                     // responseErrors.forEach(function (field) {
