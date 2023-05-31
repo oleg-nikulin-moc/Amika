@@ -44,7 +44,7 @@
 
         <div id="phone-wrap" class="clearfix form-row register-form__fieldset">
           <label for="phone" class="ac-form__label login">Mobile Number*</label>
-          <input type="text" id="phone" name="phone" title="Please enter the phone number in the format +1 XXX XXX XXXX or 1 XXX XXX-XXXX" placeholder="+X (XXX)-XXX-XXXX" class="large ac-form__field ac-form_feild" required />
+          <input type="text" id="phone" name="phone" title="Please enter the phone number in the format +1XXXXXXXXXX" placeholder="+X(XXX)XXXXXXX" class="large ac-form__field ac-form_feild" required />
           <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
@@ -55,7 +55,7 @@
       <div id="step-third" class="tab">
           {% comment %}    {% endcomment %}
         <p class="ac-form-distributor__description">salons can only earn rewards based on the purchase totals reported by their designated primary distributor as purchase totals cannot be combined. once submitted, this field is unable to be modified.</p>
-         <div id="distributor_wrap" class="clearfix form-row register-form__fieldset">
+         <div id="distributor_wrap" class="clearfix form-row register-form__fieldset ac-offset-right--sm">
             <label for="distributorName" class="ac-form__label login ac-text--truncate">primary distributor name*</label>
             <select id="distributorName" name="distributorName" class="ac-form__selector form-control" required>
                 <option value="armstrongMcCall">Armstrong McCall</option>
