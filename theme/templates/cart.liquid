@@ -1,4 +1,75 @@
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
+{% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
+{% assign tier = customer.metafields.amika_loyalty_program.points.value['tier']  %}
+{% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers  %}
+<style>
+  .qtty .quantity:disabled,
+  .qtty .minus:disabled,
+  .qtty .plus:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+</style>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const prepackQuantity = document.querySelector('[class*="prepack"] .qtty .quantity');
+    const prepackQuantityPlus = document.querySelector('[class*="prepack"] .qtty .plus');
+    const prepackQuantityMinus = document.querySelector('[class*="prepack"] .qtty .minus');
+    const prepackRemoveBtn = document.querySelector('[class*="prepack"] .remove-from-cart');
+    if (prepackQuantity) {
+      prepackQuantity.disabled = true;
+      prepackQuantityPlus.disabled = true;
+      prepackQuantityMinus.disabled = true;
+      prepackRemoveBtn.hidden = true;
+    }
+
+    {% comment %}const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');{% endcomment %}
+    const user = JSON.parse('{ "tier":"1","points":"250","brandBoxPoints":"50"}');
+    const products = JSON.parse('{{ tiersProducts }}');
+
+    if (products.length > 0) {
+      const productIds = products.filter(product => product.id !== '-1').map(product => product.product_id);
+
+      window.Shopify.cart.items = window.Shopify.cart.items.filter(item => productIds.includes(item.product_id));
+
+      let variantId = window.Shopify.cart.items[0]?.variant_id;
+
+      function updateCart(productId) {
+        jQuery.post('/cart/update.js', {
+          updates: {
+            [`${productId}`]: 1,
+          }
+        });
+        console.log('remove');
+      }
+
+      if (user.tier === "-1") {
+        updateCart(variantId, 0);
+      } else {
+
+        const { tier, brandBoxPoints } = user;
+
+        if (brandBoxPoints > 0) {
+
+          const selectedProduct = products.find(product => product.id == tier);
+          console.log('selectedProduct', selectedProduct)
+          if (selectedProduct) {
+            const { variant_id } = selectedProduct;
+            updateCart(variant_id, 1);
+
+          } else {
+            console.log('No product found for the user tier.');
+          }
+        } else {
+          console.log('brandBoxPoints is not greater than 0.');
+        }
+      }
+    } else {
+      console.log('No products available.');
+    }
+  });
+</script>
 <style>
   .main-menu .has-dropdown.active:after {display: none;}
   .main-menu .has-dropdown.active {background: initial;}
@@ -11,7 +82,7 @@
 
 <script data-cfasync="false" type="text/javascript">if (typeof Shopify === "undefined") var Shopify = {}; Shopify.cart = {{ cart | json }};</script>
 
-<!-- Begin Rocket Fuel Conversion Action Tracking Code Version 9 -->
+<!-- Begin Rocket Fuel Conversionпше  Action Tracking Code Version 9 -->
 <script type='text/javascript'>
   (function() {
     var w = window, d = document;
@@ -764,7 +835,8 @@ Find If a normal Product exist other than Sample/Gift Card(Product Id 5039639758
     });
 
     // Prevent click through on donation product
-//     $('td > a[href*="donation"]').on('click', function(e){ e.preventDefault()});
+//     $('td > a[href*="donation"]').on('click', function(e){ e.preventDefault()}
+
   </script>
   {% endif %}
 
