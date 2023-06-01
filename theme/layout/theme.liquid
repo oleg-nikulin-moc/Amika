@@ -515,8 +515,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </script>
     <!--Generic Page Tracking LXRRetailEnd -->    
   {% endunless %}
-
-
+  {% if customer %}
+    {% include 'predefine_product' %}
+  {% endif %}
 </body>
 </html>
 {% comment %} 
