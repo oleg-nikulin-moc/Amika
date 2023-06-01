@@ -1,7 +1,5 @@
-{% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
-{% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
-{% assign tier = customer.metafields.amika_loyalty_program.points.value['tier']  %}
 {% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers  %}
+
 <style>
   .qtty .quantity:disabled,
   .qtty .minus:disabled,
@@ -23,80 +21,26 @@
       prepackQuantityMinus.disabled = true;
       prepackRemoveBtn.hidden = true;
     }
+    function checkCart() {
+      const productIds = JSON.parse('{{ tiersProducts }}');
 
-    const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
-    // const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
-    const products = JSON.parse('{{ tiersProducts }}');
-    console.log('products', products);
-    console.log('user', user);
-    if (products.length > 0) {
+      console.log('productIds', productIds)
+      const cartProductIds = window.Shopify.cart.items?.map(item => item.product_id) || [];
+      console.log('cartProductIds', cartProductIds)
+      // const matchingProductIds = productIds.filter(item => cartProductIds.includes(item.product_id));
+      // console.log('matchingProductIds', matchingProductIds)
+      const submitOrderButton = document.querySelector('[data-submit-order]');
+      const hasOtherProductIds = cartProductIds.some(productId => !productIds.find(product => product.product_id === productId));
 
-      const productIds = products.filter(product => product.id !== '-1').map(product => product.product_id);
-
-      window.Shopify.cart.items = window.Shopify.cart.items.filter(item => productIds.includes(item.product_id));
-      const variantId = window.Shopify.cart.items?.map(item => item.variant_id) || [];
-      console.log('variantId', variantId);
-      function updateCart(productId, quantity) {
-        const updates = {};
-        if (variantId.length > 1) {
-          console.log('more then one');
-          const hideItemId = variantId.filter(item => !productId.includes(item));
-          const hideElement = document.querySelector(`[data-product-id="${hideItemId[0]}"]`);
-          console.log('hideItemId', hideItemId[0])
-          console.log('hideElement', hideElement)
-          if (hideElement) hideElement.hidden = true;
-
-          variantId.forEach(id => {
-            if (id === productId[0]) {
-              updates[id] = 1; // Значення 1 для productId, що має таке ж значення, як перший елемент variantId
-            } else {
-              updates[id] = 0; // Значення 0 для інших елементів productId
-            }
-          });
-        } else {
-          console.log('one')
-          productId.forEach(id => {
-            updates[id] = quantity;
-          });
-        }
-        console.log('updates', updates);
-
-        jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
-          updates: updates
-        });
-      }
-
-      if (user.tier === "-1") {
-        updateCart(variantId, 0);
-        console.log(variantId)
-        console.log('tier -1');
+      if (submitOrderButton && (cartProductIds.length === 0 || hasOtherProductIds)) {
+        submitOrderButton.disabled = false;
       } else {
-
-        const { tier, brandBoxPoints } = user;
-        const selectedProduct = products.find(product => product.id == tier);
-        console.log('selectedProduct', selectedProduct)
-
-        if (brandBoxPoints > 0) {
-
-          if (selectedProduct) {
-            const { variant_id } = selectedProduct;
-            const variantIdArray = [];
-            variantIdArray.push(variant_id);
-            updateCart(variantIdArray, 1);
-
-          } else {
-            console.log('No product found for the user tier.');
-          }
-        } else {
-          updateCart(variantId, 0);
-          const hideElement = document.querySelector(`[data-product-id="${variantId[0]}"]`);
-          if (hideElement) hideElement.hidden = true;
-          console.log('brandBoxPoints is not greater than 0.');
-        }
+        submitOrderButton.disabled = true;
       }
-    } else {
-      console.log('No products available.');
+
+      console.log('hasOtherProductIds', hasOtherProductIds)
     }
+    checkCart();
   });
 </script>
 <style>
