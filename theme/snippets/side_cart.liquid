@@ -1,4 +1,13 @@
-<style>.final_sale {display: block;}</style>
+<style>
+  .final_sale {display: block;}
+
+  /* Prepack */
+  .grid[class^="prepack"]  .quantity > .wrap,
+  .grid[class^="prepack"]  .remove {
+    opacity: 0.6;
+    pointer-events: none
+  }
+</style>
 <div class="side-cart">
   <div class="wrapper">
     <div class="header clearfix">
@@ -93,7 +102,7 @@
         <form>
           {% for item in cart.items %}
           <div class="item">
-            <div class="grid">
+            <div class="{{ item.product.handle }} grid" data-product-id="{{ item.variant.id }}">
               <div class="grid__item one-third small--two-fifths">
                 <a href="{% if item.price > 0 %}{{ item.product.url }}{% else %}javascript:void(0);{% endif %}">
                   {% if item.variant.image %}
