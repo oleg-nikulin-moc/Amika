@@ -5,8 +5,8 @@
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        {% comment %}const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');{% endcomment %}
-        const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
+        const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
+        // const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
         const products = JSON.parse('{{ tiersProducts }}');
         const cart = JSON.parse('{{ cart | json }}');
 
