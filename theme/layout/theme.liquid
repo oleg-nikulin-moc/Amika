@@ -273,6 +273,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             sgGlobalVars.isAdmin = {% if content_for_header contains 'adminBarInjector' or content_for_header contains 'previewBarInjector' %}true{% else %}false{% endif %};
                         }
                     </script></head>
+{% comment %} Redirect from product prepack page {% endcomment %}
+{% if product.handle contains 'prepack' %}
+  <script>
+    window.location.replace("{{ shop.secure_url }}");
+  </script>
+{% endif %}
 
 <body class="{% if customer %}customer-logged-in {% endif %}template{{ template | split: '.' | first | camelize }} template-{{ template | replace: '.', '-'| replace: '/', '-'}}">
 
