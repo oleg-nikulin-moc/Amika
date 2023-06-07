@@ -63,9 +63,9 @@
         border-color: transparent;
         color: #000;
         font-family: FuturaND;
-        font-weight: 500;
+        font-weight: 400;
         font-size: 14px!important;
-        line-height: 18px;
+        line-height: inherit;
         border-radius: 100px;
         min-width: 162px;
         display: inline-block;
@@ -82,6 +82,9 @@
         background-color: #000;
         border-color: #000;
         color: #fefaf0;
+    }
+    .ac-form__btn:hover {
+        opacity: 0.8!important;
     }
     .ac-form__btn--black:disabled ,
     .button--primary:disabled {
@@ -116,24 +119,6 @@
     .register-login.register-login h1 {
         margin-bottom: 32px;
     }
-    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box {
-        overflow-y: auto;
-        position: relative;
-        width: 100%;
-    }
-    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box {
-        max-width: 528px;
-        padding: 80px 92px;
-    }
-    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box__lg {
-        max-width: 894px;
-        padding: 80px 90px;
-    }
-    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box__sm {
-        max-width: 527px;
-        width: 100%;
-        padding: 90px 120px;
-    }
     .ac-password__field.ac-password__field.ac-password__field {
         margin-bottom: 32px;
     }
@@ -160,9 +145,6 @@
     .register-login.register-login {
         float: none!important;
         width: 100%!important;
-    }
-    .tingle-modal-box.tingle-modal-box {
-        padding-bottom: 85px!important;
     }
     /* Create account */
     .ac-form-title__wrap {
@@ -482,17 +464,6 @@
 
     /* Mobile Styles */
     @media screen and (max-width: 430.98px) {
-        .tingle-modal-box {
-            width :100%!important;
-            max-width: 100%!important;
-            margin: 20px 0 0 !important;
-            padding: 40px 32px!important;
-            max-height: 100%!important;
-            height: 100%!important;
-        }
-        .tingle-modal {
-            background: transparent!important;
-        }
         .tab {
             flex-direction: column;
         }
@@ -528,5 +499,74 @@
     .ac-block--horizontal {
         display: flex;
         flex-direction: column;
+    }
+
+/*  Popup  */
+
+    /*.tingle-modal-box.tingle-modal-box {*/
+    /*    padding-bottom: 85px!important;*/
+    /*}*/
+
+    .ac-popup .tingle-modal-box.tingle-modal-box.tingle-modal-box {
+        overflow-y: auto;
+        position: relative;
+        width: 100%;
+    }
+    /*.tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box {*/
+    /*    max-width: 528px;*/
+    /*    padding: 80px 92px;*/
+    /*}*/
+    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box__lg,
+    .ac-popup.ac-popup--lg .tingle-modal-box.tingle-modal-box {
+        max-width: 894px;
+    }
+    .tingle-modal .tingle-modal-box.tingle-modal-box.tingle-modal-box__sm,
+    .ac-popup.ac-popup--sm .tingle-modal-box.tingle-modal-box {
+        max-width: 527px;
+        width: 100%;
+    }
+    .ac-popup .tingle-modal-box {
+        background-color: white!important;
+        text-align: left;
+        padding: 80px 90px!important;
+    }
+
+    .ac-popup.ac-popup__logout .tingle-modal-box.tingle-modal-box {
+        padding-left: 120px!important;
+        padding-right: 120px!important;
+    }
+    #login-register-popup-container > .ac-close__btn,
+    .ac-popup > .ac-close__btn {
+        display: none;
+    }
+    .ac-popup .tingle-modal-box__content {padding: 0;}
+    .ac-close__btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 16px;
+        z-index: 10000;
+        border: none;
+        background-color: transparent;
+        color: #f0f0f0;
+        font-size: 40px;
+        line-height: 1;
+        cursor: pointer;
+        transition: color .3s ease;
+    }
+
+    @media screen and (max-width: 430.98px) {
+        .tingle-modal-box {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 20px 0 0 !important;
+            padding: 40px 32px !important;
+            max-height: 100% !important;
+            height: 100% !important;
+        }
+
+        .tingle-modal {
+            background: transparent !important;
+        }
     }
 </style>

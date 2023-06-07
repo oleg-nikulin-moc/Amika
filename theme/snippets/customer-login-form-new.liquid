@@ -7,6 +7,7 @@
 {% if container_id == nil %}
   {% assign container_id = 'customer-login' %}
 {% endif %}
+<button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
 <!-- Customer Account Login -->
 <div id="customer-register-success" style="display: none;" class="" >
   {% form 'customer_login', class: "ac-form--login"%}
@@ -22,7 +23,7 @@
       </svg>
     </div>
     <div style="float:right;" class="ac-submit__wrap">
-      <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset" type="button" id="cancelSuccessBtn" onclick="loginRegisterAlertPopup.close(); return false;">Back to site</button>
+      <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset" type="button" id="cancelSuccessBtn" onclick="logout(); return false;">Back to site</button>
       <input class="ac-form__btn ac-form__btn--black animation" type="submit" value="Sign In" id="submitSuccessBtn" />
     </div>
   {% endform %}
@@ -143,7 +144,7 @@ const customerAccount = {
     return false;
   }
   function showRegisterForm() {
-    window.formResize('lg');
+    formResize('lg');
     document.getElementById('customer-register').style.display = 'block';
     document.getElementById('customer-login').style.display = 'none';
     document.getElementById('submitBtn').style.display='none';

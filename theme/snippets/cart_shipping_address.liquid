@@ -25,6 +25,7 @@
 </div>
 
 <div class="popup" id="address-information-popup" style="display: none;">
+    <button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
     <form id="address_information">
         <div id="address-information-block">
             <h1 class="address-information__title">edit shipping information</h1>
@@ -32,7 +33,7 @@
                 {% render 'shipping_address' %}
             </div>
             <div class="ac-submit__wrap">
-                <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset" type="button" id="cancelBtn1" onclick="hideSubmitOrderPopup(); return false;">Cancel</button>
+                <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset" type="button" id="cancelBtn1" data-close-popup-btn>Cancel</button>
                 <button class="ac-form__btn ac-form__btn--black" type="button" id="submitBtn1" onclick="showSubmitOrderPopup()">Save</button>
             </div>
         </div>
@@ -132,6 +133,20 @@
     max-width: 100px;
     overflow: hidden;
     padding: 8px;
+}
+.ac-close__btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 16px;
+    z-index: 10000;
+    border: none;
+    background-color: transparent;
+    color: #f0f0f0;
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color .3s ease;
 }
 </style>
 
@@ -258,8 +273,8 @@
     const addressEdit = new tingle.modal({
         footer: false,
         stickyFooter: false,
-        closeMethods: ['overlay', 'button', 'escape'],
-        cssClass: ['ac-shipping__popup'],
+        closeMethods: ['escape'],
+        cssClass: ['ac-popup',  'ac-popup--lg','ac-shipping__popup'],
     });
     const submitOrder = document.querySelector("[data-submit-order]");
     const submitNewOrder = document.querySelector("[data-submit-new-order]")
@@ -442,6 +457,7 @@
             console.log('Not valid', validateForm());
             return false;
         }
+
         formResize('sm');
         document.getElementById('submit-order-block').style.display = 'block';
         document.getElementById('address-information-block').style.display='none';
@@ -452,6 +468,7 @@
         document.getElementById('address-information-block').style.display = 'block';
         document.getElementById('address-information-popup').style.display='none';
         document.querySelector('.tingle-modal').style.display='none';
+        formResize('lg');
         return false;
     }
     function clearCart() {
@@ -470,17 +487,20 @@
         window.location.href = '/account#customer_orders';
     }
     function formResize(size) {
-        const popup = document.querySelector('.tingle-modal-box');
-        if (size === "lg") {
-            popup.classList.add('tingle-modal-box__lg');
-            popup.classList.remove('tingle-modal-box__sm');
-        } else if (size === "sm") {
-            popup.classList.add('tingle-modal-box__sm');
-            popup.classList.remove('tingle-modal-box__lg');
-        } else {
-            popup.classList.remove('tingle-modal-box__lg');
-            popup.classList.remove('tingle-modal-box__sm');
-        }
+        const popups = document.querySelectorAll('.ac-popup');
+        popups.forEach(popup => {
+            if (size === "lg") {
+                popup.classList.add('ac-popup--lg');
+                popup.classList.remove('ac-popup--sm');
+            } else if (size === "sm") {
+                popup.classList.add('ac-popup--sm');
+                popup.classList.remove('ac-popup--lg');
+            } else {
+                popup.classList.add('ac-popup--md');
+                popup.classList.remove('ac-popup--lg');
+                popup.classList.remove('ac-popup--sm');
+            }
+        });
     }
     console.log('loyaltyPersentage', {{ loyaltyPersentage }})
 </script>
