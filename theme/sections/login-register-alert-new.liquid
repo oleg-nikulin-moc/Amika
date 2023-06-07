@@ -19,20 +19,27 @@
   var loginRegisterAlertPopup = new tingle.modal({
       footer: false,
       stickyFooter: false,
-      closeMethods: ['overlay', 'button', 'escape'],
-      cssClass: ['login-register-alert-popup'],
+      closeMethods: ['escape'],
+      cssClass: ['login-register-alert-popup', 'ac-popup', 'ac-popup--sm'],
     });
 
   // set content
   var content = $('#login-register-popup-container').html();
   loginRegisterAlertPopup.setContent( content );
 
-
   // open modal
-  $('.my-account.animation').on('click', function (event) {
-    event.preventDefault();
-    loginRegisterAlertPopup.open();
-  });
+  // $('.my-account.animation').on('click', function (event) {
+  //   event.preventDefault();
+  //   loginRegisterAlertPopup.open();
+  // });
+
+  const myAccountElement = document.querySelector('[data-login-btn]');
+  if (myAccountElement) {
+    myAccountElement.addEventListener('click', (event) => {
+      event.preventDefault();
+      loginRegisterAlertPopup.open();
+    });
+  }
 
   document.addEventListener('DOMContentLoaded', function() {
     loginRegisterAlertPopup.open();

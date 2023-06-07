@@ -17,6 +17,11 @@
         const phoneNumberError = document.getElementById('phoneError');
         let phoneNumber = phoneNumberInput.value;
 
+        const accountNumberFields = tabs[currentTab].querySelector('#account_number');
+        const accountNumberInput = document.querySelector('#account_number');
+        const accountNumberError = document.getElementById('accountNumberError');
+        let accountNumber = accountNumberInput.value;
+
         const emailInput = document.getElementById("emailMain");
         const emailError = document.getElementById("emailError");
         let emailValue = emailInput.value;
@@ -79,8 +84,6 @@
                 phoneNumberInput.classList.remove('invalid');
             }
 
-            // Email validation
-            console.log(emailValue)
             if (!emailPattern.test(emailValue)) {
                 console.log('email not valid')
                 emailError.textContent = "Invalid email format";
@@ -121,6 +124,23 @@
                 }
             }
 
+            // Accountnumber validation
+            if (accountNumberFields  === !null) {
+                if (!validatePhoneNumber(accountNumber)) {
+                    console.log('accountNumber not valid')
+                    accountNumberError.style.display = 'block';
+                    accountNumberError.textContent = "Incorrect phone number";
+                    accountNumberInput.classList.add('invalid');
+                    valid = false;
+                } else {
+                    console.log('accountNumber valid phone')
+                    accountNumberError.style.display = 'none';
+                    accountNumberError.textContent = "";
+                    accountNumberInput.classList.remove('invalid');
+                }
+            }
+
+
             // if (valid) {
             //     nextButton.disabled = false; // Enable the "Next" button
             // } else {
@@ -146,6 +166,8 @@
                 emailValue = target.value;
             } else if (targetId === "phone") {
                 phoneNumber = target.value;
+            } else if (targetId === "account_number") {
+                accountNumber = target.value;
             } else if (targetId === "zip") {
                 zipValue = target.value;
             }
@@ -159,6 +181,7 @@
 
         emailInput.addEventListener('input', handleInputChange);
         phoneNumberInput.addEventListener('input', handleInputChange);
+        accountNumberInput.addEventListener('input', handleInputChange);
         passwordInput.addEventListener('input', handleInputChange);
         confirmPasswordInput.addEventListener('input', handleInputChange);
         termsCheckbox.addEventListener('change', checkFormValidity);
@@ -376,20 +399,6 @@
             uoploadBlock.style.display = 'none';
         }
     }
-    function formResize(size) {
-        const popup = document.querySelector('.tingle-modal-box');
-        if (size === "lg") {
-            popup.classList.add('tingle-modal-box__lg');
-            popup.classList.remove('tingle-modal-box__sm');
-        } else if (size === "sm") {
-            popup.classList.add('tingle-modal-box__sm');
-            popup.classList.remove('tingle-modal-box__lg');
-        } else {
-            popup.classList.add('tingle-modal-box__md');
-            popup.classList.remove('tingle-modal-box__lg');
-            popup.classList.remove('tingle-modal-box__sm');
-        }
-    }
 
     function showSpinner() {
         const spinner = document.querySelector('[data-spinner-wrap]');
@@ -399,6 +408,23 @@
     function hideSpinner() {
         const spinner = document.querySelector('[data-spinner-wrap]');
         spinner.style.display = 'none';
+    }
+
+    function formResize(size) {
+        const popups = document.querySelectorAll('.ac-popup');
+        popups.forEach(popup => {
+            if (size === "lg") {
+                popup.classList.add('ac-popup--lg');
+                popup.classList.remove('ac-popup--sm');
+            } else if (size === "sm") {
+                popup.classList.add('ac-popup--sm');
+                popup.classList.remove('ac-popup--lg');
+            } else {
+                popup.classList.add('ac-popup--md');
+                popup.classList.remove('ac-popup--lg');
+                popup.classList.remove('ac-popup--sm');
+            }
+        });
     }
 
     function submitForm(event) {
@@ -412,6 +438,7 @@
                 first_name: form.firstName.value,
                 last_name: form.last_name.value,
                 email: form.email.value,
+                account_number:  form.account_number.value.replace(/-/g, ''),
                 password: form.password.value,
                 password_confirmation: form.confirmPassword.value,
                 phone: form.phone.value.replace(/-/g, ''),
@@ -526,14 +553,17 @@
                     //     console.log(response.error_message);
                     // }
 
-                    window.nextPrev(-2);
+
                     const responseErrors = response.errors
+
                     console.log('responseErrors', responseErrors)
+
                     responseErrors.forEach(function(error) {
                         const fieldId = error.field_name;
                         const errorMessage = error.error_message;
                            console.log(fieldId)
                         if (fieldId == 'email') {
+                            window.nextPrev(-2);
                             const fieldElement = document.getElementById('email');
                             const errorElement = document.getElementById('emailError');
 
@@ -541,7 +571,16 @@
                             fieldElement.classList.add("invalid");
                             errorElement.style.display = "block";
                             errorElement.textContent = errorMessage;
-                        } else {
+                        } else if (fieldId == 'account_number') {
+                            const fieldElement = document.getElementById('account_number');
+                            const errorElement = document.getElementById('accountNumberError');
+
+                            console.log('el ac', fieldElement);
+                            fieldElement.classList.add("invalid");
+                            errorElement.style.display = "block";
+                            errorElement.textContent = errorMessage;
+                        } else{
+                            window.nextPrev(-2);
                             const fieldElement = document.getElementById(fieldId);
                             const errorElement = document.getElementById(`${fieldId}Error`);
                             console.log('el', errorElement);
