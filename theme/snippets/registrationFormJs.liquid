@@ -15,12 +15,12 @@
         const salonNameError = document.getElementById("salonNameError");
         const phoneNumberInput = document.getElementById('phone');
         const phoneNumberError = document.getElementById('phoneError');
-        let phoneNumber = phoneNumberInput.value;
+        let phoneNumber = phoneNumberInput.value.trim();
 
         const accountNumberFields = tabs[currentTab].querySelector('#account_number');
         const accountNumberInput = document.querySelector('#account_number');
         const accountNumberError = document.getElementById('accountNumberError');
-        let accountNumber = accountNumberInput.value;
+        let accountNumber = accountNumberInput.value.trim();
 
         const emailInput = document.getElementById("emailMain");
         const emailError = document.getElementById("emailError");
@@ -50,6 +50,11 @@
             const zipPatternCanada =  '/^(\+?1\s?)?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})$/';
 
             return zipPatternUSA.test(zipCode) || zipPatternCanada.test(zipCode);
+        }
+
+        function validateAccountNumber(accountNumber) {
+            const patternNumber = '/^\d{3,50}$/';
+            return patternNumber.test(accountNumber);
         }
 
         function checkFormValidity() {
@@ -126,7 +131,7 @@
 
             // Accountnumber validation
             if (accountNumberFields  === !null) {
-                if (!validatePhoneNumber(accountNumber)) {
+                if (!validateAccountNumber(accountNumber)) {
                     console.log('accountNumber not valid')
                     accountNumberError.style.display = 'block';
                     accountNumberError.textContent = "Incorrect phone number";
