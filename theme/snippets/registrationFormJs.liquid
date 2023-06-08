@@ -198,11 +198,9 @@
 
     function validatePhoneNumber(phoneNumber) {
         // Check if the number matches the USA or Canada format
-        const phonePatternUSA = /^\+\d{1,3}\d{3}\d{3}\d{4}$/;
-        const phonePatternCanada = /^\d{1,3}\d{3}\d{3}\d{4}$/;
-        console.log('usa', phonePatternUSA.test(phoneNumber));
-        console.log('canada', phonePatternCanada.test(phoneNumber));
-        return phonePatternUSA.test(phoneNumber) || phonePatternCanada.test(phoneNumber);
+        const phonePattern = /^\d{10}$/;
+        console.log('canada', phonePattern.test(phoneNumber));
+        return phonePattern.test(phoneNumber);
     }
 
     // Upload function
@@ -446,7 +444,7 @@
                 account_number:  form.account_number.value.replace(/-/g, ''),
                 password: form.password.value,
                 password_confirmation: form.confirmPassword.value,
-                phone: form.phone.value.replace(/-/g, ''),
+                phone: "+1" + form.phone.value.replace(/-/g, ''),
                 salon_name: form.salon_name.value,
                 distributor_name: form.distributorName.value,
                 distributor_email: form.email.value,
