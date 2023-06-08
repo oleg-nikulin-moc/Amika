@@ -25,7 +25,7 @@
 {% endif %}
 {% endfor %}
 
-<div class="product-item-old product-item animation {% unless isCarousel %}grid__item large--{{settings.grid_items_per_row}} medium--{{ settings.grid_items_per_row_medium }} small--{{ settings.grid_items_per_row_small }}{% endunless %} {% if link_tag != blank  %} external__product {% endif %} " id="grid-item-{{ currentProduct.id }}">
+<div class="product-item-old product-item {{ product.handle }} animation {% unless isCarousel %}grid__item large--{{settings.grid_items_per_row}} medium--{{ settings.grid_items_per_row_medium }} small--{{ settings.grid_items_per_row_small }}{% endunless %} {% if link_tag != blank  %} external__product {% endif %} " id="grid-item-{{ currentProduct.id }}">
   <form disabled action="/cart/add" method="post" class="variants add-to-cart-form {% if currentProduct.tags contains 'final sale' %}final_sale{% endif %}" id="product-actions-{{ currentProduct.id }}" enctype="multipart/form-data" data-matchbox-click="{{ currentProduct.id }} {% for variant in currentProduct.variants %}{{variant.id}} {% endfor %}">
     <div class="image-wrapper {% if currentProduct.available == false and currentProduct.tags contains 'coming-soon' %}coming-soon-plp {% endif %}" style="position: relative;" handle="{{ product.handle }}" data-matchbox-item="{{ currentProduct.id }} {% for variant in currentProduct.variants %}{{variant.id}} {% endfor %}">
       {% if product.tags contains 'travel-award-2019' %}
