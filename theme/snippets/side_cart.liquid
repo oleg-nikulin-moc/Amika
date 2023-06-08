@@ -146,13 +146,13 @@
                     <div class="wrap">
                       {% if item.price > 0  or item.variant.id == 1771451940882 %}
                         <input type="button" aria-label="Cart product remove" value="-" class="minus animation" />
-                        <input readonly type="number" step="1" name="updates[]" value="{{ item.quantity }}" title="Qty" size="4" min="0" max="" class="qty-input" />
+                        <input readonly type="number" step="1" name="updates[]" value="{{ item.quantity }}" title="Qty" size="1" min="0" max="6" class="qty-input" />
                         <input type="button" aria-label="cart product add" value="+" class="plus animation" />
                       {% else %}
                         <div class="hide">
-                          <input type="number" step="1" name="updates[]" value="1" title="Qty" min="0" max="" class="qty-input" />
+                          <input type="number" step="1" name="updates[]" value="1" title="Qty" size="1" min="0" max="6" class="qty-input" />
                         </div>
-                        <input type="number" aria-label="cart product Quantity field" value="{{ item.quantity }}" title="Qty" disabled />
+                        <input type="number" aria-label="cart product Quantity field" value="{{ item.quantity }}" size="1" min="0" max="6" title="Qty" disabled />
                       {% endif %}
                       <div style="clear: both;"></div>
                     </div>
