@@ -1,4 +1,10 @@
 {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+<style>
+  .is-disabled,
+  .is-disabled button {
+    pointer-events: none;
+  }
+  </style>
 {% comment %} {% include 'breadcrumb' %} {% endcomment %}
 <product id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state='true' class="product grid sticky-block">
 
@@ -150,8 +156,8 @@
             </div>
           </div>
 
-          {% if section.settings.show_local_wishlist %}
-            <span class="rs_wishlist iWishAdd" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">
+          {% if section.settings.show_local_wishlist and customer %}
+            <span class="rs_wishlist iWishAdd 2" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">
               <svg class="icon"><use xlink:href="#icon-wishlist"></use></svg>
             </span>
           {% endif %}
@@ -168,12 +174,14 @@
         </div>
         {% endcomment %}
 
-        <form action="/cart/add" method="post" enctype="multipart/form-data" class="variants add-to-cart-form {% if product.has_only_default_variant %}single__option{% endif %}" id="product-actions">
+        <form {% unless customer %}disabled{% endunless %} action="/cart/add" method="post" enctype="multipart/form-data" class="variants add-to-cart-form {% unless customer %}is-disabled{% endunless %} {% if product.has_only_default_variant %}single__option{% endif %}" id="product-actions">
           {% unless product.has_only_default_variant %}
             <div id="rs-filtervariant" class="js">
               <div class="hidden-selectors"></div>
               {% include 'product-filter' %}
-              <div class="afterpay">{% include 'afterpay__product__page' %}</div>
+              {% if customer %}
+                <div class="afterpay">{% include 'afterpay__product__page' %}</div>
+              {% endif %}
             </div>
           {% else %}
             <div id="rs-filtervariant" class="js"> 
@@ -190,7 +198,9 @@
                 </div>
               </div>
             </div>
+          {% if customer %}
             <div class="afterpay">{% include 'afterpay__product__page' %}</div>
+          {% endif %}
           {% endunless %}
 
           <select name="id" class="no-js product-select">
@@ -216,7 +226,7 @@
               <button
                 type="submit"
                 name="add"
-                class="add-to-cart cta button--primary"
+                class="add-to-cart cta button--primary {% unless customer %}is-disabled{% endunless %}"
                 id="add-to-cart-button"
                 {% unless current_variant.available %}disabled="disabled"{% endunless %}>
                   {% if current_variant.available %}
@@ -226,7 +236,6 @@
                     {% comment %} {{ 'products.product.sold_out' | t }} {% endcomment %}
                     notify me when available
                   {% endif %}
-                tetst
                   {% if customer %}
                     <span class="price flex">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
                   {% endif %}
@@ -247,6 +256,7 @@
                 class="add-to-cart cta button--primary"
                 id="fixed-add-to-cart-button"
                 onclick="event.preventDefault();"
+                {% unless customer %}disabled="disabled"{% endunless %}
                 {% unless current_variant.available %}disabled="disabled"{% endunless %}>
                   {% if current_variant.available %}
                     {% comment %} {{ 'products.product.add_to_cart' | t }} {% endcomment %}
