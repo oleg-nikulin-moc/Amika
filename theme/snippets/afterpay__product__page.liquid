@@ -313,7 +313,7 @@ afterpay_ga('send', 'event', 'Shop', 'Report Currency', {{ shop.currency | json 
               $afterpay_paragraph.find('.afterpay-text2')
                 .html(' available over ');
               $afterpay_paragraph.find('.afterpay-instalments')
-                .html('$' + Afterpay.number_format(({{ afterpay_minimum_value_in_cents }}) / 100, 2))
+                .html(Afterpay.number_format(({{ afterpay_minimum_value_in_cents }}) / 100 , 2)+ ' points')
                 .insertAfter($afterpay_paragraph.find('.afterpay-text2'));
               $afterpay_paragraph.find('.afterpay-link-inner').html('info');
             } else {

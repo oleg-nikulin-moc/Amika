@@ -25,8 +25,8 @@
 {% endif %}
 {% endfor %}
 
-<div class="product-item-old product-item animation {% unless isCarousel %}grid__item large--{{settings.grid_items_per_row}} medium--{{ settings.grid_items_per_row_medium }} small--{{ settings.grid_items_per_row_small }}{% endunless %} {% if link_tag != blank  %} external__product {% endif %} " id="grid-item-{{ currentProduct.id }}">
-  <form action="/cart/add" method="post" class="variants add-to-cart-form {% if currentProduct.tags contains 'final sale' %}final_sale{% endif %}" id="product-actions-{{ currentProduct.id }}" enctype="multipart/form-data" data-matchbox-click="{{ currentProduct.id }} {% for variant in currentProduct.variants %}{{variant.id}} {% endfor %}">
+<div class="product-item-old product-item {{ product.handle }} animation {% unless isCarousel %}grid__item large--{{settings.grid_items_per_row}} medium--{{ settings.grid_items_per_row_medium }} small--{{ settings.grid_items_per_row_small }}{% endunless %} {% if link_tag != blank  %} external__product {% endif %} " id="grid-item-{{ currentProduct.id }}">
+  <form disabled action="/cart/add" method="post" class="variants add-to-cart-form {% if currentProduct.tags contains 'final sale' %}final_sale{% endif %}" id="product-actions-{{ currentProduct.id }}" enctype="multipart/form-data" data-matchbox-click="{{ currentProduct.id }} {% for variant in currentProduct.variants %}{{variant.id}} {% endfor %}">
     <div class="image-wrapper {% if currentProduct.available == false and currentProduct.tags contains 'coming-soon' %}coming-soon-plp {% endif %}" style="position: relative;" handle="{{ product.handle }}" data-matchbox-item="{{ currentProduct.id }} {% for variant in currentProduct.variants %}{{variant.id}} {% endfor %}">
       {% if product.tags contains 'travel-award-2019' %}
         <img class="people__travel_icon" src="{{'People_Travel_Award.png'| asset_url }}">
@@ -88,7 +88,9 @@
 
 
       {% endcomment %}
-	  {% include 'iwish_v2' with 'iwishCollection' %}
+      {% if customer %}
+	    {% include 'iwish_v2' with 'iwishCollection' %}
+      {% endif %}
       {% if currentProduct.tags contains 'coming-soon'%}
         <div class="rs__badge_wrapper">
           <p class="rs__badge_content" > coming soon! </p>
@@ -102,7 +104,8 @@
       <!-- <div class="rs__badge_wrapper">
           <p class="rs__badge_content" > best seller! </p>
         </div> -->
- 	  {%unless currentProduct.tags contains 'gift-BFCM' or currentProduct.tags contains 'sample' %}
+    {% if customer %}
+ 	  {% unless currentProduct.tags contains 'gift-BFCM' or currentProduct.tags contains 'sample' %}
       {% if quickview and currentProduct.available == false %}
         <div class="quickbuy__rs">
           <div class="layer out__of_stock ease-animation" handle="{{ currentProduct.handle }}" >
@@ -157,7 +160,7 @@
           {% endif %}
         {% endif %}
       {% endunless %}
-
+    {% endif %}
     </div>
 
     {% if settings.grid_product_image_behavior == "thumbs_swatches" %}
@@ -218,7 +221,7 @@
 
     {% endcomment %}
 
-
+      {% if customer %}
       {% if quickview and currentProduct.available == false  %}
         <a onclick="openKlaviyoBisPopup(this); return false;" class="layer quick-view-btn-small ease-animation rs__mobile_quickbuy" handle="{{ currentProduct.handle }}">
           <div>notify me</div>
@@ -240,6 +243,6 @@
             </div>
           {% endif %}
       {%endif %}
-
+    {% endif %}
   </form>
 </div>

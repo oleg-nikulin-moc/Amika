@@ -1,5 +1,5 @@
 {% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers  %}
-
+{% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
 <style>
   .qtty .quantity:disabled,
   .qtty .minus:disabled,
@@ -427,9 +427,11 @@
                 {% assign freeshipaway = freeShip | minus: total_price %}
                 {% if percentageFreeShip < 100 %}
                   {% assign loyalty = true %}
+                  <span class="free-text">Loyalty Program: {{ loyaltyProgram }} points</span><br><br>
                   <span>You're {{ freeshipaway | times: 100 | money }} away from qualifying for free shipping</span>
                 {% else %}
                 {% comment %}<span class="free-text">You've earned Free Shipping.</span>{% endcomment %}
+                  <span class="free-text">Loyalty Program: {{ loyaltyProgram }} points</span><br><br>
                   <span class="free-text">{{ freeshipaway | times: 100 | money }} in order more that customer has</span>
                 {% endif %}
                 <div class="free-shipping-bar"></div>
