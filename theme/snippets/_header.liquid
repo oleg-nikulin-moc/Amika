@@ -14,6 +14,12 @@
         cursor: pointer;
         transition: color .3s ease;
     }
+    .ac-nav--30 {
+        width: 25%;
+    }
+    .ac-nav--50 {
+        width: 50%;
+    }
 </style>
 <header id="header" class="header animation {% if settings.header_behavior == "drop-over" and template == "index" %}over-carousel{% endif %}">
   {% include 'utility_bar' %}
@@ -27,16 +33,16 @@
     {% endif %}
     <div class="header-wrapper">
       <div class="clearfix">
-      	<div class="menu-mobile left hide medium-down--show one-fifth">
+      	<div class="menu-mobile left hide medium-down--show one-fifth ac-nav--30">
           {% include 'menu_mobile' %}
         </div>
-        <div class="logo left one-fifth medium-down--three-fifths">
+        <div class="logo left one-fifth medium-down--three-fifths ac-nav--30">
           <a href="/"><img src="{{ "logo.png" | asset_url }}" alt="{{shop.name}}" /></a>
         </div>
-        <nav class="main-menu left three-fifths medium-down--hide clearfix">
+        <nav class="main-menu left three-fifths medium-down--hide ac-nav--50 clearfix">
           {% include 'menu_main' %}
         </nav>
-        <div class="left one-fifth medium-down--one-fifth">
+        <div class="left one-fifth medium-down--one-fifth ac-nav--30">
           {% include 'top_utils' %}
         </div>
       </div>

@@ -5,8 +5,30 @@
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
-        // const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
+        function updateBrandBoxItem(condition) {
+            const element = document.querySelector('[data-brandbox-icon]');
+            if (condition) {
+                console.log('added brandbox')
+                element.classList.add('is');
+            } else {
+                element.classList.remove('is');
+            }
+        }
+
+        function showMsg() {
+            const elements = document.querySelectorAll('.ac-nav__item--brandpoints');
+            if (elements) {
+                elements.forEach(element => {
+                    element.classList.add('open');
+                    setTimeout(function() {
+                        element.classList.remove('open');
+                    }, 60000); // 60000 miliseconds = 1 minute
+                });
+            }
+        }
+
+        {% comment %}const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');{% endcomment %}
+        const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
         const products = JSON.parse('{{ tiersProducts }}');
         const cart = JSON.parse('{{ cart | json }}');
 
@@ -78,7 +100,10 @@
                         const { variant_id } = selectedProduct;
                         const variantIdArray = [];
                         variantIdArray.push(variant_id);
+
                         updateCart(variantIdArray, 1);
+                        updateBrandBoxItem(true);
+                        showMsg ();
 
                     } else {
                         console.log('No product found for the user tier.');

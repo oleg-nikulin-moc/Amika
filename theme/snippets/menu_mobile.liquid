@@ -1,6 +1,21 @@
 {{ 'mmenu.css' | asset_url | stylesheet_tag }}
 {{ 'jquery.mmenu.min.all.js' | asset_url | script_tag }}
-
+<style>
+    .ac-nav-left__item.ac-nav-left__item {
+        display: none;
+    }
+    @media (max-width: 1023.98px) {
+        .ac-nav-left__item.ac-nav-left__item {
+            display: inline-flex;
+            position: relative;
+        }
+        .ac-nav-left__item  .ac-brandpoints {
+            left: 0;
+            right: auto;
+            z-index: 2;
+        }
+    }
+</style>
 
 <a href="#menu-mobile" id="menu-mobile-button">
 <!--   <i class="fa fa-bars"></i> -->
@@ -21,6 +36,27 @@
       </g>
   </svg>
 </a>
+<div class="ac-nav-left__item ac-nav__item--brandpoints" data-brandbox-icon>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <g clip-path="url(#clip0_154_3020)">
+            <path d="M16.6668 10V18.3333H3.3335V10" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.3332 5.83301H1.6665V9.99967H18.3332V5.83301Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 18.333V5.83301" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.99984 5.83366H6.24984C5.6973 5.83366 5.1674 5.61417 4.7767 5.22346C4.386 4.83276 4.1665 4.30286 4.1665 3.75033C4.1665 3.19779 4.386 2.66789 4.7767 2.27719C5.1674 1.88649 5.6973 1.66699 6.24984 1.66699C9.1665 1.66699 9.99984 5.83366 9.99984 5.83366Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 5.83366H13.75C14.3025 5.83366 14.8324 5.61417 15.2231 5.22346C15.6138 4.83276 15.8333 4.30286 15.8333 3.75033C15.8333 3.19779 15.6138 2.66789 15.2231 2.27719C14.8324 1.88649 14.3025 1.66699 13.75 1.66699C10.8333 1.66699 10 5.83366 10 5.83366Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="ac-icon__circle" cx="16" cy="4" r="4" fill="#FF6B26"/>
+        </g>
+        <defs>
+            <clipPath id="clip0_154_3020">
+                <rect width="20" height="20" fill="white"/>
+            </clipPath>
+        </defs>
+    </svg>
+    <div class="ac-brandpoints">
+        <p class="ac-brandpoints__text">a brand box has been added to your rewards order!</p>
+    </div>
+
+</div>
 
 <div id="menu-mobile" class="mm-menu mm-offcanvas test_class">
   
