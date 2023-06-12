@@ -5,17 +5,40 @@
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
+        function updateBrandBoxItem(condition) {
+            const elements = document.querySelectorAll('[data-brandbox-icon]');
+            if (condition) {
+                console.log('added brandbox', element)
+                elements.forEach(element => element.classList.add('is'));
+                showMsg();
+            } else {
+                elements.forEach(element => element.classList.remove('is'));
+            }
+        }
+
+        function showMsg() {
+            const elements = document.querySelectorAll('.ac-nav__item--brandpoints');
+            if (elements) {
+                elements.forEach(element => {
+                    element.classList.add('open');
+                    setTimeout(function() {
+                        element.classList.remove('open');
+                    }, 10000); // 30000 miliseconds = 10 seconds
+                });
+            }
+        }
+
         const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
         // const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
         const products = JSON.parse('{{ tiersProducts }}');
         const cart = JSON.parse('{{ cart | json }}');
 
-        // Отримати продукти з корзини
+        // Get products from cart
         const productsInCart = cart.items.map(item => {
             return {
                 product_id: item.product_id,
                 variant_id: item.variant_id
-                // Додайте інші необхідні вам властивості продукту
+                // Add other product properties you need
             };
         });
 
@@ -44,9 +67,9 @@
 
                     variantId.forEach(id => {
                         if (id === productId[0]) {
-                            updates[id] = 1; // Значення 1 для productId, що має таке ж значення, як перший елемент variantId
+                            updates[id] = 1; // A value of 1 for productId, which has the same value as the first element of variantId
                         } else {
-                            updates[id] = 0; // Значення 0 для інших елементів productId
+                            updates[id] = 0; // Value 0 for other productId elements
                         }
                     });
                 } else {
@@ -78,7 +101,9 @@
                         const { variant_id } = selectedProduct;
                         const variantIdArray = [];
                         variantIdArray.push(variant_id);
+
                         updateCart(variantIdArray, 1);
+                        updateBrandBoxItem(true);
 
                     } else {
                         console.log('No product found for the user tier.');
