@@ -306,9 +306,11 @@
         }
 
         const accountButton = document.querySelector('[data-account-btn]');
-        accountButton.addEventListener("click", function() {
-            toggleClass('.ac-nav-right__item--account', 'open');
-        });
+        if (accountButton) {
+            accountButton.addEventListener("click", function () {
+                toggleClass('.ac-nav-right__item--account', 'open');
+            });
+        }
 
         function formResize(size) {
             const popups = document.querySelectorAll('.ac-popup');
