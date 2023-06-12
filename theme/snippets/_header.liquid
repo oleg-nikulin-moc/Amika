@@ -14,13 +14,203 @@
         cursor: pointer;
         transition: color .3s ease;
     }
-    .ac-nav--30 {
-        width: 25%;
+
+     .ac-nav-left__item.ac-nav-left__item {
+         display: none;
+     }
+    #menu-mobile .mm-navbar-content-4 .mm-brendbox {
+        flex: 0 0 14%;
+        padding: 0;
+        align-self: center;
+        float: unset;
+        justify-content: center;
+        top: 10px;
     }
-    .ac-nav--50 {
-        width: 50%;
+    .ac-nav--main,
+    .ac-nav--right {
+        margin-top: 10px;
+    }
+    /* top_utils */
+
+    .ac-icon__circle {
+        opacity: 0;
+    }
+    .ac-nav-right__list {
+        display: flex;
+        align-items: center;
+    }
+    .ac-nav__item--brandpoints.is .ac-icon__circle{
+        opacity: 1;
+    }
+    .ac-nav-right__item--search {}
+    .ac-nav-account__btn {
+        background-color: transparent;
+        position: relative;
+        padding: 14px 20px 14px 8px;
+        white-space: nowrap;
+        line-height: 18px;
+        font-weight: 500;
+        display: inline-flex;
+    }
+    .ac-nav-account__btn:after {
+        content: "";
+        width: 12px;
+        height: 8px;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNyIgdmlld0JveD0iMCAwIDEwIDciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01LjMwMjM3IDYuMTUwODVDNS4xNDI4NiA2LjMzNTA0IDQuODU3MTQgNi4zMzUwNCA0LjY5NzYzIDYuMTUwODVMMC4zNzcwMzYgMS4xNjE4NkMwLjE1MjY4NiAwLjkwMjgwNCAwLjMzNjcwNyAwLjUgMC42Nzk0MDggMC41TDkuMzIwNTkgMC41MDAwMDFDOS42NjMyOSAwLjUwMDAwMSA5Ljg0NzMxIDAuOTAyODA1IDkuNjIyOTYgMS4xNjE4Nkw1LjMwMjM3IDYuMTUwODVaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K");
+        background-repeat: no-repeat;
+        position: absolute;
+        transform: translateY(-50%);
+        top: 55%;
+        right: 2px;
+    }
+
+    .open .ac-nav-account__list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        border-radius: 3px;
+        text-align: left;
+        width: 164px;
+        padding: 12px;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        margin-top: 0!important;
+        /*max-height: 200px;*/
+        overflow-y: auto;
+        background: #FEFAF0;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .ac-nav-account__list {
+        display: none;
+    }
+
+    #header .ac-nav-account__item.ac-nav-account__item {
+        padding: 16px 4px;
+        margin-left: 0;
+        cursor: pointer;
+        float: none;
+        line-height: 1;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+    }
+    #header .ac-nav-right__item.ac-nav-right__item a {
+        display: inline-flex;
+        top: 0;
+        left: 0;
+        bottom: 0;
+    }
+    #header .ac-nav-right__item.ac-nav-right__item {
+        float: none;
+        margin-left: 0;
+        padding: 8px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        width: 44px;
+        height: 44px;
+    }
+    #header .ac-nav-right__item.ac-nav-right__item--account {
+        position: relative;
+        padding: 0;
+        display: inline-block;
+        width: auto;
+    }
+    .ac-brandpoints {
+        display: none;
+    }
+    .open .ac-brandpoints {
+        display: block;
+        text-align: left;
+        width: 179px;
+        padding: 24px 16px;
+        position: absolute;
+        border-radius: 3px;
+        top: 35px;
+        right: 0;
+        overflow-y: auto;
+        background: #FEFAF0;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    }
+    .ac-brandpoints__text {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+        text-decoration-line: underline;
+        color: #000000;
+    }
+    .ac-nav-account__link {
+        top: 0!important;
+        font-weight: inherit;
+    }
+    .ac-nav-account__item--points {
+        padding-top: 13px;
+        padding-bottom: 7px;
+        cursor: default;
+    }
+
+    .ac-nav-account__divider {
+        border-color: #FF6B26;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        height: 1px;
+        width: 100%;
+    }
+
+    .ac-nav-account__item:not.ac-nav-account__item--points:hover {
+        background-color: #f2f2f2;
+    }
+    .ac-nav-account__item--points {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+    }
+    .ac-nav-account__icon { display: none; }
+    .ac-nav-account__text {
+        opacity: 1!important;
+        display: block!important;
+        position: static!important;
+        top: initial!important;
+    }
+    @media screen and (max-width: 1023.98px) {
+        #header .ac-nav-right__item.ac-nav__item--brandpoints {
+            display: none;
+        }
+        .ac-nav-account__icon { display: inline-flex; padding-left: 8px;}
+        .ac-nav-account__text { display: none!important; }
+        .ac-nav-left__item.ac-nav__item--brandpoints {
+            display: inline-flex;
+            position: relative;
+            padding: 5px;
+            top: 13px;
+            margin-left: 14px;
+
+        }
+        .ac-nav-left__item  .ac-brandpoints {
+            left: 0;
+            right: auto;
+            z-index: 2;
+        }
+        .ac-navigation__left .ac-nav-left__menu-btn {
+            display: inline-flex;
+            padding: 6px;
+        }
+    }
+
+    @media  (max-width: 767.98px) {
+        .header-wrapper .medium-down--three-fifths {
+            width: 40%!important;
+        }
+        .header-wrapper .ac-navigation__left,
+        .header-wrapper .medium-down--one-fifth {
+            width: 30%!important;
+        }
     }
 </style>
+
 <header id="header" class="header animation {% if settings.header_behavior == "drop-over" and template == "index" %}over-carousel{% endif %}">
   {% include 'utility_bar' %}
   <div class="container-fluid">
@@ -33,16 +223,16 @@
     {% endif %}
     <div class="header-wrapper">
       <div class="clearfix">
-      	<div class="menu-mobile left hide medium-down--show one-fifth ac-nav--30">
+      	<div class="menu-mobile left hide medium-down--show one-fifth ac-navigation__left">
           {% include 'menu_mobile' %}
         </div>
-        <div class="logo left one-fifth medium-down--three-fifths ac-nav--30">
+        <div class="logo left one-fifth medium-down--three-fifths">
           <a href="/"><img src="{{ "logo.png" | asset_url }}" alt="{{shop.name}}" /></a>
         </div>
-        <nav class="main-menu left three-fifths medium-down--hide ac-nav--50 clearfix">
+        <nav class="main-menu left three-fifths medium-down--hide ac-nav--main clearfix">
           {% include 'menu_main' %}
         </nav>
-        <div class="left one-fifth medium-down--one-fifth ac-nav--30">
+        <div class="left one-fifth medium-down--one-fifth ac-nav--right">
           {% include 'top_utils' %}
         </div>
       </div>
@@ -106,6 +296,18 @@
                 console.log('modal closed');
                 return true;
             },
+        });
+
+        function toggleClass(elementSelector, className) {
+            const element = document.querySelector(elementSelector);
+            if (element) {
+                element.classList.toggle(className);
+            }
+        }
+
+        const accountButton = document.querySelector('[data-account-btn]');
+        accountButton.addEventListener("click", function() {
+            toggleClass('.ac-nav-right__item--account', 'open');
         });
 
         function formResize(size) {
