@@ -4,7 +4,7 @@
         <input type="text" name="salonName" id="salon_name" pattern="/^[A-Za-z ]{2,50}$/" placeholder="Salon Name" required class="large ac-form__field" size="30" />
         <span id="salonNameError" class="ac-text--error"></span>
     </div>
-    <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset"></div>
+    <div id="salon_name_wrap-empty" class="clearfix form-row register-form__fieldset"></div>
 {% else %}
     <div id="first_name-wrap" class="clearfix form-row register-form__fieldset">
         <label for="firstName" class="ac-form__label login">First Name*</label>
@@ -30,7 +30,7 @@
         <span id="salonAddress2Error" class="ac-text--error"></span>
     </div>
 {% else %}
-    <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset"></div>
+    <div id="salon_name_wrap-empty" class="clearfix form-row register-form__fieldset"></div>
 {% endif %}
 <div id="city_wrap" class="clearfix form-row register-form__fieldset">
     <label for="city" class="ac-form__label login">City*</label>
