@@ -536,6 +536,12 @@
         cursor: pointer;
         transition: color .3s ease;
     }
+    /* Product Pages */
+    .shopify-section span,
+    .shopify-section p,
+    .product-item .title {
+        text-transform: lowercase;
+    }
     /* Mobile Styles */
     @media screen and (max-width: 1023.98px) {
         .ac-nav--main,
@@ -606,6 +612,15 @@
         }
         .ac-account__login {
             width:100%;
+        }
+        /* Product page */
+        .collection-top .wrap {
+            display: flex;
+            justify-content: space-between;
+        }
+        .wrapper-dropdown {
+            width: 100px;
+            margin-right: initial;
         }
     }
 </style>
