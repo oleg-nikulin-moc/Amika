@@ -1,4 +1,5 @@
 <!-- <br><a href="/account?view=edit" style="font-size: 14px;">{{ shop.metafields.locales.edit }}</a>  -->
+{% assign passChangedDate = customer.metafields.amika_loyalty_program.password_was_updated %}
 <script>
 $(function(){
     $('.scroll').click(function(){
@@ -6,91 +7,457 @@ $(function(){
       	return false;
     });
 });
-</script>
 
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  const formData = {};
+  const changedData = {};
+  const accountEditPopup = new tingle.modal({
+    footer: false,
+    stickyFooter: false,
+    closeMethods: ['escape'],
+    cssClass: ['ac-popup', 'ac-popup__account-edit', 'ac-popup--sm'],
+    onOpen: function() {
+      const form = document.querySelector('[data-account-form]')
+      trackFormFirst(form);
+    },
+    onClose: function() {
+      console.log('modal closed');
+      return true;
+    },
+  });
+
+  // set content
+  const content = $('#customer-account-edit').html();
+  accountEditPopup.setContent( content );
+
+  // open modal
+  const accountEditBtns = document.querySelectorAll('[data-account-edit]');
+  const accountBlocks = document.querySelectorAll('[data-account-block]');
+
+  function hideBlocks() {
+    accountBlocks.forEach(accountBlock => accountBlock.classList.add('hide'));
+    accountBlocks.forEach(accountBlock => accountBlock.classList.remove('show'));
+  }
+
+  function showBlocks(type) {
+    accountBlocks.forEach(accountBlock => {
+      if (accountBlock.getAttribute('data-account-block') === type) {
+        accountBlock.classList.remove('hide')
+        accountBlock.classList.add('show')
+      }
+    });
+  }
+
+  accountEditBtns.forEach(accountEditBtn => {
+    accountEditBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      const type = event.target.getAttribute('data-account-edit')
+      console.log('type', type)
+      formResize('lg');
+
+      hideBlocks()
+      showBlocks(type)
+      accountEditPopup.open();
+    });
+  });
+
+
+  function toggleClass(elementSelector, className) {
+    const element = document.querySelector(elementSelector);
+    if (element) {
+      element.classList.toggle(className);
+    }
+  }
+
+  const accountButton = document.querySelector('[data-account-btn]');
+  if (accountButton) {
+    accountButton.addEventListener("click", function () {
+      toggleClass('.ac-nav-right__item--account', 'open');
+    });
+  }
+
+  function formResize(size) {
+    const popups = document.querySelectorAll('.ac-popup');
+    popups.forEach(popup => {
+      if (size === "lg") {
+        popup.classList.add('ac-popup--lg');
+        popup.classList.remove('ac-popup--sm');
+      } else if (size === "sm") {
+        popup.classList.add('ac-popup--sm');
+        popup.classList.remove('ac-popup--lg');
+      } else {
+        popup.classList.add('ac-popup--md');
+        popup.classList.remove('ac-popup--lg');
+        popup.classList.remove('ac-popup--sm');
+      }
+    });
+  }
+
+  const closePopups = document.querySelectorAll('[data-close-popup-btn]');
+  closePopups.forEach(element => {
+    element.addEventListener("click", (event) => {
+      console.log(event)
+      event.preventDefault();
+      const elementsToRemove = document.querySelectorAll('.tingle-modal.tingle-modal--visible');
+      elementsToRemove.forEach(element => {
+        element.classList.remove('tingle-modal--visible');
+        document.documentElement.classList.remove("tingle-enabled")
+      })
+    });
+  });
+
+  function trackFormFirst(form) {
+    console.log('form', form);
+    // const formData = {}; // об'єкт для зберігання даних полів форми
+    // Зберігаємо початкові значення полів форми
+    form.querySelectorAll('.ac-form__field').forEach(input => {
+      formData[input.name] = input.value;
+    });
+    // console.log('formdata', formData);
+
+    // Створюємо об'єкт для зберігання змінених полів
+  }
+
+  function trackFormChanges() {
+    const form = document.querySelector('[data-account-form]');
+    // Відстежуємо зміни у полях форми
+    form.querySelectorAll('.ac-form__field').forEach(input => {
+      changedData[input.name] = input.value;
+    });
+    // console.log('changedData', changedData);
+  }
+
+  function compareObjects(obj1, obj2) {
+    const diffObj = {}; // Об'єкт для зберігання відмінних полів
+
+    for (let key in obj1) {
+      if (obj1.hasOwnProperty(key) && obj1[key] !== obj2[key]) {
+        diffObj[key] = obj1[key];
+      }
+    }
+
+    return diffObj;
+  }
+
+
+
+
+  // function getInputData() {
+  //   console.log('test')
+  //   const showBlock = document.querySelector('.ac-block--horizontal.show');
+  //   console.log('showBlock', showBlock)
+  //   if (showBlock) {
+  //     const inputs = showBlock.querySelectorAll('.ac-form__field'); // вибираємо всі інпути
+  //     const inputData = {};
+  //     inputs.forEach(input => {
+  //       input.addEventListener('input', (event) => {
+  //         const name = event.target.getAttribute('name'); // отримуємо значення атрибуту name
+  //         const value = event.target.value; // отримуємо значення інпуту
+  //
+  //         inputData[name] = value;
+  //
+  //       });
+  //     });
+  //     return inputData;
+  //   }
+  // }
+
+  const saveInfo = document.querySelector('[data-info-save]');
+
+  saveInfo.addEventListener("click", (event) => {
+    // Виклик функції при потрібній події або відповідному місці
+    trackFormChanges();
+    const diff = compareObjects(formData, changedData);
+    // console.log('formData', formData);
+    // console.log('changedData', changedData);
+    // console.log('diff', diff);
+    if(Object.keys(diff).length === 0) {
+      console.log('object empty');
+    } else {
+      console.log('diffNew', diff);
+    }
+
+
+    // const data = {
+    //   // інші дані об'єкта...
+    //   ...diff // додавання об'єкта змінених полів
+    // };
+    // console.log('data', data);
+
+    const formDataNew = {
+      customer: {
+        id: '{{ customer.id }}',
+        email: '{{ customer.email }}'
+      },
+      'customer_data': diff,
+    }// виводимо об'єкт з даними зміненого інпуту
+    console.log('formDataNew', formDataNew);
+  });
+
+
+});
+
+</script>
+<style>
+.ac-account__wrap.my-account-content {
+  background-color: transparent;
+  border: none;
+}
+.ac-account__block {
+
+}
+.ac-account__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.ac-account__header .ac-account-header__title {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.6;
+  color: #000000;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: none;
+}
+.ac-account-header__box--right {
+  text-align: right;
+}
+.ac-account__header .ac-account-header__points {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FF6B26;
+}
+.ac-account__header .ac-account-header__expire-points {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.ac-account__body {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #FFFFFF;
+  padding: 30px 40px;
+}
+.ac-account__item {
+  padding: 56px;
+  max-width: 254px;
+  width: 100%;
+  text-align: left;
+}
+.ac-account__subtitle {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  text-transform: lowercase;
+  color: #000;
+  border-bottom: 2px solid #000;
+  padding-bottom: 8px;
+}
+.ac-account__text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000;
+}
+.ac-account__text:not:last-of-type {
+  margin-bottom: 24px;
+}
+
+.ac-btn {
+  background-color: transparent;
+  border-color: transparent;
+  color: #000;
+  font-weight: 400;
+  font-size: 14px!important;
+  line-height: inherit;
+  border-radius: 100px;
+  min-width: 162px;
+  display: inline-block;
+  letter-spacing: 1px;
+  padding:8px;
+}
+.ac-account__btn {
+  text-align: left;
+  font-weight: 400;
+  font-size: 18px!important;
+  line-height: 23px;
+  color: #FF6B26;
+  background-color: transparent;
+  padding-left: 0;
+}
+.hide.hide.hide {
+  display: none;
+}
+.ac-block__wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>
 <div class="clearfix my-account account">
   
   <div class="container clearfix">
   
   {% include 'account_menu' %}
   
-  <div class="my-account-content clearfix">
-      
-    <h1 class="hello">hello, {{ customer.name }}</h1>
-    <p class="hide">From your dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
-
-    <div class="columns-wrapper">
-      
-      <div class="grid">
-        <div class="grid__item one-third medium--one-half small--one-whole">
-          <div class="column c_left">
-            <h3>Account Information</h3>
-            <h4 class="hide">Contact Information</h4>
-            <p>{{ customer.name }}</p>
-            <p>{{ customer.email }}</p>
-          </div>
-        </div>
-        <div class="grid__item two-thirds medium--one-half small--one-whole">
-          <div class="column  c_right">
-            <h3>Address Book</h3>
-            <div class="grid address note">
-              <div class="grid__item one-half medium--one-whole">
-                {% if customer.default_address != nil %}
-                <p class="address_title">Shipping</p>
-                <p>{{ customer.default_address.address1 }}</p>
-                {% if customer.default_address.address2 != "" %}
-                <p>{{ customer.default_address.address2 }}</p>
-                {% endif %}
-                <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
-                <p>{{ customer.default_address.zip}}</p>
-                <p>{{ customer.default_address.phone }}</p>
-                {% endif %}
-              </div>
-              
+  <div class="my-account-content clearfix ac-account__wrap">
+    <div class="ac-account__header">
+      <div class="ac-account-header__box ac-account-header__box--left">
+        <h1 class="ac-account-header__title hello">hello, {{ customer.name }}</h1>
+        <p class="hide">From your dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
+      </div>
+      <div class="ac-account-header__box ac-account-header__box--right">
+        <p class="ac-account-header__points">3,405 points</p>
+        <p class="ac-account-header__expire-points">1800 points will expire in 15 days</p>
+      </div>
+    </div>
+    <div class="ac-account__body">
+      <div class="ac-account__item">
+          <h3 class="ac-account__subtitle">my information</h3>
+          <p class="ac-account__text" >{{ customer.name }}</p>
+          <p class="ac-account__text" >{{ customer.email }}</p>
+          <p class="ac-account__text">{{ customer.phone }}</p>
+          <button class="ac-btn ac-account__btn" type="button" data-account-edit="info">edit</button>
+      </div>
+      <div class="ac-account__item">
+        <h3 class="ac-account__subtitle">primary distributor</h3>
+        <p class="ac-account__text" data-account-edit2="distributor">MAKA Beauty Systems</p>
+      </div>
+      <div class="ac-account__item">
+          <h3 class="ac-account__subtitle">salon information</h3>
+          <div class="grid address note">
+            <div class="grid__item one-half medium--one-whole">
+              {% if customer.default_address != nil %}
+              <p class="address_title">Shipping</p>
+              <p>{{ customer.default_address.address1 }}</p>
+              {% if customer.default_address.address2 != "" %}
+              <p>{{ customer.default_address.address2 }}</p>
+              {% endif %}
+              <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
+              <p>{{ customer.default_address.zip}}</p>
+              <p>{{ customer.default_address.phone }}</p>
+              {% endif %}
             </div>
-            <h4 class="edit"><a id="view_address" href="/account/addresses">EDIT <span class="hide">({{ customer.addresses_count }})</span></a></h4>
           </div>
+          <button class="ac-btn ac-account__btn" type="button" data-account-edit="salon">edit</button>
+          <a id="view_address" style="display: none!important;" href="/account/addresses">EDIT <span class="hide">({{ customer.addresses_count }})</span></a>
+        </div>
+      <div class="ac-account__item">
+        <h3 class="ac-account__subtitle">password</h3>
+        <p class="ac-account__text" data-account-password>MAKA Beauty Systems</p>
+        {% if passChangedDate %}
+          <p class="ac-account__text">password was changed <span data-account-password-changed>{{ passChangedDate }}</span></p>
+        {% endif %}
+        <button class="ac-btn ac-account__btn" type="button" data-account-edit="password">edit</button>
+      </div>
+
+      <div class="ac-account__item" id="customer_orders" hidden>
+        <h1> My orders </h1>
+        {% if customer.orders.size != 0 %}
+          <table>
+            <thead>
+              <tr class="head">
+                <th class="order_number first">Order</th>
+                <th class="date">Date</th>
+                <th class="payment_status">Payment Status</th>
+                <th class="fulfillment_status">Fulfillment Status</th>
+                <th class="total">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+              <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+                <td>{{ order.name | link_to: order.customer_url }}</td>
+                <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
+                <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
+                <td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
+                <td><span class="total money">{{ order.total_price | money }}</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>You haven't placed any orders yet.</p>
+        {% endif %}
+      </div>
+
+    </div>
+   </div>
+  </div>
+</div>
+{% comment %}
+  address1: '{{ customer.default_address.address1 }}',
+  country: '{{ customer.default_address.country }}',
+  province: '{{ customer.default_address.province_code }}',
+  city: '{{ customer.default_address.city }}',
+  zip: '{{ customer.default_address.zip }}',
+  first_name: '',
+  last_name: '{{ customer.last_name }}',
+  phone: '{{ customer.phone }}'
+{% endcomment %}
+<div id="customer-account-edit" class="ac-popup" style="display: none;">
+  <button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
+  <form data-account-form>
+    <div class="ac-block--horizontal" data-account-block="info">
+      <h2>edit my information</h2>
+      <div class="ac-block__wrap">
+        <div id="first_name-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="firstName" class="ac-form__label login">First Name*</label>
+          <input type="text" placeholder="First Name" name="first_name" id="firstName" value="{{ customer.first_name }}" class="large ac-form__field" size="30" required />
+          <span id="firstNameError" class="ac-text--error"></span>
+        </div>
+        <div id="last_name-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="last_name" class="ac-form__label login">Last Name*</label>
+          <input type="text" placeholder="Last Name" name="last_name" id="last_name" value="{{ customer.last_name }}" class="large ac-form__field" size="30" required/>
+          <span id="lastNameError" class="ac-text--error"></span>
+        </div>
+        <div id="email-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="emailMain" class="ac-form__label login ac-text--truncate">Email* <span class="ac-form__note">identical to account email with primary distributor</span></label>
+          <input type="email"  name="email" id="emailMain" placeholder="Email Address" class="large ac-form__field" value="{{ customer.email }}" size="30" required/>
+          <span id="emailError" class="ac-text--error"></span>
+        </div>
+        <div id="phone-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="phone" class="ac-form__label login">Mobile Number*</label>
+          <input type="text" id="phone" name="phone" title="Please provide the phone number without the country code." placeholder="(XXX)XXXXXXX" value="{{ customer.phone }}" class="large ac-form__field ac-form_feild" required />
+          <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
     </div>
-    
-    <div id="customer_orders">
-      <div class="page-header clearfix">
-        <h1>
-          My orders
-        </h1>
+    <div class="ac-block--horizontal" data-account-block="password">
+      <h2>edit password</h2>
+      <div class="ac-block__wrap">
+        <div id="current-password-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="currentPassword" class="ac-form__label login">Current Password*</label>
+          <input type="password" placeholder="" name="current_password" id="currentPassword" class="large ac-form__field" size="30" required />
+          <span id="currentPasswordError" class="ac-text--error"></span>
+        </div>
+        <div id="password-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="password" class="ac-form__label login">Password*</label>
+          <input type="password" name="password" id="password" class="large ac-form__field password" size="30" required />
+          <span id="passwordError" class="ac-text--error"></span>
+        </div>
+
+        <div id="confirm-password-wrap" class="clearfix form-row register-form__fieldset">
+          <label for="confirmPassword" class="ac-form__label login">Confirm Password*</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" class="large ac-form__field password" size="30" required />
+          <span id="confirmPasswordError" class="ac-text--error"></span>
+        </div>
       </div>
-      {% if customer.orders.size != 0 %}
-      <table>
-        <thead>
-          <tr class="head">
-            <th class="order_number first">Order</th>
-            <th class="date">Date</th>
-            <th class="payment_status">Payment Status</th>
-            <th class="fulfillment_status">Fulfillment Status</th>
-            <th class="total">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for order in customer.orders %}
-          <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
-            <td>{{ order.name | link_to: order.customer_url }}</td>
-            <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
-            <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
-            <td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
-            <td><span class="total money">{{ order.total_price | money }}</span></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-        <p>You haven't placed any orders yet.</p>
-      {% endif %}
     </div>
-    
-   </div>
-    
-    
-  </div>
-    
+    <div class="ac-block--horizontal" data-account-block="salon">
+      <h2>edit salon information</h2>
+      <div class="ac-block__wrap">
+        {% render 'shipping_address', salon: true %}
+      </div>
+    </div>
+  </form>
+    <div style="text-align: right;" class="">
+      <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+      <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save>save</button>
+    </div>
 </div>

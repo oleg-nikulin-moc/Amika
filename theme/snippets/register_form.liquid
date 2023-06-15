@@ -26,13 +26,13 @@
 
         <div id="password-wrap" class="clearfix form-row register-form__fieldset">
           <label for="password" class="ac-form__label login">Password*</label>
-          <input type="password" name="password" id="password" pattern="^[a-zA-Z0-9]{8,50}$" class="large ac-form__field password{% if form.errors contains 'password' %} error{% endif %}" size="30"required />
+          <input type="password" name="password" id="password" pattern="^[a-zA-Z0-9]{8,50}$" class="large ac-form__field password{% if form.errors contains 'password' %} error{% endif %}" size="30" required />
           <span id="passwordError" class="ac-text--error"></span>
         </div>
 
         <div id="confirm-password-wrap" class="clearfix form-row register-form__fieldset">
           <label for="confirmPassword" class="ac-form__label login">Confirm Password*</label>
-          <input type="password" name="confirmPassword" id="confirmPassword" class="large ac-form__field password{% if form.errors contains 'confirm-password' %} error{% endif %}" size="30"required />
+          <input type="password" name="confirmPassword" id="confirmPassword" class="large ac-form__field password{% if form.errors contains 'confirm-password' %} error{% endif %}" size="30" required />
           <span id="confirmPasswordError" class="ac-text--error"></span>
         </div>
 
