@@ -3,6 +3,7 @@
 {% assign tier = customer.metafields.amika_loyalty_program.points.value['tier']  %}
 {% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers  %}
 
+
 <script>
     window.addEventListener("DOMContentLoaded", () => {
         function updateBrandBoxItem(condition) {
@@ -10,7 +11,7 @@
             if (condition) {
                 console.log('added brandbox', element)
                 elements.forEach(element => element.classList.add('is'));
-                showMsg();
+                // showMsg();
             } else {
                 elements.forEach(element => element.classList.remove('is'));
             }

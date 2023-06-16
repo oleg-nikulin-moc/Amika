@@ -66,7 +66,7 @@
         top: 48%;
         right: 2px;
     }
-
+    .opened .ac-nav-account__list,
     .open .ac-nav-account__list {
         list-style: none;
         display: flex;
@@ -125,6 +125,7 @@
     .ac-brandpoints {
         display: none;
     }
+    .opened .ac-brandpoints,
     .open .ac-brandpoints {
         display: block;
         text-align: left;
@@ -322,15 +323,18 @@
 
         function toggleClass(elementSelector, className) {
             const element = document.querySelector(elementSelector);
+            console.log('elementSelector', elementSelector)
             if (element) {
                 element.classList.toggle(className);
+                console.log('className', className)
             }
         }
 
         const accountButton = document.querySelector('[data-account-btn]');
+        console.log('accountButton', accountButton)
         if (accountButton) {
             accountButton.addEventListener("click", function () {
-                toggleClass('.ac-nav-right__item--account', 'open');
+                toggleClass('.ac-nav-right__item--account', 'opened');
             });
         }
 
