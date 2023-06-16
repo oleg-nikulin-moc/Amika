@@ -1,5 +1,8 @@
 {% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers  %}
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
+{% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
+{% assign points = loyaltyProgram | plus: brandBoxPoints %}
+
 <style>
   .qtty .quantity:disabled,
   .qtty .minus:disabled,
@@ -166,7 +169,7 @@
                   {% endif %}
                   {% endfor %}
 
-                  {% assign freeShip = loyaltyProgram %}
+                  {% assign freeShip = points %}
                   {% assign total_price = cart.total_price | money_without_currency %}
                   {% if excludePrice > 0 %}
                   {% assign excludePrice = excludePrice | money_without_currency %}
@@ -416,7 +419,7 @@
             {% else %}
             <div class="free__shipping--bar small--hide">
               <div class="free-shipping">
-                {% assign freeShip = loyaltyProgram %}
+                {% assign freeShip = points %}
                 {% assign loyalty = false %}
                 {% assign total_price = cart.total_price | money_without_currency %}
                 {% if excludePrice > 0 %}
@@ -427,7 +430,7 @@
                 {% assign freeshipaway = freeShip | minus: total_price %}
                 {% if percentageFreeShip < 100 %}
                   {% assign loyalty = true %}
-                  <span class="free-text">Loyalty Program: {{ loyaltyProgram }} points</span><br><br>
+                  <span class="free-text">Loyalty Program: {{ points }} points</span><br><br>
                   <span>You're {{ freeshipaway | times: 100 | money }} away from qualifying for free shipping</span>
                 {% else %}
                 {% comment %}<span class="free-text">You've earned Free Shipping.</span>{% endcomment %}

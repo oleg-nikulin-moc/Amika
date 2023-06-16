@@ -1,5 +1,6 @@
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
-
+{% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
+{% assign points = loyaltyProgram | plus: brandBoxPoints %}
 <div class="top-utils clearfix">
   <ul class="ac-nav-right__list right clearfix">
     {% if settings.show_newsletter_header %}
@@ -97,7 +98,7 @@
               </svg>
             </button>
             <ul class="ac-nav-account__list">
-              <li class="ac-nav-account__item ac-nav-account__item--points">{{ loyaltyProgram }} points</li>
+              <li class="ac-nav-account__item ac-nav-account__item--points">{{ points }}</li>
               <hr class="ac-nav-account__divider">
               <li class="ac-nav-account__item">
                 <a href="/account" class="ac-nav-account__link">my account</a>

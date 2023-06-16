@@ -45,6 +45,7 @@
     }
     .ac-form--login {
         min-width: 348px;
+        width: 100%;
     }
     .ac-form__note {
         font-style: italic;
@@ -465,6 +466,33 @@
 
     /* Mobile Styles */
     @media screen and (max-width: 430.98px) {
+        .ac-popup__logout .ac-form__btn{
+            min-width: 162px!important;
+        }
+        .ac-popup .tingle-modal-box {
+            top: 0;
+        }
+        .ac-form--login {
+            width: 100%;
+            min-width: 100%;
+        }
+        .ac-form--login .register_wrap {
+            text-align: center;
+        }
+        .action-bottom {
+            flex-grow: 1;
+        }
+        .action-bottom:first-of-type {
+            margin-right: 16px;
+        }
+        .ac-form__btn {
+            min-width: 100%!important;
+        }
+        .ac-submit__wrap .ac-form__btn {
+            min-width: 46%!important;
+            font-size: 12px!important;
+        }
+        .ac-form-checkbox__wrap,
         .tab {
             flex-direction: column;
         }
@@ -533,13 +561,15 @@
     .ac-popup .tingle-modal-box {
         background-color: #FEFAF0!important;
         text-align: left;
-        padding: 80px 90px!important;
+        padding: 80px 90px;
+        padding-bottom: 80px!important;
     }
 
-    .ac-popup.ac-popup__logout .tingle-modal-box.tingle-modal-box {
-        padding-left: 120px!important;
-        padding-right: 120px!important;
+    .ac-popup.ac-popup__logout .tingle-modal-box {
+        padding-left: 120px;
+        padding-right: 120px;
     }
+
     #login-register-popup-container > .ac-close__btn,
     .ac-popup > .ac-close__btn {
         display: none;
@@ -561,6 +591,9 @@
     }
 
     @media (max-width: 430.98px) {
+        .ac-login-wrap #customer-login {
+            width: 100%;
+        }
         .tingle-modal-box {
             width: 100% !important;
             max-width: 100% !important;

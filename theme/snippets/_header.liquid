@@ -30,6 +30,9 @@
     .ac-nav--right {
         margin-top: 10px;
     }
+    .ac-nav--main.ac-nav--main ul li {
+        font-weight: 600;
+    }
     /* top_utils */
 
     .ac-icon__circle {
@@ -60,10 +63,10 @@
         background-repeat: no-repeat;
         position: absolute;
         transform: translateY(-50%);
-        top: 55%;
+        top: 48%;
         right: 2px;
     }
-
+    .opened .ac-nav-account__list,
     .open .ac-nav-account__list {
         list-style: none;
         display: flex;
@@ -122,6 +125,7 @@
     .ac-brandpoints {
         display: none;
     }
+    .opened .ac-brandpoints,
     .open .ac-brandpoints {
         display: block;
         text-align: left;
@@ -150,6 +154,7 @@
         padding-top: 13px;
         padding-bottom: 7px;
         cursor: default;
+        font-weight: 600!important;
     }
 
     .ac-nav-account__divider {
@@ -174,7 +179,25 @@
         display: block!important;
         position: static!important;
         top: initial!important;
+        font-weight: 600;
     }
+    .side-cart .wrapper .item .grid__item.quantity {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+    }
+    .side-cart .wrapper .item .grid__item  .wrap {
+        position:relative;
+        margin-right: auto;
+    }
+    .side-cart .wrapper .item .grid__item  .price {
+        line-height: 1.2;
+    }
+    .side-cart .wrapper .saso-cart-original-total {
+        text-transform: lowercase;
+    }
+
     @media screen and (max-width: 1023.98px) {
         #header .ac-nav-right__item.ac-nav__item--brandpoints {
             display: none;
@@ -300,15 +323,18 @@
 
         function toggleClass(elementSelector, className) {
             const element = document.querySelector(elementSelector);
+            console.log('elementSelector', elementSelector)
             if (element) {
                 element.classList.toggle(className);
+                console.log('className', className)
             }
         }
 
         const accountButton = document.querySelector('[data-account-btn]');
+        console.log('accountButton', accountButton)
         if (accountButton) {
             accountButton.addEventListener("click", function () {
-                toggleClass('.ac-nav-right__item--account', 'open');
+                toggleClass('.ac-nav-right__item--account', 'opened');
             });
         }
 
