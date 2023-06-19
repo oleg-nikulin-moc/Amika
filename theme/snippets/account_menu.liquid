@@ -1,15 +1,13 @@
 <div class="my-account-menu animation ac-account__sidebar">
-  <h1 class="small--hide hide"><a href="/account">Index</a></h1>
-  <h1 class="hide small--show"><a href="/account">My Account</a></h1>
   <ul class="ac-tabs">
-    <li class="animation ac-tab active" data-tab="info"><a role="button">my account</a></li>
-    <li class="animation ac-tab" data-tab="tiers"><a role="button">my tier</a></li>
+    <li class="animation ac-tab active" data-tab="info"><a role="button" class="ac-account-sidebar__link">my account</a></li>
+    <li class="animation ac-tab" data-tab="tiers"><a role="button" class="ac-account-sidebar__link">my tier</a></li>
     {% if template == "customers/account" %}
-      <li class="animation ac-tab" data-tab="orders"><a role="button" class="scroll">my orders</a></li>
+      <li class="animation ac-tab" data-tab="orders"><a role="button" class="ac-account-sidebar__link">my orders</a></li>
     {% else %}
-      <li class="animation ac-tab" data-tab="tab4"><a href="/account#customer_orders" class="scroll">my orders</a></li>
+      <li class="animation ac-tab" data-tab="tab4"><a href="/account#customer_orders" class="ac-account-sidebar__link">my orders</a></li>
     {% endif %}
-    <li class="animation ac-tab" data-tab="wishes"><a href="/apps/iwish">my wishlist</a></li>
+    <li class="animation ac-tab" data-tab="wishes"><a href="/apps/iwish" class="ac-account-sidebar__link">my wishlist</a></li>
   </ul>
-  <div class="action-bottom smaller logout"><a href="/account/logout" data-logout-btn><div class="button--secondary">logout</div></a></div>
+  <a role="button" class="ac-account-sidebar__link" data-logout-btn="">logout</a>
 </div>

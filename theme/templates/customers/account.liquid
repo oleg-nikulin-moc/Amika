@@ -382,6 +382,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <style>
+.account .container { padding-top: 0; }
+.account #customer_orders { margin-top: 0; }
+
 .ac-account__wrap.my-account-content {
   background-color: transparent;
   border: none;
@@ -506,6 +509,56 @@ document.addEventListener('DOMContentLoaded', (event) => {
 .ac-account-order { color: #FF6B26!important; }
 .ac-account-order__paid { color: #00C980!important; }
 
+.ac-acccount-order__link {
+  display: inline-flex;
+  padding: 4px 7px
+}
+.ac-acccount-order__link:hover {
+  opacity: 0.8;
+}
+.ac-account-order__row:not(:last-of-type) {
+  border-bottom: 1px solid #FF6B26;
+}
+.ac-account__wrap .ac-account-order__row td {
+  padding-top: 19px;
+  padding-bottom: 19px;
+  line-height: 24px;
+}
+.ac-tab__content.show {
+  float: initial!important;
+  width: initial!important;
+}
+.ac-account__sidebar {
+  flex-direction: column;
+  margin-top: 60px;
+}
+.ac-account__sidebar .ac-tabs li {
+  text-transform: lowercase;
+  padding: 0;
+}
+.ac-account__sidebar .ac-tabs li:hover { background-color: transparent!important; color: #000!important; }
+.ac-account__sidebar .ac-account-sidebar__link {
+  display: inline-block;
+  padding: 9px 0;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.ac-account__sidebar .ac-account-sidebar__link:hover {
+  background-color: transparent;
+  opacity: 0.8;
+}
+.ac-account__sidebar .active .ac-account-sidebar__link {
+  font-weight: 600;
+}
+.ac-account__sidebar .ac-tabs {
+  border-bottom: 1px solid #FF6B26;
+  margin-bottom: 8px;
+  max-width: 164px;
+}
+.ac-account-sidebar__link {
+
+}
 </style>
 <div class="clearfix my-account account">
   
@@ -513,7 +566,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   
   {% include 'account_menu' %}
   
-  <div class="my-account-content clearfix ac-account__wrap">
+  <div class="my-account-content clearfix ac-account__wrap ac-tab__content show" data-tab="info">
     <div class="ac-account__header">
       <div class="ac-account-header__box ac-account-header__box--left">
         <h1 class="ac-account-header__title hello">hello, {{ customer.name }}</h1>
@@ -525,7 +578,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       </div>
     </div>
     <div class="ac-account__body">
-      <div class="ac-tab__content show" data-tab="info">
         <div class="ac-account__item ac-account__iteь--sm">
             <h3 class="ac-account__subtitle">my information</h3>
             <p class="ac-account__text" >{{ customer.name }}</p>
@@ -565,8 +617,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <button class="ac-btn ac-account__btn" type="button" data-account-edit="password">edit</button>
         </div>
       </div>
-      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="orders">
-        <h1> My orders </h1>
+    </div>
+    <div class="my-account-content clearfix ac-account__wrap ac-tab__content" id="customer_orders" data-tab="orders">
+      {% comment %} Orders Tab {% endcomment %}
+      <div class="ac-account__header">
+        <div class="ac-account-header__box ac-account-header__box--left">
+          <h2 class="ac-account-header__title">my orders</h2>
+          <p class="hide">From your dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
+        </div>
+      </div>
+      <div class="ac-account__body">
         {% if customer.orders.size != 0 %}
           <table class="ac-acccount__order">
             <thead>
@@ -580,12 +640,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
             </thead>
             <tbody>
               {% for order in customer.orders %}
-              <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
-                <td>{{ order.name | link_to: order.customer_url }}</td>
+              <tr class="ac-account-order__row {% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+                <td><span>order {{ order.name}}</span></td>
                 <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
                 <td><span class="status_{{ order.financial_status }} ac-account-order ac-account-order__{{ order.financial_status }}">{{ order.financial_status }}</span></td>
                 {% comment %}<td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>{% endcomment %}
                 <td><span class="total money">{{ order.total_price | money }}</span></td>
+                <td>
+                  <a class="ac-acccount-order__link" href="{{order.customer_url }}">
+                    <svg class="icon icon-close" role="presentation" width="8" height="14">
+                      <use href="#arrowIcon">
+                    </svg>
+                  </a>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -594,10 +661,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <p>You haven't placed any orders yet.</p>
         {% endif %}
       </div>
-      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tiers"></div>
-      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="wishes"></div>
     </div>
-   </div>
+    <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tiers"></div>
+    <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="wishes"></div>
   </div>
 </div>
 {% comment %}
