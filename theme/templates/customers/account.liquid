@@ -1,5 +1,10 @@
 <!-- <br><a href="/account?view=edit" style="font-size: 14px;">{{ shop.metafields.locales.edit }}</a>  -->
 {% assign passChangedDate = customer.metafields.amika_loyalty_program.password_was_updated %}
+{% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
+{% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
+{% assign points = loyaltyProgram | plus: brandBoxPoints %}
+
+
 <script>
 $(function(){
     $('.scroll').click(function(){
@@ -12,20 +17,46 @@ $(function(){
 document.addEventListener('DOMContentLoaded', (event) => {
   const formData = {};
   const changedData = {};
+  let valid = true;
   const accountEditPopup = new tingle.modal({
     footer: false,
     stickyFooter: false,
     closeMethods: ['escape'],
     cssClass: ['ac-popup', 'ac-popup__account-edit', 'ac-popup--sm'],
     onOpen: function() {
-      const form = document.querySelector('[data-account-form]')
-      trackFormFirst(form);
+      const type =  document.querySelector('[data-account-block].show').getAttribute('data-account-block');
+      const form = document.querySelector(`[data-account-block="${type}"]`);
+      console.log('type', type, form)
+      if (type === 'info') {
+        checkFieldsChanges(form, type);
+        trackFormFirst(form);
+      }
     },
     onClose: function() {
       console.log('modal closed');
       return true;
     },
   });
+
+  const tabs = document.querySelectorAll('.ac-tab');
+  const tabContents = document.querySelectorAll('.ac-tab__content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const activeTab = document.querySelector('.ac-tab.active');
+      const activeTabContent = document.querySelector('.ac-tab__content.show');
+      console.log('activeTab', activeTab);
+      console.log('activeTabContent', activeTabContent);
+      activeTab.classList.remove('active');
+      activeTabContent.classList.remove('show');
+
+      tab.classList.add('active');
+      const tabId = tab.getAttribute('data-tab');
+      const tabContent = document.querySelector(`.ac-tab__content[data-tab="${tabId}"]`);
+      tabContent.classList.add('show');
+    });
+  });
+
 
   // set content
   const content = $('#customer-account-edit').html();
@@ -70,12 +101,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   }
 
-  const accountButton = document.querySelector('[data-account-btn]');
-  if (accountButton) {
-    accountButton.addEventListener("click", function () {
-      toggleClass('.ac-nav-right__item--account', 'open');
-    });
-  }
+  // const accountButton = document.querySelector('[data-account-btn]');
+  // if (accountButton) {
+  //   accountButton.addEventListener("click", function () {
+  //     toggleClass('.ac-nav-right__item--account', 'open');
+  //   });
+  // }
 
   function formResize(size) {
     const popups = document.querySelectorAll('.ac-popup');
@@ -99,24 +130,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
     element.addEventListener("click", (event) => {
       console.log(event)
       event.preventDefault();
-      const elementsToRemove = document.querySelectorAll('.tingle-modal.tingle-modal--visible');
-      elementsToRemove.forEach(element => {
-        element.classList.remove('tingle-modal--visible');
-        document.documentElement.classList.remove("tingle-enabled")
-      })
+      closePopup();
     });
   });
 
+  function closePopup() {
+    const elementsToRemove = document.querySelectorAll('.tingle-modal.tingle-modal--visible');
+    elementsToRemove.forEach(element => {
+      element.classList.remove('tingle-modal--visible');
+      document.documentElement.classList.remove("tingle-enabled")
+    })
+  }
+
   function trackFormFirst(form) {
-    console.log('form', form);
-    // const formData = {}; // об'єкт для зберігання даних полів форми
     // Зберігаємо початкові значення полів форми
     form.querySelectorAll('.ac-form__field').forEach(input => {
       formData[input.name] = input.value;
     });
-    // console.log('formdata', formData);
-
-    // Створюємо об'єкт для зберігання змінених полів
   }
 
   function trackFormChanges() {
@@ -125,7 +155,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     form.querySelectorAll('.ac-form__field').forEach(input => {
       changedData[input.name] = input.value;
     });
-    // console.log('changedData', changedData);
   }
 
   function compareObjects(obj1, obj2) {
@@ -140,64 +169,178 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return diffObj;
   }
 
-
-
-
-  // function getInputData() {
-  //   console.log('test')
-  //   const showBlock = document.querySelector('.ac-block--horizontal.show');
-  //   console.log('showBlock', showBlock)
-  //   if (showBlock) {
-  //     const inputs = showBlock.querySelectorAll('.ac-form__field'); // вибираємо всі інпути
-  //     const inputData = {};
-  //     inputs.forEach(input => {
-  //       input.addEventListener('input', (event) => {
-  //         const name = event.target.getAttribute('name'); // отримуємо значення атрибуту name
-  //         const value = event.target.value; // отримуємо значення інпуту
-  //
-  //         inputData[name] = value;
-  //
-  //       });
-  //     });
-  //     return inputData;
-  //   }
-  // }
-
-  const saveInfo = document.querySelector('[data-info-save]');
-
-  saveInfo.addEventListener("click", (event) => {
-    // Виклик функції при потрібній події або відповідному місці
-    trackFormChanges();
-    const diff = compareObjects(formData, changedData);
-    // console.log('formData', formData);
-    // console.log('changedData', changedData);
-    // console.log('diff', diff);
-    if(Object.keys(diff).length === 0) {
-      console.log('object empty');
-    } else {
-      console.log('diffNew', diff);
+  function checkFieldsChanges(form, type) {
+    const inputFields = form.querySelectorAll('input'); // Виберіть всі поля введення
+    console.log('inputFields', inputFields)
+// Функція, яка перевіряє, чи були внесені зміни в будь-якому полі введення
+    function checkChanges() {
+      for (let i = 0; i < inputFields.length; i++) {
+        if (inputFields[i].value !== inputFields[i].defaultValue) {
+          return true; // Якщо знайдено зміну в одному з полів, повернути true
+        }
+      }
+      return false; // Якщо зміни не виявлено в жодному з полів, повернути false
     }
 
+    const submitButton = form.querySelector(`[data-info-save=${type}]`); // Виберіть вашу кнопку
+    console.log('submitButton', submitButton)
+// Слухайте подію вводу для кожного поля введення
+    inputFields.forEach(inputField => {
+      inputField.addEventListener('input', () => {
+        submitButton.disabled = !checkChanges(); // Дісейбліть кнопку, якщо немає змін в жодному полі
+      });
+    });
+  }
 
-    // const data = {
-    //   // інші дані об'єкта...
-    //   ...diff // додавання об'єкта змінених полів
-    // };
-    // console.log('data', data);
+  const saveInfo = document.querySelector('[data-info-save="info"]');
+  saveInfo.addEventListener("click", (event) => {
+    console.log('click info btn');
+    trackFormChanges();
 
+    const diff = compareObjects(formData, changedData);
     const formDataNew = {
       customer: {
         id: '{{ customer.id }}',
         email: '{{ customer.email }}'
       },
       'customer_data': diff,
-    }// виводимо об'єкт з даними зміненого інпуту
+    }
+    // виводимо об'єкт з даними зміненого інпуту
     console.log('formDataNew', formDataNew);
+
+    if(Object.keys(diff).length === 0) {
+      console.log('object empty');
+    } else {
+      fetch('https://ckl0vod2t7.execute-api.us-east-1.amazonaws.com/development/customer-update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataNew)
+      })
+      .then(response => response.json())
+      .then(response => {
+        if (response.success) {
+          // Success response
+          console.log('Form submitted successfully');
+          closePopup();
+        } else {
+          // Error response
+          console.log('Form submission error:', response.error_message);
+          alert(response.error_message);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
   });
 
+  const savePass = document.querySelector('[data-info-save="password"]');
 
+  function handleSaveButtonClick(event, type) {
+    const form = document.querySelector(`[data-account-block="${type}"]`);
+    const oldPasswordInput = form.querySelector('#currentPassword');
+    const newPasswordInput = form.querySelector('#password');
+    const confirmPasswordInput = form.querySelector('#confirmPassword');
+    const oldPassword = oldPasswordInput.value;
+    const newPassword = newPasswordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+    const confirmPasswordError = form.querySelector("#confirmPasswordError");
+    const passwordError = form.querySelector("#passwordError");
+    const passwordPattern = /^[a-zA-Z0-9]{8,50}$/;
+    const requiredFields = form.querySelectorAll("[required]");
+    let valid = true;
+
+    requiredFields.forEach(function (field) {
+      if (field.value === "") {
+        field.classList.add("invalid");
+        valid = false;
+        field.nextElementSibling.textContent = "Empty value";
+      } else if (field.value.length < 2) {
+        field.classList.add("invalid");
+        valid = false;
+        field.nextElementSibling.textContent = "Text must be at least 2 characters";
+      } else {
+        field.classList.remove("invalid");
+        field.nextElementSibling.textContent = "";
+      }
+    });
+
+    if (!passwordPattern.test(newPassword)) {
+      oldPasswordInput.classList.add("invalid");
+      passwordError.textContent = "Password must be at least 8 characters";
+      valid = false;
+    }
+
+    if (oldPassword === newPassword) {
+      newPasswordInput.classList.add("invalid");
+      passwordError.textContent = "The old password matches the new password. Enter a different password.";
+      valid = false;
+    }
+
+    if (newPassword !== confirmPassword) {
+      confirmPasswordInput.classList.add("invalid");
+      confirmPasswordError.textContent = "The new password does not match the confirmation password. Enter the same values.";
+      valid = false;
+    }
+
+    if (!valid) {
+      return;
+    }
+
+    const passwordData = {
+      current_password: oldPassword,
+      new_password: newPassword,
+      new_password_confirmation: confirmPassword
+    };
+
+    const formDataNew = {
+      customer: {
+        id: '{{ customer.id }}',
+        email: '{{ customer.email }}'
+      },
+      customer_data: passwordData,
+    };
+
+    console.log('formDataNew', formDataNew);
+
+    if (Object.keys(passwordData).length === 0) {
+      console.log('object empty');
+    } else {
+      fetch('https://ckl0vod2t7.execute-api.us-east-1.amazonaws.com/development/customer-update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataNew)
+      })
+              .then(response => response.json())
+              .then(response => {
+                if (response.success) {
+                  console.log('Form submitted successfully');
+                  closePopup();
+                } else {
+                  console.log('Form submission error:', response.error_message);
+                  alert(response.error_message);
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              });
+    }
+
+    console.log('Об\'єкт зі значеннями паролів:', passwordData);
+  }
+
+  savePass.addEventListener("click", (event) => {
+    event.preventDefault();
+    const type =  event.target.getAttribute('data-info-save');
+    console.log('type',  type);
+    // document.querySelector(`[data-account-block="${type3}"]`);
+    handleSaveButtonClick(event, type);
+  });
 });
-
 </script>
 <style>
 .ac-account__wrap.my-account-content {
@@ -245,9 +388,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 }
 .ac-account__item {
   padding: 56px;
-  max-width: 254px;
   width: 100%;
   text-align: left;
+}
+.ac-account__item-sm {
+  max-width: 254px;
 }
 .ac-account__subtitle {
   font-style: normal;
@@ -298,6 +443,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
   display: flex;
   flex-wrap: wrap;
 }
+.ac-tab__content {
+  display: none;
+}
+
+.ac-tab__content.show {
+  display: block;
+}
+
+.ac-acccount__order th,
+.ac-acccount__order thead td a,
+.ac-acccount__order tbody td span {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #000000;
+}
+
+.ac-acccount__order thead th {
+  color: #666666;
+  border-bottom: none;
+}
+
+
 </style>
 <div class="clearfix my-account account">
   
@@ -312,61 +480,62 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <p class="hide">From your dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
       </div>
       <div class="ac-account-header__box ac-account-header__box--right">
-        <p class="ac-account-header__points">3,405 points</p>
+        <p class="ac-account-header__points">{{ points }} points</p>
         <p class="ac-account-header__expire-points">1800 points will expire in 15 days</p>
       </div>
     </div>
     <div class="ac-account__body">
-      <div class="ac-account__item">
-          <h3 class="ac-account__subtitle">my information</h3>
-          <p class="ac-account__text" >{{ customer.name }}</p>
-          <p class="ac-account__text" >{{ customer.email }}</p>
-          <p class="ac-account__text">{{ customer.phone }}</p>
-          <button class="ac-btn ac-account__btn" type="button" data-account-edit="info">edit</button>
-      </div>
-      <div class="ac-account__item">
-        <h3 class="ac-account__subtitle">primary distributor</h3>
-        <p class="ac-account__text" data-account-edit2="distributor">MAKA Beauty Systems</p>
-      </div>
-      <div class="ac-account__item">
-          <h3 class="ac-account__subtitle">salon information</h3>
-          <div class="grid address note">
-            <div class="grid__item one-half medium--one-whole">
-              {% if customer.default_address != nil %}
-              <p class="address_title">Shipping</p>
-              <p>{{ customer.default_address.address1 }}</p>
-              {% if customer.default_address.address2 != "" %}
-              <p>{{ customer.default_address.address2 }}</p>
-              {% endif %}
-              <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
-              <p>{{ customer.default_address.zip}}</p>
-              <p>{{ customer.default_address.phone }}</p>
-              {% endif %}
-            </div>
-          </div>
-          <button class="ac-btn ac-account__btn" type="button" data-account-edit="salon">edit</button>
-          <a id="view_address" style="display: none!important;" href="/account/addresses">EDIT <span class="hide">({{ customer.addresses_count }})</span></a>
+      <div class="ac-tab__content show" data-tab="tab1">
+        <div class="ac-account__item ac-account__iteь--sm">
+            <h3 class="ac-account__subtitle">my information</h3>
+            <p class="ac-account__text" >{{ customer.name }}</p>
+            <p class="ac-account__text" >{{ customer.email }}</p>
+            <p class="ac-account__text">{{ customer.phone }}</p>
+            <button class="ac-btn ac-account__btn" type="button" data-account-edit="info">edit</button>
         </div>
-      <div class="ac-account__item">
-        <h3 class="ac-account__subtitle">password</h3>
-        <p class="ac-account__text" data-account-password>MAKA Beauty Systems</p>
-        {% if passChangedDate %}
-          <p class="ac-account__text">password was changed <span data-account-password-changed>{{ passChangedDate }}</span></p>
-        {% endif %}
-        <button class="ac-btn ac-account__btn" type="button" data-account-edit="password">edit</button>
+        <div class="ac-account__item ac-account__iteь--sm">
+          <h3 class="ac-account__subtitle">primary distributor</h3>
+          <p class="ac-account__text" data-account-edit2="distributor">MAKA Beauty Systems</p>
+        </div>
+        <div class="ac-account__item ac-account__iteь--sm">
+            <h3 class="ac-account__subtitle">salon information</h3>
+            <div class="grid address note">
+              <div class="grid__item one-half medium--one-whole">
+                {% if customer.default_address != nil %}
+                <p class="address_title">Shipping</p>
+                <p>{{ customer.default_address.address1 }}</p>
+                {% if customer.default_address.address2 != "" %}
+                <p>{{ customer.default_address.address2 }}</p>
+                {% endif %}
+                <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
+                <p>{{ customer.default_address.zip}}</p>
+                <p>{{ customer.default_address.phone }}</p>
+                {% endif %}
+              </div>
+            </div>
+            <button class="ac-btn ac-account__btn" type="button" data-account-edit="salon">edit</button>
+            <a id="view_address" style="display: none!important;" href="/account/addresses">EDIT <span class="hide">({{ customer.addresses_count }})</span></a>
+          </div>
+        <div class="ac-account__item ac-account__iteь--sm">
+          <h3 class="ac-account__subtitle">password</h3>
+          <p class="ac-account__text" data-account-password>**********</p>
+          {% if passChangedDate %}
+            <p class="ac-account__text">password was changed <span data-account-password-changed>{{ passChangedDate }}</span></p>
+          {% endif %}
+          <button class="ac-btn ac-account__btn" type="button" data-account-edit="password">edit</button>
+        </div>
       </div>
-
-      <div class="ac-account__item" id="customer_orders" hidden>
+      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tab3">
         <h1> My orders </h1>
         {% if customer.orders.size != 0 %}
-          <table>
+          <table class="ac-acccount__order">
             <thead>
               <tr class="head">
-                <th class="order_number first">Order</th>
-                <th class="date">Date</th>
-                <th class="payment_status">Payment Status</th>
-                <th class="fulfillment_status">Fulfillment Status</th>
-                <th class="total">Total</th>
+                <th class="order_number first"></th>
+                <th class="date">order placed</th>
+                <th class="payment_status">order status</th>
+                {% comment %}<th class="fulfillment_status">Fulfillment Status</th>{% endcomment %}
+                <th class="total">order total</th>
               </tr>
             </thead>
             <tbody>
@@ -375,7 +544,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <td>{{ order.name | link_to: order.customer_url }}</td>
                 <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
                 <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
-                <td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
+                {% comment %}<td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>{% endcomment %}
                 <td><span class="total money">{{ order.total_price | money }}</span></td>
               </tr>
               {% endfor %}
@@ -402,8 +571,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 {% endcomment %}
 <div id="customer-account-edit" class="ac-popup" style="display: none;">
   <button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
-  <form data-account-form>
-    <div class="ac-block--horizontal" data-account-block="info">
+    <form class="ac-block--horizontal" data-account-block="info" data-account-form>
       <h2>edit my information</h2>
       <div class="ac-block__wrap">
         <div id="first_name-wrap" class="clearfix form-row register-form__fieldset">
@@ -427,7 +595,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
-    </div>
+      <div style="text-align: right;" class="">
+        <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+        <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" disabled data-info-save="info">save</button>
+      </div>
+    </form>
     <div class="ac-block--horizontal" data-account-block="password">
       <h2>edit password</h2>
       <div class="ac-block__wrap">
@@ -436,6 +608,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <input type="password" placeholder="" name="current_password" id="currentPassword" class="large ac-form__field" size="30" required />
           <span id="currentPasswordError" class="ac-text--error"></span>
         </div>
+        <div id="salon_name_wrap-empty" class="clearfix form-row register-form__fieldset"></div>
         <div id="password-wrap" class="clearfix form-row register-form__fieldset">
           <label for="password" class="ac-form__label login">Password*</label>
           <input type="password" name="password" id="password" class="large ac-form__field password" size="30" required />
@@ -448,16 +621,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <span id="confirmPasswordError" class="ac-text--error"></span>
         </div>
       </div>
+      <div style="text-align: right;" class="">
+        <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+        <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="password">save</button>
+      </div>
     </div>
     <div class="ac-block--horizontal" data-account-block="salon">
       <h2>edit salon information</h2>
       <div class="ac-block__wrap">
         {% render 'shipping_address', salon: true %}
       </div>
-    </div>
-  </form>
-    <div style="text-align: right;" class="">
-      <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
-      <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save>save</button>
+      <div style="text-align: right;" class="">
+        <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+        <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="salon">save</button>
+      </div>
     </div>
 </div>
