@@ -38,24 +38,63 @@ document.addEventListener('DOMContentLoaded', (event) => {
     },
   });
 
+  function setActiveTab(tabId) {
+    const tabs = document.querySelectorAll('.ac-tab');
+    const tabContents = document.querySelectorAll('.ac-tab__content');
+
+    tabs.forEach(tab => {
+      if (tab.getAttribute('data-tab') === tabId) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    tabContents.forEach(tabContent => {
+      if (tabContent.getAttribute('data-tab') === tabId) {
+        tabContent.classList.add('show');
+      } else {
+        tabContent.classList.remove('show');
+      }
+    });
+  }
+
   const tabs = document.querySelectorAll('.ac-tab');
-  const tabContents = document.querySelectorAll('.ac-tab__content');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const activeTab = document.querySelector('.ac-tab.active');
-      const activeTabContent = document.querySelector('.ac-tab__content.show');
-      console.log('activeTab', activeTab);
-      console.log('activeTabContent', activeTabContent);
-      activeTab.classList.remove('active');
-      activeTabContent.classList.remove('show');
-
-      tab.classList.add('active');
       const tabId = tab.getAttribute('data-tab');
-      const tabContent = document.querySelector(`.ac-tab__content[data-tab="${tabId}"]`);
-      tabContent.classList.add('show');
+      setActiveTab(tabId);
+      window.location.hash = `#${tabId}`;
     });
   });
+
+  if (window.location.hash == '#orders') { setActiveTab('orders') }
+  else if (window.location.hash == '#info') { setActiveTab('info') }
+  else if (window.location.hash == '#tiers') { setActiveTab('info') }
+  // const tabs = document.querySelectorAll('.ac-tab');
+  // const tabContents = document.querySelectorAll('.ac-tab__content');
+  //
+  // tabs.forEach(tab => {
+  //   tab.addEventListener('click', () => {
+  //     const activeTab = document.querySelector('.ac-tab.active');
+  //     const activeTabContent = document.querySelector('.ac-tab__content.show');
+  //     console.log('activeTab', activeTab);
+  //     console.log('activeTabContent', activeTabContent);
+  //     activeTab.classList.remove('active');
+  //     activeTabContent.classList.remove('show');
+  //
+  //     tab.classList.add('active');
+  //     const tabId = tab.getAttribute('data-tab');
+  //     const tabContent = document.querySelector(`.ac-tab__content[data-tab="${tabId}"]`);
+  //     tabContent.classList.add('show');
+  //     window.location.hash = `#${tabId}`;
+  //     // if (window.location.hash == '#register') { showRegisterForm() }
+  //
+  //
+  //
+  //   });
+  // });
 
 
   // set content
@@ -464,7 +503,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   color: #666666;
   border-bottom: none;
 }
-
+.ac-account-order { color: #FF6B26!important; }
+.ac-account-order__paid { color: #00C980!important; }
 
 </style>
 <div class="clearfix my-account account">
@@ -485,7 +525,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       </div>
     </div>
     <div class="ac-account__body">
-      <div class="ac-tab__content show" data-tab="tab1">
+      <div class="ac-tab__content show" data-tab="info">
         <div class="ac-account__item ac-account__iteь--sm">
             <h3 class="ac-account__subtitle">my information</h3>
             <p class="ac-account__text" >{{ customer.name }}</p>
@@ -525,7 +565,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <button class="ac-btn ac-account__btn" type="button" data-account-edit="password">edit</button>
         </div>
       </div>
-      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tab3">
+      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="orders">
         <h1> My orders </h1>
         {% if customer.orders.size != 0 %}
           <table class="ac-acccount__order">
@@ -543,7 +583,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
               <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
                 <td>{{ order.name | link_to: order.customer_url }}</td>
                 <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
-                <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
+                <td><span class="status_{{ order.financial_status }} ac-account-order ac-account-order__{{ order.financial_status }}">{{ order.financial_status }}</span></td>
                 {% comment %}<td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>{% endcomment %}
                 <td><span class="total money">{{ order.total_price | money }}</span></td>
               </tr>
@@ -554,7 +594,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <p>You haven't placed any orders yet.</p>
         {% endif %}
       </div>
-
+      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tiers"></div>
+      <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="wishes"></div>
     </div>
    </div>
   </div>
