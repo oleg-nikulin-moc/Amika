@@ -1,10 +1,4 @@
 {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
-<style>
-  .is-disabled,
-  .is-disabled button {
-    pointer-events: none;
-  }
-  </style>
 {% comment %} {% include 'breadcrumb' %} {% endcomment %}
 <product id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state='true' class="product grid sticky-block">
 
@@ -222,8 +216,7 @@
                 <label for="Quantity">quantity:</label>
                 <input type="number" id="Quantity" name="quantity" value="1" min="1">
               </div>
-
-              <button
+              <button hidden
                 type="submit"
                 name="add"
                 class="add-to-cart cta button--primary {% unless customer %}is-disabled{% endunless %}"
@@ -240,7 +233,12 @@
                     <span class="price flex">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
                   {% endif %}
               </button>
-
+              {% unless customer %}
+                <a role="button"
+                   href="/account/login"
+                   class="ac-product-login cta button--primary"
+                   id="loginBtn">login</a>
+              {% endunless %}
               <a href="#" onclick="openKlaviyoPDPBisPopup(this); return false;" class="cta bis-trigger notify__me button--primary" handle="{{ product.handle }}" style="display:none;">notify me when available</a>
 
               
@@ -250,7 +248,8 @@
           <div id="atc-fixed" class="atc-container fixed">
             <div class="img-holder"><img /></div>
             <div class="flex atc-btns">
-              <button
+
+              <button hidden
                 type="submit"
                 name="add"
                 class="add-to-cart cta button--primary"
@@ -269,6 +268,14 @@
                   <span class="price fixed">{{ product.selected_variant.price | money_without_trailing_zeros }}</span>
                 {% endif %}
               </button>
+              {% unless customer %}
+                           <a
+                      role="button"
+                      href="/account/login"
+                      class="ac-product-login cta button--primary"
+                      id="loginBtn"
+                      >login</a>
+              {% endunless %}
               <a href="#" onclick="openKlaviyoPDPBisPopup(this); return false;" class="cta bis-trigger notify__me button--primary" handle="{{ product.handle }}" style="display:none;">notify me when available</a>
             </div>
           </div>
