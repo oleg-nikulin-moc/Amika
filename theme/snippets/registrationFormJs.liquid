@@ -405,11 +405,15 @@
 
     function showSpinner() {
         const spinner = document.querySelector('[data-spinner-wrap]');
+        const popups = document.querySelectorAll('.tingle-modal-box');
+        popups.forEach(popup => popup.style.overflow = 'hidden');
         spinner.style.display = 'block';
     }
 
     function hideSpinner() {
         const spinner = document.querySelector('[data-spinner-wrap]');
+        const popups = document.querySelectorAll('.tingle-modal-box');
+        popups.forEach(popup => popup.style.overflow = 'auto');
         spinner.style.display = 'none';
     }
 
