@@ -518,8 +518,6 @@
         background-color: #FEFAF0!important;
         text-align: left;
         padding: 80px 90px;
-        top: 0!important;
-        margin-top: 0!important;
     }
 
     .ac-popup.ac-popup__logout .tingle-modal-box.tingle-modal-box {
@@ -565,6 +563,10 @@
 
     /* Mobile Styles */
     @media screen and (max-width: 430.98px) {
+        .ac-popup.ac-popup .tingle-modal-box {
+            top: 0 !important;
+            margin-top: 0 !important;
+        }
         .tab {
             flex-direction: column;
         }
@@ -667,5 +669,5 @@
     /* Style scss  */
     #cart-wrap .cart__right .cart__right--outer .subtotal__section .subtotal .subtotal__data--section .label,
     .side-cart .subtotal__section .subtotal .subtotal__data--section .label {font-family: inherit;}
-    .side-cart.side-cart h1 {line-height: 1em;}
+    .side-cart.side-cart h1 {line-height: 1em; font-size: 18px;}
 </style>
