@@ -4,7 +4,6 @@
 {% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
 {% assign points = loyaltyProgram | plus: brandBoxPoints %}
 
-
 <script>
 $(function(){
     $('.scroll').click(function(){
@@ -62,7 +61,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const tabs = document.querySelectorAll('.ac-tab');
 
   tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (event) => {
+      event.preventDefault();
       const tabId = tab.getAttribute('data-tab');
       setActiveTab(tabId);
       window.location.hash = `#${tabId}`;
@@ -556,8 +556,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
   margin-bottom: 8px;
   max-width: 164px;
 }
-.ac-account-sidebar__link {
-
+@media screen and (max-width: 767.98px) {
+  .ac-account__header .ac-account-header__title.ac-account-header__title {
+    font-size: 24px;
+    line-height: 36px;
+    text-align: left;
+    word-break: break-word;
+  }
+  .ac-account-header__expire-points {
+    word-break: break-word;
+  }
+  .ac-account-header__expire-points span,
+  .ac-account-header__title span {
+    white-space: nowrap;
+  }
+  .ac-account-header__points.ac-account-header__points {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 8px;
+  }
+  .ac-account-header__expire-points.ac-account-header__expire-points{
+    font-size: 12px;
+    line-height: 15px;
+  }
 }
 </style>
 <div class="clearfix my-account account">
@@ -569,12 +590,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   <div class="my-account-content clearfix ac-account__wrap ac-tab__content show" data-tab="info">
     <div class="ac-account__header">
       <div class="ac-account-header__box ac-account-header__box--left">
-        <h1 class="ac-account-header__title hello">hello, {{ customer.name }}</h1>
+        <h1 class="ac-account-header__title hello">hello, <span>{{ customer.name }}</span></h1>
         <p class="hide">From your dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
       </div>
       <div class="ac-account-header__box ac-account-header__box--right">
         <p class="ac-account-header__points">{{ points }} points</p>
-        <p class="ac-account-header__expire-points">1800 points will expire in 15 days</p>
+        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in 15 days</span></p>
       </div>
     </div>
     <div class="ac-account__body">
@@ -628,6 +649,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
       </div>
       <div class="ac-account__body">
         {% if customer.orders.size != 0 %}
+        <div class="ac-table__container">
+          <div class="ac-table__row ac-table__row--header">
+            <div class="ac-table__cell"></div>
+            <div class="ac-table__cell">order placed</div>
+            <div class="ac-table__cell">order status</div>
+            <div class="ac-table__cell">order total</div>
+            <div class="ac-table__cell"></div>
+          </div>
+          <div class="table-content">
+            {% for order in customer.orders %}
+              <div class="ac-table__row ac-table__row--mobile">
+                <div class="ac-table__cell ac-table__cell--name">order {{ order.name}}</div>
+                <div class="ac-table__cell ac-table__cell--date">{{ order.created_at | date: "%b %d, %Y" }}</div>
+                <div class="ac-table__cell ac-table__cell--status ac-table__cell--status-{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</div>
+                <div class="ac-table__cell ac-table__cell--money">{{ order.total_price | money }}</div>
+                <div class="ac-table__cell ac-table__cell--action">
+                  <a class="ac-acccount-order__link" href="{{order.customer_url }}">
+                    <svg class="icon icon-close" role="presentation" width="8" height="14">
+                      <use href="#arrowIcon">
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% else %}
+          <p>You haven't placed any orders yet.</p>
+        {% endif %}
+        {% comment %}
+        {% if customer.orders.size != 0 %}
           <table class="ac-acccount__order">
             <thead>
               <tr class="head">
@@ -660,6 +712,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         {% else %}
           <p>You haven't placed any orders yet.</p>
         {% endif %}
+        {% endcomment %}
       </div>
     </div>
     <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tiers"></div>
