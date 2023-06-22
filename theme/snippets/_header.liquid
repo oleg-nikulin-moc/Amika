@@ -323,7 +323,6 @@
 
         function toggleClass(elementSelector, className) {
             const element = document.querySelector(elementSelector);
-            console.log('elementSelector', elementSelector)
             if (element) {
                 element.classList.toggle(className);
                 console.log('className', className)
@@ -331,7 +330,6 @@
         }
 
         const accountButton = document.querySelector('[data-account-btn]');
-        console.log('accountButton', accountButton)
         if (accountButton) {
             accountButton.addEventListener("click", function () {
                 toggleClass('.ac-nav-right__item--account', 'opened');
