@@ -1,13 +1,23 @@
 <div class="my-account-menu animation ac-account__sidebar">
   <ul class="ac-tabs">
-    <li class="animation ac-tab active" data-tab="info"><a role="button" class="ac-account-sidebar__link">my account</a></li>
-    <li class="animation ac-tab" data-tab="tiers"><a role="button" class="ac-account-sidebar__link">my tier</a></li>
+    <li class="animation ac-tab active" data-tab="info">
+      <a role="button" href="/account" class="ac-account-sidebar__link">my account</a>
+    </li>
+    <li class="animation ac-tab" data-tab="tiers">
+      <a role="button" href="/account" class="ac-account-sidebar__link">my tier</a>
+    </li>
     {% if template == "customers/account" %}
-      <li class="animation ac-tab" data-tab="orders"><a role="button" class="ac-account-sidebar__link">my orders</a></li>
+      <li class="animation ac-tab" data-tab="orders">
+        <a role="button" href="/account#orders" class="ac-account-sidebar__link">my orders</a>
+      </li>
     {% else %}
-      <li class="animation ac-tab" data-tab="tab4"><a href="/account#customer_orders" class="ac-account-sidebar__link">my orders</a></li>
+      <li class="animation ac-tab" data-tab="tab4">
+        <a href="/account#orders" class="ac-account-sidebar__link">my orders</a>
+      </li>
     {% endif %}
-    <li class="animation ac-tab" data-tab="wishes"><a href="/apps/iwish" class="ac-account-sidebar__link">my wishlist</a></li>
+    <li class="animation ac-tab" data-tab="wishes">
+      <a href="/apps/iwish" class="ac-account-sidebar__link">my wishlist</a>
+    </li>
   </ul>
   <a role="button" class="ac-account-sidebar__link" data-logout-btn="">logout</a>
 </div>

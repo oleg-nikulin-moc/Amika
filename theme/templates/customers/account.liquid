@@ -2,8 +2,11 @@
 {% assign passChangedDate = customer.metafields.amika_loyalty_program.password_was_updated %}
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
 {% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
+{% assign pointsExpireDate = customer.metafields.amika_loyalty_program.points.value['pointsExpireDate'] %}
 {% assign points = loyaltyProgram | plus: brandBoxPoints %}
-
+{% assign customerAditionalData = customer.metafields.amika_loyalty_program | json %}
+{% assign customerSalonName =  customer.metafields.amika_loyalty_program.customer_additional_info.value['salonName'] %}
+{% assign customerDistributorName =  customer.metafields.amika_loyalty_program.customer_additional_info.value['distributorName'] %}
 
 <script>
 $(function(){
@@ -15,8 +18,20 @@ $(function(){
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
+  {% comment %}console.log('customerAditionalDataNew', {{ customerAditionalData }});{% endcomment %}
+  {% comment %}const customerData = JSON.parse('{{ customerAditionalData | escape }}');{% endcomment %}
+  console.log('pointsExpireDate', '{{ pointsExpireDate }}');
+
   const formData = {};
-  const changedData = {};
+  const changedDataSalon = {};
+  const changedDataInfo = {};
+  const destributorEl = document.querySelector('[data-account-distributor]');
+  const destributorValue = "{{ customerDistributorName }}";
+  if (destributorValue) {
+    const modifiedStr = destributorValue.replace(/([A-Z])/g, ' $1');
+    destributorEl.textContent = modifiedStr;
+  }
+
   let valid = true;
   const accountEditPopup = new tingle.modal({
     footer: false,
@@ -62,7 +77,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const tabs = document.querySelectorAll('.ac-tab');
 
   tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (event) => {
+      event.preventDefault();
       const tabId = tab.getAttribute('data-tab');
       setActiveTab(tabId);
       window.location.hash = `#${tabId}`;
@@ -113,8 +129,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   function showBlocks(type) {
     accountBlocks.forEach(accountBlock => {
       if (accountBlock.getAttribute('data-account-block') === type) {
-        accountBlock.classList.remove('hide')
-        accountBlock.classList.add('show')
+        const form = document.querySelector(`[data-account-block="${type}"]`);
+        accountBlock.classList.remove('hide');
+        accountBlock.classList.add('show');
+        trackFormFirst(form);
       }
     });
   }
@@ -188,11 +206,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 
-  function trackFormChanges() {
-    const form = document.querySelector('[data-account-form]');
+  function trackFormChanges(type) {
+    console.log('trackFormChanges type', type)
+    const form = document.querySelector(`[data-account-block=${type}]`);
+    console.log('trackFormChanges foem', form)
     // Відстежуємо зміни у полях форми
     form.querySelectorAll('.ac-form__field').forEach(input => {
-      changedData[input.name] = input.value;
+      if (type === 'salon') {
+        changedDataSalon[input.name] = input.value;
+        console.log('input.value;', input.value)
+      } else if (type === 'info') {
+        changedDataInfo[input.name] = input.value;
+        console.log('input.value;', input.value)
+      }
     });
   }
 
@@ -234,9 +260,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const saveInfo = document.querySelector('[data-info-save="info"]');
   saveInfo.addEventListener("click", (event) => {
     console.log('click info btn');
-    trackFormChanges();
+    const type =  event.target.getAttribute('data-info-save');
+    console.log('type',  type);
+    trackFormChanges(type);
 
-    const diff = compareObjects(formData, changedData);
+    const diff = compareObjects(formData, changedDataInfo);
     const formDataNew = {
       customer: {
         id: '{{ customer.id }}',
@@ -378,6 +406,55 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.log('type',  type);
     // document.querySelector(`[data-account-block="${type3}"]`);
     handleSaveButtonClick(event, type);
+  });
+
+  // Save Salon Data data-info-save="salon"
+  const saveSalonInfo = document.querySelector('[data-info-save="salon"]');
+  saveSalonInfo.addEventListener("click", (event) => {
+    const type =  event.target.getAttribute('data-info-save');
+    console.log('click info btn');
+    trackFormChanges(type);
+    console.log('formData salon', formData);
+    console.log('changedData salon', changedDataSalon);
+    const diff = compareObjects(changedDataSalon, formData);
+    const formDataNew = {
+      customer: {
+        id: '{{ customer.id }}',
+        email: '{{ customer.email }}'
+      },
+      'customer_data': {
+        addresses: diff,
+      },
+    }
+    // виводимо об'єкт з даними зміненого інпуту
+    console.log('formDataNew', formDataNew);
+
+    if(Object.keys(diff).length === 0) {
+      console.log('object empty');
+    } else {
+      fetch('https://ckl0vod2t7.execute-api.us-east-1.amazonaws.com/development/customer-update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataNew)
+      })
+              .then(response => response.json())
+              .then(response => {
+                if (response.success) {
+                  // Success response
+                  console.log('Form submitted successfully');
+                  closePopup();
+                } else {
+                  // Error response
+                  console.log('Form submission error:', response.error_message);
+                  alert(response.error_message);
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              });
+    }
   });
 });
 </script>
@@ -556,8 +633,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
   margin-bottom: 8px;
   max-width: 164px;
 }
-.ac-account-sidebar__link {
-
+@media screen and (max-width: 767.98px) {
+  .ac-account__header .ac-account-header__title.ac-account-header__title {
+    font-size: 24px;
+    line-height: 36px;
+    text-align: left;
+    word-break: break-word;
+  }
+  .ac-account-header__expire-points {
+    word-break: break-word;
+  }
+  .ac-account-header__expire-points span,
+  .ac-account-header__title span {
+    white-space: nowrap;
+  }
+  .ac-account-header__points.ac-account-header__points {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 8px;
+  }
+  .ac-account-header__expire-points.ac-account-header__expire-points{
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .ac-block__wrap {
+    flex-direction: column;
+  }
 }
 </style>
 <div class="clearfix my-account account">
@@ -569,12 +670,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   <div class="my-account-content clearfix ac-account__wrap ac-tab__content show" data-tab="info">
     <div class="ac-account__header">
       <div class="ac-account-header__box ac-account-header__box--left">
-        <h1 class="ac-account-header__title hello">hello, {{ customer.name }}</h1>
+        <h1 class="ac-account-header__title hello">hello, <span>{{ customer.name }}</span></h1>
         <p class="hide">From your dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
       </div>
       <div class="ac-account-header__box ac-account-header__box--right">
         <p class="ac-account-header__points">{{ points }} points</p>
-        <p class="ac-account-header__expire-points">1800 points will expire in 15 days</p>
+        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in 15 days</span></p>
       </div>
     </div>
     <div class="ac-account__body">
@@ -587,21 +688,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
         </div>
         <div class="ac-account__item ac-account__iteь--sm">
           <h3 class="ac-account__subtitle">primary distributor</h3>
-          <p class="ac-account__text" data-account-edit2="distributor">MAKA Beauty Systems</p>
+          <p class="ac-account__text ac-text--capitalize" data-account-distributor>MAKA Beauty Systems</p>
         </div>
         <div class="ac-account__item ac-account__iteь--sm">
             <h3 class="ac-account__subtitle">salon information</h3>
             <div class="grid address note">
               <div class="grid__item one-half medium--one-whole">
                 {% if customer.default_address != nil %}
-                <p class="address_title">Shipping</p>
-                <p>{{ customer.default_address.address1 }}</p>
-                {% if customer.default_address.address2 != "" %}
-                <p>{{ customer.default_address.address2 }}</p>
-                {% endif %}
-                <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
-                <p>{{ customer.default_address.zip}}</p>
-                <p>{{ customer.default_address.phone }}</p>
+                  <p class="address_title">Shipping</p>
+                  <p>{{ customer.default_address.address1 }}</p>
+                  {% if customer.default_address.address2 != "" %}
+                    <p>{{ customer.default_address.address2 }}</p>
+                  {% endif %}
+                  <p>{{ customer.default_address.city}},
+                    {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}
+                     {{customer.default_address.country}}</p>
+                  <p>{{ customer.default_address.zip}}</p>
+                  <p>{{ customer.default_address.phone }}</p>
                 {% endif %}
               </div>
             </div>
@@ -627,6 +730,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
         </div>
       </div>
       <div class="ac-account__body">
+        {% if customer.orders.size != 0 %}
+        <div class="ac-table__container">
+          <div class="ac-table__row ac-table__row--header">
+            <div class="ac-table__cell"></div>
+            <div class="ac-table__cell">order placed</div>
+            <div class="ac-table__cell">order status</div>
+            <div class="ac-table__cell">order total</div>
+            <div class="ac-table__cell"></div>
+          </div>
+          <div class="table-content">
+            {% for order in customer.orders %}
+              <div class="ac-table__row ac-table__row--mobile">
+                <div class="ac-table__cell ac-table__cell--name">order {{ order.name}}</div>
+                <div class="ac-table__cell ac-table__cell--date">{{ order.created_at | date: "%b %d, %Y" }}</div>
+                <div class="ac-table__cell ac-table__cell--status ac-table__cell--status-{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</div>
+                <div class="ac-table__cell ac-table__cell--money">{{ order.total_price | money }}</div>
+                <div class="ac-table__cell ac-table__cell--action">
+                  <a class="ac-acccount-order__link" href="{{order.customer_url }}">
+                    <svg class="icon icon-close" role="presentation" width="8" height="14">
+                      <use href="#arrowIcon">
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% else %}
+          <p>You haven't placed any orders yet.</p>
+        {% endif %}
+        {% comment %}
         {% if customer.orders.size != 0 %}
           <table class="ac-acccount__order">
             <thead>
@@ -660,6 +794,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         {% else %}
           <p>You haven't placed any orders yet.</p>
         {% endif %}
+        {% endcomment %}
       </div>
     </div>
     <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tiers"></div>
@@ -733,14 +868,51 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="password">save</button>
       </div>
     </div>
-    <div class="ac-block--horizontal" data-account-block="salon">
+    <form class="ac-block--horizontal" data-account-block="salon">
       <h2>edit salon information</h2>
       <div class="ac-block__wrap">
-        {% render 'shipping_address', salon: true %}
+        <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset">
+          <label for="salon_name" class="ac-form__label login">Salon Name*</label>
+          <input value="{{ customerSalonName }}" type="text" name="salon_name" id="salon_name" pattern="/^[A-Za-z ]{2,50}$/" placeholder="Salon Name" required class="large ac-form__field" size="30" />
+          <span id="salonNameError" class="ac-text--error"></span>
+        </div>
+        <div id="salon_name_wrap-empty" class="clearfix form-row register-form__fieldset"></div>
+        <div id="salon-adress_wrap_1" class="clearfix form-row register-form__fieldset">
+          <label for="salon_address" class="ac-form__label login">Salon address line 1*</label>
+          <input value="{% if customer.default_address.address1 != "" %}{{ customer.default_address.address1 }}{% endif %}" type="text" name="salon_address" id="salon_address" required placeholder="Salon address line 1" class="large ac-form__field{% if form.errors contains 'password' %} error{% endif %}" size="30"/>
+          <span id="salonAddressError" class="ac-text--error"></span>
+        </div>
+        <div id="salon-adress_wrap_2" class="clearfix form-row register-form__fieldset">
+          <label for="salonAddress2" class="ac-form__label login">Salon address line 2</label>
+          <input value="{% if customer.default_address.address2 != "" %}{{ customer.default_address.address2 }}{% endif %}" type="text" name="salonAddress2" id="salonAddress2" placeholder="Salon address line 2" class="large ac-form__field password{% if form.errors contains '' %} error{% endif %}" size="30"/>
+          <span id="salonAddress2Error" class="ac-text--error"></span>
+        </div>
+        <div id="city_wrap" class="clearfix form-row register-form__fieldset">
+          <label for="city" class="ac-form__label login">City*</label>
+          <input value="{% if customer.default_address.city != "" %}{{ customer.default_address.city}}{% endif %}" type="text" name="city" id="city" placeholder="city" required class="large ac-form__field {% if form.errors contains 'password' %} error{% endif %}" size="30" />
+          <span id="cityError" class="ac-text--error"></span>
+        </div>
+
+        <div id="state_wrap" class="clearfix form-row register-form__fieldset">
+          <label for="province" class="ac-form__label login">State/province*</label>
+          <input value="{% if customer.default_address.province_code %}{{customer.default_address.province_code}}{% endif %}" name="state" type="text" placeholder="province" required id="state" class="large ac-form__field"/>
+          <span id="provinceError" class="ac-text--error"></span>
+        </div>
+        <div id="zip_wrap" class="clearfix form-row register-form__fieldset">
+          <label for="zip" class="ac-form__label login">zip/postal code*</label>
+          <input value="{% if customer.default_address.zip %}{{ customer.default_address.zip}}{% endif %}" type="text"  id="zip" placeholder="zip/postal code" required name="zip" class="large ac-form__field{% if form.errors contains 'zip' %} error{% endif %}" size="30"/>
+          <span id="zipError" class="ac-text--error"></span>
+        </div>
+        <div id="country_wrap" class="clearfix form-row register-form__fieldset">
+          <label for="country" class="ac-form__label login">Country*</label>
+          {% comment %}{#% render 'country_selector'%}{% endcomment %}
+          <input value="{% if customer.default_address.country %}{{customer.default_address.country}}{% endif %}" type="text" id="country" name="country" class="large ac-form__field">
+          <span id="countryError" class="ac-text--error"></span>
+        </div>
       </div>
       <div style="text-align: right;" class="">
         <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
         <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="salon">save</button>
       </div>
-    </div>
+    </form>
 </div>
