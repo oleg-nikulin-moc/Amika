@@ -2,11 +2,17 @@
 {% assign passChangedDate = customer.metafields.amika_loyalty_program.password_was_updated %}
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
 {% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
-{% assign pointsExpireDate = customer.metafields.amika_loyalty_program.points.value['pointsExpireDate'] %}
 {% assign points = loyaltyProgram | plus: brandBoxPoints %}
 {% assign customerAditionalData = customer.metafields.amika_loyalty_program | json %}
 {% assign customerSalonName =  customer.metafields.amika_loyalty_program.customer_additional_info.value['salonName'] %}
 {% assign customerDistributorName =  customer.metafields.amika_loyalty_program.customer_additional_info.value['distributorName'] %}
+{% assign pointsExpireDate = customer.metafields.amika_loyalty_program.points.value['pointsExpireDate'] %}
+{% assign pointsNowDate = 'now' | date: '%Y-%m-%d' %}
+{% assign expireDateTimestamp = pointsExpireDate | date: '%s' %}
+{% assign todayTimestamp = pointsNowDate | date: '%s' %}
+
+{% assign daysDifference = expireDateTimestamp | minus: todayTimestamp | divided_by: 86400 | minus: 1 %}
+
 
 <script>
 $(function(){
@@ -18,10 +24,6 @@ $(function(){
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  {% comment %}console.log('customerAditionalDataNew', {{ customerAditionalData }});{% endcomment %}
-  {% comment %}const customerData = JSON.parse('{{ customerAditionalData | escape }}');{% endcomment %}
-  console.log('pointsExpireDate', '{{ pointsExpireDate }}');
-
   const formData = {};
   const changedDataSalon = {};
   const changedDataInfo = {};
@@ -483,6 +485,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   padding-bottom: 0;
   border: none;
 }
+.ac-account__header .ac-account-header__title span {
+  float: none;
+}
 .ac-account-header__box--right {
   text-align: right;
 }
@@ -491,6 +496,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   font-size: 18px;
   line-height: 24px;
   color: #FF6B26;
+  margin-bottom: 8px;
 }
 .ac-account__header .ac-account-header__expire-points {
   font-weight: 400;
@@ -633,6 +639,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   margin-bottom: 8px;
   max-width: 164px;
 }
+.ac-form__action {
+  text-align: right;
+  display: inline-flex;
+  margin-left: auto;
+}
 @media screen and (max-width: 767.98px) {
   .ac-account__header .ac-account-header__title.ac-account-header__title {
     font-size: 24px;
@@ -650,7 +661,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   .ac-account-header__points.ac-account-header__points {
     font-size: 18px;
     line-height: 24px;
-    margin-bottom: 8px;
   }
   .ac-account-header__expire-points.ac-account-header__expire-points{
     font-size: 12px;
@@ -658,6 +668,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
   .ac-block__wrap {
     flex-direction: column;
+  }
+  .ac-account__item.ac-account__item {
+    padding: 24px;
+    background-color: #fff;
+    margin-bottom: 16px;
+  }
+  .ac-account__item--info { order: 1; }
+  .ac-account__item--distributor { order: 3; }
+  .ac-account__item--salon { order: 2; }
+  .ac-account__item--password { order: 4; }
+
+  .ac-account__body.ac-account__body {
+    padding: 0;
+    background-color: transparent;
+  }
+  .ac-popup__account-edit .register-form__fieldset {
+    width: 100%;
+  }
+  .ac-form__action {
+    margin-left: 0;
   }
 }
 </style>
@@ -675,22 +705,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
       </div>
       <div class="ac-account-header__box ac-account-header__box--right">
         <p class="ac-account-header__points">{{ points }} points</p>
-        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in 15 days</span></p>
+        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in {{ daysDifference }} days</span></p>
       </div>
     </div>
     <div class="ac-account__body">
-        <div class="ac-account__item ac-account__iteь--sm">
+        <div class="ac-account__item ac-account__item--info ac-account__item--sm">
             <h3 class="ac-account__subtitle">my information</h3>
             <p class="ac-account__text" >{{ customer.name }}</p>
             <p class="ac-account__text" >{{ customer.email }}</p>
             <p class="ac-account__text">{{ customer.phone }}</p>
             <button class="ac-btn ac-account__btn" type="button" data-account-edit="info">edit</button>
         </div>
-        <div class="ac-account__item ac-account__iteь--sm">
+        <div class="ac-account__item ac-account__item--distributor ac-account__item--sm">
           <h3 class="ac-account__subtitle">primary distributor</h3>
           <p class="ac-account__text ac-text--capitalize" data-account-distributor>MAKA Beauty Systems</p>
         </div>
-        <div class="ac-account__item ac-account__iteь--sm">
+        <div class="ac-account__item ac-account__item--salon ac-account__item--sm">
             <h3 class="ac-account__subtitle">salon information</h3>
             <div class="grid address note">
               <div class="grid__item one-half medium--one-whole">
@@ -711,7 +741,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             <button class="ac-btn ac-account__btn" type="button" data-account-edit="salon">edit</button>
             <a id="view_address" style="display: none!important;" href="/account/addresses">EDIT <span class="hide">({{ customer.addresses_count }})</span></a>
           </div>
-        <div class="ac-account__item ac-account__iteь--sm">
+        <div class="ac-account__item ac-account__item--password ac-account__item--sm">
           <h3 class="ac-account__subtitle">password</h3>
           <p class="ac-account__text" data-account-password>**********</p>
           {% if passChangedDate %}
@@ -837,8 +867,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <span id="phoneError" class="ac-text--error"></span>
         </div>
       </div>
-      <div style="text-align: right;" class="">
-        <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+      <div class="ac-form__action">
+        <button class="ac-form__btn ac-form__btn--solid ac-offset-right--sm" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
         <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" disabled data-info-save="info">save</button>
       </div>
     </form>
@@ -863,8 +893,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <span id="confirmPasswordError" class="ac-text--error"></span>
         </div>
       </div>
-      <div style="text-align: right;" class="">
-        <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+      <div class="ac-form__action">
+        <button class="ac-form__btn ac-form__btn--solid ac-offset-right--sm" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
         <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="password">save</button>
       </div>
     </div>
@@ -910,8 +940,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
           <span id="countryError" class="ac-text--error"></span>
         </div>
       </div>
-      <div style="text-align: right;" class="">
-        <button class="ac-form__btn" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
+      <div class="ac-form__action">
+        <button class="ac-form__btn ac-form__btn--solid ac-offset-right--sm" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
         <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="salon">save</button>
       </div>
     </form>
