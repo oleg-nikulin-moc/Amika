@@ -55,9 +55,9 @@
     {% comment %}{#% render 'country_selector'%}{% endcomment %}
 
     <select id="country" name="country" class="ac-form__selector form-control">
-        <option value="">Select Country</option>
         <option value="usa">USA</option>
-        <option value="canada">Canada</option>
+        {% comment %}<option value="">Select Country</option>{% endcomment %}
+        {% comment %}<option value="canada">Canada</option>{% endcomment %}
     </select>
     <span id="countryError" class="ac-text--error"></span>
 </div>

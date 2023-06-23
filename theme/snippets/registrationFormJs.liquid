@@ -355,35 +355,37 @@
         ]
     };
 
-    stateSelect.disabled = true;
+    // stateSelect.disabled = true;
     citySelect.disabled = true;
     zipField.disabled = true;
 
-        function renderStates(country) {
-            stateSelect.innerHTML = ''; //очищаємо список штатів перед додаванням нових елементів
+    function renderStates(country) {
+        stateSelect.innerHTML = ''; //очищаємо список штатів перед додаванням нових елементів
 
-            if (country in statesData) {
-                for (let i = 0; i < statesData[country].length; i++) {
-                    let option = document.createElement('option');
-                    option.value = statesData[country][i];
-                    option.text = statesData[country][i];
-                    stateSelect.appendChild(option);
-                }
-                stateSelect.disabled = false;
-            } else {
-                stateSelect.disabled = true;
+        if (country in statesData) {
+            for (let i = 0; i < statesData[country].length; i++) {
+                let option = document.createElement('option');
+                option.value = statesData[country][i];
+                option.text = statesData[country][i];
+                stateSelect.appendChild(option);
             }
+            stateSelect.disabled = false;
+        } else {
+            stateSelect.disabled = true;
         }
+    }
 
-        countrySelect.addEventListener('change', function() {
-            renderStates(this.value);
-        });
+    // countrySelect.addEventListener('change', function() {
+    //     renderStates(this.value);
+    // });
 
-        stateSelect.addEventListener('change', () => {
-            citySelect.disabled = false;
-            zipField.disabled = false;
-        });
-    })
+    renderStates('usa');
+
+    stateSelect.addEventListener('change', () => {
+        citySelect.disabled = false;
+        zipField.disabled = false;
+    });
+})
 
     // Show or hide the image upload value
 
@@ -440,6 +442,14 @@
 
         event.preventDefault(); // Stop the default form submission
         const fileInput = document.getElementById('file-input');
+        const phoneNumber = form.phone.value.trim().replace(/-/g, ''); // and remove dashes
+        let phoneWithCountryCode = "";
+        if (phoneNumber !== "") {
+            phoneWithCountryCode = "+1" + phoneNumber; // If the phone number is not empty, add "+1" .
+        } else {
+            phoneWithCountryCode = phoneNumber; // If the phone number is empty, leave it as is.
+        }
+
         const formData = {
             customer: {
                 first_name: form.firstName.value,
@@ -448,7 +458,7 @@
                 account_number:  form.account_number.value.replace(/-/g, ''),
                 password: form.password.value,
                 password_confirmation: form.confirmPassword.value,
-                phone: "+1" + form.phone.value.replace(/-/g, ''),
+                phone: phoneWithCountryCode,
                 salon_name: form.salon_name.value,
                 distributor_name: form.distributorName.value,
                 distributor_email: form.email.value,
