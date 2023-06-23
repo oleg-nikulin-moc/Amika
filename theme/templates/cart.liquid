@@ -183,7 +183,6 @@
                   {% comment %}<span class="free-text">You've earned Free Shipping.</span>{% endcomment %}
                     <span class="free-text">{{ freeshipaway | times: 100 | money }} in order more that customer has</span>
                   {% endif %}
-                  <div class="free-shipping-bar"></div>
                 </div>
               </div>
           {% endif %}
@@ -417,29 +416,7 @@
           {% if salonExists == false %}
             {% if customer.tags contains 'HMS' or customer.tags contains 'Pro' or customer.tags contains 'BrandAmbassadorUS' %}
             {% else %}
-            <div class="free__shipping--bar small--hide">
-              <div class="free-shipping">
-                {% assign freeShip = points %}
-                {% assign loyalty = false %}
-                {% assign total_price = cart.total_price | money_without_currency %}
-                {% if excludePrice > 0 %}
-                {% assign excludePrice = excludePrice | money_without_currency %}
-                {% assign total_price = total_price | minus: excludePrice %}
-                {% endif %}
-                {% assign percentageFreeShip = total_price | times: 100  | divided_by: freeShip %}
-                {% assign freeshipaway = freeShip | minus: total_price %}
-                {% if percentageFreeShip < 100 %}
-                  {% assign loyalty = true %}
-                  <span class="free-text">Loyalty Program: {{ points }} points</span><br><br>
-                  <span>You're {{ freeshipaway | times: 100 | money }} away from qualifying for free shipping</span>
-                {% else %}
-                {% comment %}<span class="free-text">You've earned Free Shipping.</span>{% endcomment %}
-                  <span class="free-text">Loyalty Program: {{ loyaltyProgram }} points</span><br><br>
-                  <span class="free-text">{{ freeshipaway | times: 100 | money }} in order more that customer has</span>
-                {% endif %}
-                <div class="free-shipping-bar"></div>
-              </div>
-            </div>
+                <p class="free-text" style="text-align: left;">Loyalty Program: {{ points }} points</p>
             {% endif %}
           {% else %}
             <div class="free__shipping--bar small--hide">
@@ -497,17 +474,20 @@
       background: #E5E8EB;
       margin-top: 8px;
     }
-    {% assign total_price = total_price | times: 100 %}
-    {% assign shippingProgress = total_price | divided_by: loyaltyProgram | at_most: 100 %}
-    .free-shipping-bar:after {
-      width: {{ shippingProgress | round }}%;
-      content: '';
-      position: absolute;
-      background-color: #000000;
-      top: 0;
-      bottom: 0;
-      left: 0;
-    }
+
+    {% comment %}
+      {% assign total_price = total_price | times: 100 %}
+      {% assign shippingProgress = total_price | divided_by: loyaltyProgram | at_most: 100 %}
+      .free-shipping-bar:after {
+        width: {{ shippingProgress | round }}%;
+        content: '';
+        position: absolute;
+        background-color: #000000;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+    {% endcomment %}
     .loader__wrapper {padding: 20px 0;}
     .donateLoader {
       border: .2em solid currentcolor;
