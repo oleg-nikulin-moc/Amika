@@ -14,7 +14,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<link rel="shortcut icon" type="image/png" href="{{ 'favicon.png' | asset_url }}">
     <meta name='facebook-domain-verification' content='2yl6dzv09wlqk6y1ucabeu4omsiveg' />
-
+    {{ 'cryptoCore.js' | asset_url | script_tag }}
+    {{ 'cryptoSha256.js' | asset_url | script_tag }}
 	<script>
 		var showPageloadPopup = ('{{ settings.enable_promotion_popup }}' === 'true');
   </script>

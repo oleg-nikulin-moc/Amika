@@ -1,3 +1,13 @@
+
+<script type="text/javascript">
+    const message = 'Привіт, світ!';
+    const hashedMessage = CryptoJS.SHA256(message).toString();
+
+    console.log('Хешоване повідомлення:', hashedMessage);
+
+    // var encrypted = CryptoJS.SHA256.encrypt('my message', 'secret key 123').toString()
+    // console.log('encrypted', encrypted)
+</script>
 <script>
     function validateForm() {
         const tabs = document.getElementsByClassName("tab");

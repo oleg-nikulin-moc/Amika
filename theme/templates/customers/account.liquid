@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       });
     });
   }
-
+  // Info Save
   const saveInfo = document.querySelector('[data-info-save="info"]');
   saveInfo.addEventListener("click", (event) => {
     console.log('click info btn');
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.log('type',  type);
     trackFormChanges(type);
 
-    const diff = compareObjects(formData, changedDataInfo);
+    const diff = compareObjects(changedDataInfo, formData);
     const formDataNew = {
       customer: {
         id: '{{ customer.id }}',
@@ -477,7 +477,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <style>
-.account .container { padding-top: 0; }
+.templateCustomersAccount {
+  overflow: hidden;
+}
+.account .container { padding-top: 40px; }
 .account #customer_orders { margin-top: 0; }
 
 .ac-account__wrap.my-account-content {
@@ -493,7 +496,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   margin-bottom: 16px;
 }
 .ac-account__header .ac-account-header__title {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 28px;
   line-height: 1.6;
   color: #000000;
@@ -535,9 +538,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 .ac-account__item--sm {
   max-width: 254px;
 }
-.ac-account__subtitle {
+.ac-account__subtitle.ac-account__subtitle {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 18px;
   line-height: 24px;
   text-transform: lowercase;
@@ -545,14 +548,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
   border-bottom: 2px solid #000;
   padding-bottom: 8px;
 }
-.ac-account__text {
+.ac-account__text.ac-account__text {
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
   color: #000;
 }
-.ac-account__text:not:last-of-type {
+p.ac-account__text:not(:last-of-type) {
   margin-bottom: 24px;
+}
+p.ac-account__text:last-of-type {
+  margin-bottom: 16px;
 }
 
 .ac-btn {
@@ -724,7 +730,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       </div>
       <div class="ac-account-header__box ac-account-header__box--right">
         <p class="ac-account-header__points">{{ points }} points</p>
-        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in {{ daysDifference }} days</span></p>
+        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in</span><span> {{ daysDifference }} days</span></p>
       </div>
     </div>
     <div class="ac-account__body">
