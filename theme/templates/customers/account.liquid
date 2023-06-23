@@ -422,13 +422,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const type =  event.target.getAttribute('data-info-save');
     const form = document.querySelector(`[data-account-block="${type}"]`)
     const formId = form.getAttribute('id');
-    console.log('form id:', formId);
+    let salonName = '';
     trackFormChanges(type);
-    console.log('formData salon', formData);
-    console.log('changedData salon', changedDataSalon);
     const diff = compareObjects(changedDataSalon, formData);
     if (Object.keys(diff).length !== 0) {
       diff.id = formId;
+    }
+    if (diff.hasOwnProperty('salon_name')) {
+      salonName = diff.salon_name;
+      delete diff.salon_name;
     }
     const formDataNew = {
       customer: {
@@ -438,6 +440,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       'customer_data': {
         addresses: diff,
       },
+    }
+    if (salonName !== '') {
+      formDataNew.customer_data.salon_name = salonName;
     }
     // виводимо об'єкт з даними зміненого інпуту
     console.log('formDataNew', formDataNew);
