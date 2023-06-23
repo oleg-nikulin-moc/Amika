@@ -76,7 +76,7 @@
             });
 
             // Phone validation
-            if (!validatePhoneNumber(phoneNumber)) {
+            if (phoneNumber !== '' && !validatePhoneNumber(phoneNumber) ) {
                 console.log('phone not valid')
                 phoneNumberError.style.display = 'block';
                 phoneNumberError.textContent = "Incorrect phone number";
@@ -545,22 +545,6 @@
                     // Error response
                     console.log('Form submission error:', response.error_message);
                     hideSpinner();
-                    // Highlight invalid fields
-                    // const emailField = form.email;
-                    // const emailError = document.getElementById("emailError");
-
-                    // window.nextPrev(-2);
-                    // emailField.classList.add('invalid');
-                    // uoploadBlock.style.display = 'block';
-                    // emailError.textContent = "Email already exists";
-                    // if (response.error_message.includes("Phone has already been taken")) {
-                    //     console.log("Phone number has already been taken.");
-                    //     console.log(response.error_message);
-                    // }
-                    // if (response.field_name === 'email') {
-                    //     console.log(response.error_message);
-                    // }
-
 
                     const responseErrors = response.errors
 
@@ -569,21 +553,16 @@
                     responseErrors.forEach(function(error) {
                         const fieldId = error.field_name;
                         const errorMessage = error.error_message;
-                           console.log(fieldId)
                         if (fieldId == 'email') {
                             window.nextPrev(-2);
                             const fieldElement = document.getElementById('email');
                             const errorElement = document.getElementById('emailError');
-
-                            console.log('el', fieldElement);
                             fieldElement.classList.add("invalid");
                             errorElement.style.display = "block";
                             errorElement.textContent = errorMessage;
                         } else if (fieldId == 'account_number') {
                             const fieldElement = document.getElementById('account_number');
                             const errorElement = document.getElementById('accountNumberError');
-
-                            console.log('el ac', fieldElement);
                             fieldElement.classList.add("invalid");
                             errorElement.style.display = "block";
                             errorElement.textContent = errorMessage;
@@ -591,7 +570,6 @@
                             window.nextPrev(-2);
                             const fieldElement = document.getElementById(fieldId);
                             const errorElement = document.getElementById(`${fieldId}Error`);
-                            console.log('el', errorElement);
                             fieldElement.classList.add("invalid");
                             errorElement.style.display = "block";
                             errorElement.textContent = errorMessage;
