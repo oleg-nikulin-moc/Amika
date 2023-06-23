@@ -480,15 +480,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 .templateCustomersAccount {
   overflow: hidden;
 }
-.account .container { padding-top: 40px; }
+.account .container { padding: 40px 90px;}
 .account #customer_orders { margin-top: 0; }
 
 .ac-account__wrap.my-account-content {
+  padding: 40px 0 0;
   background-color: transparent;
   border: none;
 }
-.ac-account__block {
-
+.templateCustomersAccount #header .container-fluid {
+  padding-right: 91px;
+  padding-left: 91px;
 }
 .ac-account__header {
   display: flex;
@@ -528,7 +530,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   display: flex;
   flex-wrap: wrap;
   background-color: #FFFFFF;
-  padding: 30px 40px;
+  padding-top: 30px;
 }
 .ac-account__item {
   padding: 56px;
@@ -540,7 +542,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 }
 .ac-account__subtitle.ac-account__subtitle {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 18px;
   line-height: 24px;
   text-transform: lowercase;
@@ -666,6 +668,14 @@ p.ac-account__text:last-of-type {
   display: inline-flex;
   margin-left: auto;
 }
+@media screen and (max-width: 1023.98px) {
+  .templateCustomersAccount #header .container-fluid,
+  .account .container {
+    padding-top: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
 @media screen and (max-width: 767.98px) {
   .ac-account__header .ac-account-header__title.ac-account-header__title {
     font-size: 24px;
@@ -747,22 +757,18 @@ p.ac-account__text:last-of-type {
         </div>
         <div class="ac-account__item ac-account__item--salon ac-account__item--sm">
             <h3 class="ac-account__subtitle">salon information</h3>
-            <div class="grid address note">
-              <div class="grid__item one-half medium--one-whole">
-                {% if customer.default_address != nil %}
-                  <p class="address_title">Shipping</p>
-                  <p>{{ customer.default_address.address1 }}</p>
-                  {% if customer.default_address.address2 != "" %}
-                    <p>{{ customer.default_address.address2 }}</p>
-                  {% endif %}
-                  <p>{{ customer.default_address.city}},
-                    {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}
-                     {{customer.default_address.country}}</p>
-                  <p>{{ customer.default_address.zip}}</p>
-                  <p>{{ customer.default_address.phone }}</p>
-                {% endif %}
-              </div>
-            </div>
+            {% if customer.default_address != nil %}
+              <p class="ac-account__text">Shipping</p>
+              <p class="ac-account__text">{{ customer.default_address.address1 }}</p>
+              {% if customer.default_address.address2 != "" %}
+                <p class="ac-account__text">{{ customer.default_address.address2 }}</p>
+              {% endif %}
+              <p class="ac-account__text">{{ customer.default_address.city}},
+                {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}
+                 {{customer.default_address.country}}</p>
+              <p class="ac-account__text">{{ customer.default_address.zip}}</p>
+              <p class="ac-account__text">{{ customer.default_address.phone }}</p>
+            {% endif %}
             <button class="ac-btn ac-account__btn" type="button" data-account-edit="salon">edit</button>
             <a id="view_address" style="display: none!important;" href="/account/addresses">EDIT <span class="hide">({{ customer.addresses_count }})</span></a>
           </div>
