@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const type =  document.querySelector('[data-account-block].show').getAttribute('data-account-block');
       const form = document.querySelector(`[data-account-block="${type}"]`);
       console.log('type', type, form)
-      if (type === 'info') {
-        checkFieldsChanges(form, type);
-        trackFormFirst(form);
-      }
+      // if (type === 'info') {
+      //   // checkFieldsChanges(form, type);
+      //   trackFormFirst(form);
+      // }
     },
     onClose: function() {
       console.log('modal closed');
@@ -131,10 +131,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
   function showBlocks(type) {
     accountBlocks.forEach(accountBlock => {
       if (accountBlock.getAttribute('data-account-block') === type) {
-        const form = document.querySelector(`[data-account-block="${type}"]`);
         accountBlock.classList.remove('hide');
         accountBlock.classList.add('show');
-        trackFormFirst(form);
+        const type = accountBlock.getAttribute('data-account-block');
+        console.log('accountBlock', type);
+        if (type === 'info' || type === 'salon') {
+          console.log('popup type', type);
+          checkFieldsChanges(accountBlock, type);
+        }
+        trackFormFirst(accountBlock);
       }
     });
   }
@@ -248,7 +253,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       }
       return false; // Якщо зміни не виявлено в жодному з полів, повернути false
     }
-
+    console.log('checkChanges', checkChanges());
     const submitButton = form.querySelector(`[data-info-save=${type}]`); // Виберіть вашу кнопку
     console.log('submitButton', submitButton)
 // Слухайте подію вводу для кожного поля введення
@@ -413,12 +418,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
   // Save Salon Data data-info-save="salon"
   const saveSalonInfo = document.querySelector('[data-info-save="salon"]');
   saveSalonInfo.addEventListener("click", (event) => {
+    // data-account-block
     const type =  event.target.getAttribute('data-info-save');
-    console.log('click info btn');
+    const form = document.querySelector(`[data-account-block="${type}"]`)
+    const formId = form.getAttribute('id');
+    console.log('form id:', formId);
     trackFormChanges(type);
     console.log('formData salon', formData);
     console.log('changedData salon', changedDataSalon);
     const diff = compareObjects(changedDataSalon, formData);
+    if (Object.keys(diff).length !== 0) {
+      diff.id = formId;
+    }
     const formDataNew = {
       customer: {
         id: '{{ customer.id }}',
@@ -901,7 +912,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="password">save</button>
       </div>
     </div>
-    <form class="ac-block--horizontal" data-account-block="salon">
+    <form class="ac-block--horizontal" id="{{ customer.default_address.id }}" data-account-block="salon">
       <h2>edit salon information</h2>
       <div class="ac-block__wrap">
         <div id="salon_name_wrap" class="clearfix form-row register-form__fieldset">
@@ -945,7 +956,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       </div>
       <div class="ac-form__action">
         <button class="ac-form__btn ac-form__btn--solid ac-offset-right--sm" type="button" id="cancelLogoutBtn" data-close-popup-btn>cancel</button>
-        <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" data-info-save="salon">save</button>
+        <button class="ac-form__btn ac-form__btn--black" type="button" id="saveAccountInfo" disabled data-info-save="salon">save</button>
       </div>
     </form>
 </div>

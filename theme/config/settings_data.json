@@ -293,7 +293,7 @@
     "allow_ajax_cart": true,
     "allow_note": false,
     "cart_return_policy": "",
-    "cart_additional_msg": "<p style=\"font-size:15px;font-family:Founders Grotesk Mono,helvetica,sans-serif\">LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE<\/p>",
+    "cart_additional_msg": "<p style=\"font-size:15px;font-family:Founders Grotesk Mono,helvetica,sans-serif\">REWARDS ORDERS ARE LIMITED TO ONE PER MONTH<\/p>",
     "hide__sample_selector": true,
     "free_sample_text": "<p style=\"font-size:15px;font-family:Founders Grotesk Mono,helvetica,sans-serif\">PICK TWO (2) FREE SAMPLES WITH EVERY PURCHASE<\/p>",
     "free_sample_offer_text": "<p style=\"font-size:15px;font-family:Founders Grotesk Mono,helvetica,sans-serif\">PICK TWO (2) FREE SAMPLES WITH EVERY PURCHASE<\/p>",
@@ -1220,7 +1220,7 @@
           "1f34c2ef-a0ec-4246-9918-5bed29e51726": {
             "type": "message",
             "settings": {
-              "text": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE",
+              "text": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH",
               "text-slider": 0,
               "utility_bar_link": ""
             }
@@ -1400,7 +1400,7 @@
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
             }
           },
           "7b693269-0074-4431-9ef6-f449dba2c358": {
@@ -1422,7 +1422,7 @@
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
             }
           },
           "a4b23c15-01c9-4e74-a58c-4bceffe3cfb8": {
@@ -1444,7 +1444,7 @@
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#ffffff",
-              "disclaimer": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
             }
           }
         },
@@ -1489,7 +1489,7 @@
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#ffffff",
-              "disclaimer": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
             }
           },
           "a68e8d7f-06c0-40ab-86cf-b84be86bfcd1": {
@@ -1510,7 +1510,7 @@
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
             }
           },
           "c2d112f9-a66c-4257-8e8b-ef33cb1ece54": {
@@ -1531,7 +1531,7 @@
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "LOYALTY PROGRAM PRODUCTS ARE NOT FOR RESALE"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
             }
           }
         },
