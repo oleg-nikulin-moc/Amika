@@ -1,4 +1,6 @@
-{% render 'registrationFormJs' %}
+{% comment %}{% endcomment %}
+  {% render 'registrationFormJs' %}
+
 {% comment %}{% render 'registrationFormCss' %}{% endcomment %}
 
 <button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
@@ -171,7 +173,7 @@ function showActiveButtons(n) {
   const cancelBtn = document.getElementById("cancelBtn");
   const nextBtn = document.getElementById("nextBtn");
   const submitBtn = document.getElementById('submitBtn');
-  console.log(n);
+
   if (n === 0) {
     prevBtn.style.display = "none";
     submitBtn.style.display = 'none';
@@ -199,7 +201,6 @@ function showActiveButtons(n) {
 
 function showTab(n) {
   const tabs = document.getElementsByClassName("tab");
-  console.log(n)
 
   // Display or hide the tab based on the value of n
   if (n < 3) {

@@ -1,14 +1,4 @@
-
 <script type="text/javascript">
-    const message = 'Привіт, світ!';
-    const hashedMessage = CryptoJS.SHA256(message).toString();
-
-    console.log('Хешоване повідомлення:', hashedMessage);
-
-    // var encrypted = CryptoJS.SHA256.encrypt('my message', 'secret key 123').toString()
-    // console.log('encrypted', encrypted)
-</script>
-<script>
     function validateForm() {
         const tabs = document.getElementsByClassName("tab");
         const requiredFields = tabs[currentTab].querySelectorAll("[required]");
@@ -87,20 +77,17 @@
 
             // Phone validation
             if (phoneNumber !== '' && !validatePhoneNumber(phoneNumber) ) {
-                console.log('phone not valid')
                 phoneNumberError.style.display = 'block';
                 phoneNumberError.textContent = "Incorrect phone number";
                 phoneNumberInput.classList.add('invalid');
                 valid = false;
             } else {
-                console.log('valid phone')
                 phoneNumberError.style.display = 'none';
                 phoneNumberError.textContent = "";
                 phoneNumberInput.classList.remove('invalid');
             }
 
             if (!emailPattern.test(emailValue)) {
-                console.log('email not valid')
                 emailError.textContent = "Invalid email format";
                 emailError.style.display = 'block';
                 emailInput.classList.add("invalid");
@@ -127,7 +114,6 @@
             if (zipCodes === !null) {
 
                 if (!validateZipCode(zipValue)) {
-                    console.log('zip not valid')
                     zipError.textContent = "Invalid zip code format";
                     zipError.style.display = 'block';
                     zipInput.classList.add("invalid");
@@ -142,13 +128,11 @@
             // Accountnumber validation
             if (accountNumberFields  === !null) {
                 if (!validateAccountNumber(accountNumber)) {
-                    console.log('accountNumber not valid')
                     accountNumberError.style.display = 'block';
                     accountNumberError.textContent = "Incorrect phone number";
                     accountNumberInput.classList.add('invalid');
                     valid = false;
                 } else {
-                    console.log('accountNumber valid phone')
                     accountNumberError.style.display = 'none';
                     accountNumberError.textContent = "";
                     accountNumberInput.classList.remove('invalid');
@@ -207,9 +191,8 @@
     }
 
     function validatePhoneNumber(phoneNumber) {
-        // Check if the number matches the USA or Canada format
         const phonePattern = /^\d{10}$/;
-        console.log('canada', phonePattern.test(phoneNumber));
+
         return phonePattern.test(phoneNumber);
     }
 
@@ -237,18 +220,14 @@
         if (allowedTypes.includes(file.type)) {
             const fileName = fileField.value.split("\\").pop();
             if (fileName) {
-                console.log(file);
                 labelText.textContent = fileName;
                 labelRemove.style.display = "flex";
                 preview.style.display = "block";
 
-                console.log('file.files', file)
                 if (file.type === "application/pdf") {
-                    console.log('1')
                     uploadImageWrap.style.display = "none";
                     uploadWrap.style.display = "none";
                 } else {
-                    console.log('2')
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         preview.setAttribute("src", e.target.result);
@@ -276,14 +255,12 @@
         const uploadWrap = document.querySelector("[data-upload-file]");
         const preview = document.getElementById("preview");
         const labelDefault = labelText.textContent;
-        // labelRemove.addEventListener("click", (event) => {
+
         file.value = "";
         labelText.textContent = labelDefault;
         labelRemove.style.display = "none";
         preview.style.display = "none";
         uploadWrap.style.display = "block";
-        console.log(file);
-        // });
     }
 
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -400,17 +377,13 @@
     // Show or hide the image upload value
 
     function toggleDivVisibility() {
-        console.log('upload-image');
         const selectBox = document.querySelectorAll('[data-upload-image]')[0];
         const uoploadBlock = document.querySelectorAll('[data-upload-image-block]')[0];
         const selectedValue = selectBox.value;
-        console.log('upload-image', selectBox, 'uoploadBlock', uoploadBlock);
 
         if (selectedValue === 'true') {
-            console.log('true')
             uoploadBlock.style.display = 'block';
         } else {
-            console.log('false')
             uoploadBlock.style.display = 'none';
         }
     }
@@ -446,9 +419,35 @@
         });
     }
 
+    // start Auth
+    const secretCode = "32kMURYG2ryEG5n4UEgzeaMpzpKMcoxJBNkvSiA2";
+
+    function generateAuthData(body){
+        return toBase64(JSON.stringify(body));
+    }
+
+    function generateToken(body, secretCode){
+        const salt = generateSecretSalt(body, secretCode);
+        const encodedBody = toBase64(JSON.stringify(body));
+        const ab =   encodedBody + salt;
+        const hash = CryptoJS.SHA256(ab);
+        const encodedHash = CryptoJS.enc.Hex.stringify(hash);
+        return toBase64(encodedHash);
+    }
+
+    function generateSecretSalt(body, secretCode){
+        const email = body.customer.email;
+        return toBase64(email + "/" + secretCode);
+    }
+
+    function toBase64(body) {
+        const base64 = btoa(decodeURIComponent(encodeURIComponent(body)));
+        return base64;
+    }
+    // end Auth
+
     function submitForm(event) {
         const form = document.getElementById('create_customer');
-        // form.addEventListener('submit', (event) => {
 
         event.preventDefault(); // Stop the default form submission
         const fileInput = document.getElementById('file-input');
@@ -483,6 +482,9 @@
             }
         };
 
+        const token = generateToken(formData, secretCode);
+        const authData = generateAuthData(formData);
+
         // const formData = {
         //     customer :{
         //         first_name: "Seven",
@@ -504,10 +506,13 @@
         //     }
         // }
         showSpinner();
-        fetch('https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration', {
+        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?${authData}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-api-key': token,
+                mode: 'no-cors',
+
             },
             body: JSON.stringify(formData)
         })
@@ -518,10 +523,11 @@
                         const file = fileInput.files[0];
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
                         const fileName = btoa(form.email) + '&' + validateFileName;
-                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
+                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}?${authData}`;
 
                         return fetch(uploadUrl, {
                             method: 'POST',
+                            'x-api-key': token,
                             // mode: 'no-cors',
                             headers: {
                                 'Content-Type': 'multipart/form-data'
@@ -533,21 +539,17 @@
                                     console.log('Response success');
                                     window.showSuccessForm();
                                     hideSpinner();
-                                    // window.loginRegisterAlertPopup.close(); // Закриття попапу
-                                    // window.location.hash = '';
                                 } else {
-                                    alert('Image not uploaded.'); // Виклик функції для виведення повідомлення про незавантажений імедж
+                                    alert('Image not uploaded.'); // Calling a function to display a message about the unloaded image.
                                 }
                             })
                             .catch(function(error) {
-                                console.error('Error:', error); // Обробка помилок при виконанні запиту
+                                console.error('Error:', error); // Handling errors during request execution.
                             });
                     } else if (response.success){
-                        // Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії
+                        //  If successful, but image upload is not required, perform the necessary actions.
                         // ...
-                        console.log('Якщо успішно, але завантаження зображення не потрібно, виконуємо потрібні дії');
-                        // window.loginRegisterAlertPopup.close();
-                        // window.location.hash = '';
+                        console.log('If successful but image loading is not required, perform the necessary actions.');
                         window.showSuccessForm();
                         hideSpinner();
                         return Promise.resolve();
@@ -614,17 +616,17 @@
         })
             // .then(response => {
             //     if (response && response.ok) {
-            //         console.log('Зображення успішно завантажено');
+            //         console.log('Picture upload success');
             //         return response.json();
             //
             //     } else {
-            //         throw new Error('Помилка під час завантаження зображення');
+            //         throw new Error('error on load picture');
             //     }
             // })
             // .then(data => {
             //     document.getElementById('customer-register').style.display='none';
-            //     console.log('Обробка даних, які повернув сервер після завантаження зображення');
-            //     // Обробка даних, які повернув сервер після завантаження зображення
+            //     console.log('Processing the data returned by the server after uploading an image.');
+            //     // Processing the data returned by the server after uploading an image.
             //     // ...
             // })
             .catch(error => {

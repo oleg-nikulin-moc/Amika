@@ -282,7 +282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endif %}
 
 <body class="{% if customer %}customer-logged-in {% endif %}template{{ template | split: '.' | first | camelize }} template-{{ template | replace: '.', '-'| replace: '/', '-'}}">
-
+{% comment %}{{ 'registrationFormJsMinify.js' | asset_url | script_tag }}{% endcomment %}
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <!--script async src="https://www.googletagmanager.com/gtag/js?id=UA-150668327-1"></script>
   <script>
@@ -525,6 +525,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   {% if customer %}
     {% include 'predefine_product' %}
   {% endif %}
+  {% comment %}  {% endcomment %}
   {% render 'amikaStyles' %}
 </body>
 </html>
