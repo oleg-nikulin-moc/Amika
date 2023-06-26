@@ -506,8 +506,7 @@
         //     }
         // }
         showSpinner();
-        console.log('token', token)
-        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?${authData}`, {
+        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?auth_data=${authData}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -524,7 +523,7 @@
                         const file = fileInput.files[0];
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
                         const fileName = btoa(form.email) + '&' + validateFileName;
-                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}?${authData}`;
+                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}?auth_data=${authData}`;
 
                         return fetch(uploadUrl, {
                             method: 'POST',

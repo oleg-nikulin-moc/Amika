@@ -1,6 +1,6 @@
-{% comment %}{% endcomment %}
+{% comment %}
   {% render 'registrationFormJs' %}
-
+{% endcomment %}
 {% comment %}{% render 'registrationFormCss' %}{% endcomment %}
 
 <button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
@@ -163,7 +163,6 @@ const customerAccount = {
   var currentTab = 0; // Current tab is set to be the first tab (0)
 
   showTab(currentTab); // Display the current tab
-  console.log('currentTab:', currentTab);
 
 // Helper function to display a tab
 
@@ -223,7 +222,6 @@ function nextPrev(n) {
 
   // Validate form
   if ( n === 1 && !validateForm()) {
-    console.log('Not valid', validateForm());
     return false;
   }
 
