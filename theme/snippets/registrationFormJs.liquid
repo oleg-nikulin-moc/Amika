@@ -506,12 +506,13 @@
         //     }
         // }
         showSpinner();
+        console.log('token', token)
         fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?${authData}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-api-key': token,
-                mode: 'no-cors',
+                'x-api-key': token
+                // mode: 'no-cors',
 
             },
             body: JSON.stringify(formData)
