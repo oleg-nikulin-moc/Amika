@@ -107,6 +107,32 @@
 </div>
 <div id="sca_fg_cart">
   <div id="cart-wrap" class="container">
+    <div class="ac-cart__info--mobile" data-order-header data-dropdown="cart">
+      <div class="ac-cart__info__header">
+        <h2 class="ac-cart-info__title" style="position: relative;">shipping information</h2>
+        <button class="ac-btn ac-cart__info--btn ac-cart__info--btn--rotate" type="button" id="myButton" data-dropdown-toggle></button>
+      </div>
+      <div class="ac-dropdown__list" data-dropdown-menu>
+        <button class="ac-btn ac-cart__info--btn ac-offset__bottom--md" type="button" id="myButton" data-dropdown-toggle data-dropdown-close></button>
+        <div class="ac-dropdown__box">
+          <div class="ac-cart__info__header ac-offset__bottom--sm">
+            <h2 class="ac-cart-info__title" style="position: relative;">shipping information</h2>
+            <button class="ac-form__btn ac-cart-info__btn--edit" id="view_address" type="button" data-edit-address>edit</button>
+          </div>
+          <p class="ac-shipping-information__text ac-offset__bottom--sm">{{ customer.default_address.name }}</p>
+          <p class="ac-shipping-information__text ac-offset__bottom--sm">{{ customer.default_address.address1 }}</p>
+          {% if customer.default_address.address2 != "" %}
+            <p>{{ customer.default_address.address2 }}</p>
+          {% endif %}
+          <p class="ac-shipping-information__text city ac-offset__bottom--sm">{{ customer.default_address.city}}</p>
+          {% if customer.default_address.province != "" %}
+            <p class="ac-shipping-information__text ac-offset__bottom--sm">{{ customer.default_address.province }}</p>
+          {% endif %}
+          <p class="ac-shipping-information__text ac-offset__bottom--sm">{{ customer.default_address.zip}}</p>
+          <p class="ac-shipping-information__text ac-offset__bottom--sm">{{customer.default_address.country}}</p>
+        </div>
+      </div>
+    </div>
     <h1>your rewards order <span>({{ cart.item_count }})</span></h1>
 
     {% assign cart_total_price_minus_gift_cards = 0 %}
@@ -325,56 +351,21 @@
         {% endif %}
 
         <form action="/cart" method="post" id="cartform" class="clearfix">
-          <table>
-            <thead class="thead__section small--hide">
-            <tr class="top-labels">
-              <th></th>
-              <th>
-                <table>
-                  <tr class="item-line item-first-line">
-                    <td class="title animation two-twelfths small--hide medium--hide">
-                      <span class="line-header">Description</span>
-                    </td>
-                    <td class="unit-price small--hide two-twelfths small--hide medium--hide">
-                      <span class="line-header">Value</span>
-                    </td>
-                    <td class="qtty two-twelfths small--hide medium--hide">
-                      <span class="line-header">Quantity</span>
-                    </td>
-                    <td class="total-price two-twelfths small--hide medium--hide">
-                      <span class="line-header">Total</span>
-                    </td>
-                    <td class="remove one-twelfth small--hide medium--hide">
-                    </td>
-                  </tr>
-                </table>
-              </th>
-            </tr>
-            </thead>
+          <div class="ac-table-cart">
+            <div class="ac-table-cart__row ac-table-cart__row--head">
+              <div class="ac-table-cart__cell ac-table-cart__cell--image"></div>
+              <div class="ac-table-cart__cell ac-table-cart__cell--title">Description</div>
+              <div class="ac-table-cart__cell ac-table-cart__cell--unit-price">Value</div>
+              <div class="ac-table-cart__cell ac-table-cart__cell--qtty">Quantity</div>
+              <div class="ac-table-cart__cell ac-table-cart__cell--total-price">Total</div>
+              <div class="ac-table-cart__cell ac-table-cart__cell--remove"></div>
+            </div>
+            {% comment %}        {% endcomment %}
+            {% for item in cart.items %}
+              {% include '_cart-item-new' %}
+            {% endfor %}
 
-            <tbody>
-              {% for item in cart.items %}
-              {% include '_cart-item' %}
-                {% comment %}
-                <script>
-                  const productData = {
-                    "title": "{{ item.product.title }}",
-                    "product_id":"{{ item.product.id }}",
-                    "variant_id": "{{ item.variant.id }}",
-                    "price": "{{ item.product.price | money_without_currency }}",
-                    "quantity": "{{ item.quantity }}",
-                    "sku": "{{ item.product.sku }}"
-                  };
-                  console.log('productData1:', productData)
-                </script>
-                {% endcomment %}
-              {% endfor %}
-            </tbody>
-          </table>
-
-
-
-
+          </div>
 
           {% if settings.allow_note %}
           <div id="checkout-addnote">
@@ -468,6 +459,8 @@
     {% comment %}
     Calculate the percentage of the Shipping bar
     {% endcomment %}
+   .final_sale {display: block;}
+
     .free-shipping-bar {
       position: relative;
       height: 12px;

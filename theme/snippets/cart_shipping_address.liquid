@@ -106,7 +106,7 @@
     display: flex;
     flex-wrap: wrap;
 }
-.ac-btn__edit {
+.ac-btn__edit.ac-btn__edit {
     font-style: normal;
     font-weight: 400;
     font-size: 18px!important;
@@ -304,12 +304,14 @@
 
 
     // open modal
-    const editShippingAddress = document.querySelector('[data-edit-address]');
-    editShippingAddress.addEventListener("click", (event) => {
-        event.preventDefault();
-        formResize('lg');
-        addressEdit.open();
-    });
+    const editShippingAddressBtn = document.querySelectorAll('[data-edit-address]');
+    editShippingAddressBtn.forEach(editShippingAddress => {
+        editShippingAddress.addEventListener("click", (event) => {
+            event.preventDefault();
+            formResize('lg');
+            addressEdit.open();
+        });
+    })
 
     // Vvalidation
     function validateForm() {
