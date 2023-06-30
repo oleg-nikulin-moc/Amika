@@ -270,103 +270,10 @@
     const stateSelect = document.getElementById('state');
     const citySelect = document.getElementById('city');
     const zipField = document.getElementById('zip');
-    const statesData = {
-        usa: [
-            'Select State',
-            'Alabama',
-            'Alaska',
-            'Arizona',
-            'Arkansas',
-            'California',
-            'Colorado',
-            'Connecticut',
-            'Delaware',
-            'Florida',
-            'Georgia',
-            'Hawaii',
-            'Idaho',
-            'Illinois',
-            'Indiana',
-            'Iowa',
-            'Kansas',
-            'Kentucky',
-            'Louisiana',
-            'Maine',
-            'Maryland',
-            'Massachusetts',
-            'Michigan',
-            'Minnesota',
-            'Mississippi',
-            'Missouri',
-            'Montana',
-            'Nebraska',
-            'Nevada',
-            'New Hampshire',
-            'New Jersey',
-            'New Mexico',
-            'New York',
-            'North Carolina',
-            'North Dakota',
-            'Ohio',
-            'Oklahoma',
-            'Oregon',
-            'Pennsylvania',
-            'Rhode Island',
-            'South Carolina',
-            'South Dakota',
-            'Tennessee',
-            'Texas',
-            'Utah',
-            'Vermont',
-            'Virginia',
-            'Washington',
-            'West Virginia',
-            'Wisconsin',
-            'Wyoming'
-        ],
-        canada: [
-            'Select State',
-            'Alberta',
-            'British Columbia',
-            'Manitoba',
-            'New Brunswick',
-            'Newfoundland and Labrador',
-            'Northwest Territories',
-            'Nova Scotia',
-            'Nunavut',
-            'Ontario',
-            'Prince Edward Island',
-            'Quebec',
-            'Saskatchewan',
-            'Yukon'
-        ]
-    };
 
     // stateSelect.disabled = true;
     citySelect.disabled = true;
     zipField.disabled = true;
-
-    function renderStates(country) {
-        stateSelect.innerHTML = ''; //очищаємо список штатів перед додаванням нових елементів
-
-        if (country in statesData) {
-            for (let i = 0; i < statesData[country].length; i++) {
-                let option = document.createElement('option');
-                option.value = statesData[country][i];
-                option.text = statesData[country][i];
-                stateSelect.appendChild(option);
-            }
-            stateSelect.disabled = false;
-        } else {
-            stateSelect.disabled = true;
-        }
-    }
-
-    // countrySelect.addEventListener('change', function() {
-    //     renderStates(this.value);
-    // });
-
-    renderStates('usa');
 
     stateSelect.addEventListener('change', () => {
         citySelect.disabled = false;

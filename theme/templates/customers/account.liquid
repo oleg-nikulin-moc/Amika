@@ -740,7 +740,9 @@ p.ac-account__text:last-of-type {
       </div>
       <div class="ac-account-header__box ac-account-header__box--right">
         <p class="ac-account-header__points">{{ points }} points</p>
+        {% if pointsExpireDate %}
         <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in</span><span> {{ daysDifference }} days</span></p>
+        {% endif %}
       </div>
     </div>
     <div class="ac-account__body">

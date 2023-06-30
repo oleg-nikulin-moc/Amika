@@ -11,7 +11,241 @@
     opacity: 0.6;
   }
 </style>
+<style>
+  .ac-cart__info--mobile {
+    display: none;
+  }
+  .ac-cart__info--btn {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuMDgwOTIgNy4zMzgzMkwxNi44NjcyIDcuMzM4MzEiIHN0cm9rZT0iI0ZGNkIyNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik04IDEzLjIyNjNDOCA5Ljg1MDIgNC44NjU5MiA3LjExMzIgMC45OTk5OTkgNy4xMTMyIiBzdHJva2U9IiNGRjZCMjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNNy45OTgwNSAwLjk5OTkxNUM3Ljk5ODA1IDQuMzc2MDQgNC44NjM5NyA3LjExMzA0IDAuOTk4MDQ3IDcuMTEzMDQiIHN0cm9rZT0iI0ZGNkIyNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=);
+    width: 32px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    min-width: 64px!important;
+  }
+  .ac-cart__info--btn--rotate {
+    transform: rotate(180deg);
+  }
+  .ac-cart__info__header {
+    width: 100%;
+  }
 
+  .ac-dropdown__list {
+    display: none;
+    position: absolute;
+    background-color: #FEFAF0;
+    padding: 40px 32px;
+    z-index: 999;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 999;
+    text-align: left;
+  }
+
+  .ac-dropdown__list.active {
+    display: block;
+  }
+  .ac-cart-info__title {
+    margin-bottom: 8px;
+    color: #000;
+    font-size: 18px;
+    line-height: 24px;
+    text-transform: lowercase;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .ac-cart__info--mobile {
+      display: flex;
+      width: 100%;
+      margin-bottom: 24px;
+      background-color: white;
+      padding: 24px;
+      box-sizing: border-box;
+
+    }
+    .ac-cart__info__header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #000;
+    }
+    .ac-dropdown__box {
+      background-color: white;
+      padding: 24px;
+    }
+    .ac-offset__bottom--sm {
+      margin-bottom: 24px;
+    }
+    .ac-cart-info__btn--edit.ac-cart-info__btn--edit {
+      color: #FF6B26;
+      font-size: 18px!important;
+      line-height: 24px;
+      min-width: auto;
+      text-transform: lowercase;
+      margin-bottom: 8px;
+      padding: 10px 0 6px 24px;
+      height: auto;
+      margin-top: -8px!important;
+      width: auto;
+    }
+  }
+  .ac-table-cart {
+    display: grid;
+    /*grid-template-columns: repeat(6, 1fr);*/
+  }
+
+  .ac-table-cart__row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns:
+        minmax(163px, 1fr)
+        minmax(150px, 1fr)
+        1fr
+        94px
+        1fr
+        36px
+  }
+
+  .ac-table-cart__cell {
+    padding: 8px;
+    text-align: left;
+  }
+  .ac-table-cart__cell p {
+    font-size: 14px;
+  }
+  .ac-table-cart__row {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    grid-template-areas: "cartCellImage cartCellTitle cartCellPrice cartCellQtty cartCellTotal cartCellRemove";
+    border-bottom: 1px solid #E5E8EB;
+  }
+  .ac-table-cart__row--head {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .ac-table-cart__row--head .ac-table-cart__cell {
+    color: #000;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+  .ac-table-cart__cell img {
+    width: 100%;
+    height: auto;
+    padding: 0!important;
+    max-width: 163px!important;
+  }
+  .ac-table-cart__cell--image { grid-area: cartCellImage; }
+  .ac-table-cart__cell--title { grid-area: cartCellTitle; }
+  .ac-table-cart__cell--unit-price { grid-area: cartCellPrice; }
+  .ac-table-cart__cell--qtty { grid-area: cartCellQtty; }
+  .ac-table-cart__cell--total-price { grid-area: cartCellTotal; }
+  .ac-table-cart__cell--remove {
+    grid-area: cartCellRemove;
+    text-align: right;
+  }
+
+  .ac-table-cart__cell--unit-price,
+  .ac-table-cart__cell--total-price {
+    text-align: center;
+    font-weight: 500;
+  }
+  .ac-table-cart__cell--remove {
+    padding: 0;
+  }
+  .ac-table-cart__cell--remove a {
+    display: inline-flex;
+    padding: 8px;
+  }
+  .grid {
+    display: inline-flex;
+  }
+  @media screen and (max-width: 1023.98px) {
+    .grid {
+      flex-direction: column;
+    }
+    #cart-wrap .grid .grid__item {
+      width: 100%!important;
+    }
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .ac-shipping-information,
+    .ac-table-cart__row--head,
+    .ac-table-cart__cell--unit-price {
+      display: none;
+    }
+
+    .ac-table-cart__row {
+      grid-template-columns: minmax(100px, 1fr) minmax(100px, 2fr)  1fr;
+      grid-template-areas: "cartCellImage cartCellTitle cartCellRemove"
+                             "cartCellImage cartCellTitle cartCellTotal"
+                             "cartCellImage cartCellQtty cartCellQtty";
+    }
+
+    .ac-table-cart__cell--unit-price {
+      text-align: right;
+    }
+
+    .ac-table-cart__cell--unit-price span {
+      white-space: nowrap;
+    }
+
+    .ac-table-cart__cell--unit-price br {
+      display: none;
+    }
+
+    .ac-table-cart__cell--qtty .wrap {
+      border-radius: 23px;
+      border: 1px solid #000;;
+      width: 100%;
+      display: flex !important;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ac-table-cart__cell--qtty .minus,
+    .ac-table-cart__cell--qtty .plus {
+      padding: 7px !important;
+      width: 38px !important;
+      height: 38px !important;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #cart-wrap .ac-table-cart__cell--qtty input[type=number] {
+      width: 100%;
+    }
+
+    /* popyp Edit*/
+    .ac-shipping__popup .ac-address-information__wrap {
+      flex-direction: column;
+    }
+
+    .ac-shipping__popup .register-form__fieldset {
+      width: 100% !important;
+      margin-right: 0 !important;
+      margin-bottom: 16px !important;
+    }
+
+    .ac-shipping__popup .tingle-modal-box {
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+    }
+
+    .ac-form__btn {
+      width: 100%;
+    }
+    .register-form__fieldset:last-of-type {
+      margin-bottom: 32px!important;
+    }
+  }
+</style>
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     const prepackQuantity = document.querySelector('[class*="prepack"] .qtty .quantity');
