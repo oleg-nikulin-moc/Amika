@@ -3,121 +3,256 @@
 {% assign tier = customer.metafields.amika_loyalty_program.points.value['tier']  %}
 {% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers  %}
 
-
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        function updateBrandBoxItem(condition) {
-            const elements = document.querySelectorAll('[data-brandbox-icon]');
-            if (condition) {
-                console.log('added brandbox', element)
-                elements.forEach(element => element.classList.add('is'));
-                // showMsg();
-            } else {
-                elements.forEach(element => element.classList.remove('is'));
-            }
-        }
-
-        function showMsg() {
-            const elements = document.querySelectorAll('.ac-nav__item--brandpoints');
-            if (elements) {
-                elements.forEach(element => {
-                    element.classList.add('open');
-                    setTimeout(function() {
-                        element.classList.remove('open');
-                    }, 10000); // 30000 miliseconds = 10 seconds
+        function getCart() {
+            return fetch('/cart.js')
+                .then(response => response.json())
+                .then(data => {
+                    const cartItems = data.items;
+                    const productsInCart = cartItems.map(item => {
+                        return {
+                            product_id: item.product_id,
+                            variant_id: item.variant_id
+                        };
+                    });
+                    return productsInCart;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-            }
         }
 
+        const BrandBoxEls = document.querySelectorAll('[data-brandbox-icon]');
         const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
-        // const user = JSON.parse('{ "tier":"2","points":"250","brandBoxPoints":"50"}');
-        const products = JSON.parse('{{ tiersProducts }}');
-        const cart = JSON.parse('{{ cart | json }}');
 
-        // Get products from cart
-        const productsInCart = cart.items.map(item => {
-            return {
-                product_id: item.product_id,
-                variant_id: item.variant_id
-                // Add other product properties you need
-            };
-        });
+        {% comment %}
+        const user = {
+            "tier": "-1",
+            "points": "",
+            "pointsExpireDate": "2024-07-07",
+            "brandBoxPoints": "150"
+        }
+        {% endcomment %}
+console.log('user', user);
 
-        console.log('productsInCart', productsInCart);
+const tiersProducts = JSON.parse('{{ tiersProducts }}');
+console.log('tiersProducts', tiersProducts)
 
-        console.log('products', products);
-        console.log('user', user);
-        console.log('length', products.length > 0)
-        if (products.length > 0) {
+// const productsInCart
 
-            const productIds = products.filter(product => product.id !== '-1').map(product => product.product_id);
-            // console.log('123', window.Shopify.cart.items = window.Shopify.cart.items?.filter(item => productIds.includes(item.product_id)));
-            let productsInCartFilter = productsInCart?.filter(item => productIds.includes(item.product_id));
-            // const variantId = window.Shopify.cart.items?.map(item => item.variant_id) || [];
-            const variantId = productsInCartFilter?.map(item => item.variant_id) || [];
-            console.log('variantId', products);
-            function updateCart(productId, quantity) {
-                const updates = {};
-                if (variantId.length > 1) {
-                    console.log('more then one');
-                    const hideItemId = variantId.filter(item => !productId.includes(item));
-                    const hideElement = document.querySelector(`[data-product-id="${hideItemId[0]}"]`);
-                    console.log('hideItemId', hideItemId[0])
-                    console.log('hideElement', hideElement)
-                    if (hideElement) hideElement.hidden = true;
+function updateBrandBoxItem(condition) {
+    const elements = document.querySelectorAll('[data-brandbox-icon]');
+    if (condition) {
+        console.log('added brandbox', element)
+        BrandBoxEls.forEach(element => element.classList.add('is'));
+        showMsg();
+    } else {
+        BrandBoxEls.forEach(element => element.classList.remove('is'));
+    }
+}
 
-                    variantId.forEach(id => {
-                        if (id === productId[0]) {
-                            updates[id] = 1; // A value of 1 for productId, which has the same value as the first element of variantId
-                        } else {
-                            updates[id] = 0; // Value 0 for other productId elements
-                        }
-                    });
-                } else {
-                    console.log('one')
-                    productId.forEach(id => {
-                        updates[id] = quantity;
-                    });
+function showMsg() {
+    if (BrandBoxEls) {
+        BrandBoxEls.forEach(el => {
+            el.addEventListener('click', function() {
+                console.log('user.tier', user.tier);
+                el.classList.toggle('open');
+                if (user.tier === "-1") {
+                    console.log('user.tier > -1');
+                    el.querySelector('.ac-brandpoints__text').textContent = 'you’re eligible for brand choice rewards through your primary distributor!';
                 }
-                console.log('updates', updates);
+                setTimeout(function() {
+                    el.classList.remove('open');
+                }, 10000); // 10 sec
+            });
+        });
+    }
+}
 
+function getCart() {
+    return fetch('/cart.js')
+        .then(response => response.json())
+        .then(data => {
+            const cartItems = data.items;
+            const productsInCartFilter = cartItems.map(item => {
+                return {
+                    product_id: item.product_id,
+                    variant_id: item.variant_id
+                };
+            });
+            return productsInCartFilter;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+// Виклик функції та отримання масиву productsInCartFilter
+getCart().then(productsInCartFilter => {
+    if (tiersProducts.length > 0) {
+        function updateCartNew(updates) {
+            console.log('updateCartNew', updates)
+            if (Object.keys(updates).length !== 0) {
+                console.log('cart not update? objrct is empty');
                 jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
                     updates: updates
                 });
             }
-
-            if (user.tier === "-1") {
-                updateCart(variantId, 0);
-                console.log(variantId)
-                console.log('tier -1');
-            } else {
-
-                const { tier, brandBoxPoints } = user;
-                const selectedProduct = products.find(product => product.id == tier);
-                console.log('selectedProduct', selectedProduct)
-
-                if (brandBoxPoints > 0) {
-
-                    if (selectedProduct) {
-                        const { variant_id } = selectedProduct;
-                        const variantIdArray = [];
-                        variantIdArray.push(variant_id);
-
-                        updateCart(variantIdArray, 1);
-                        updateBrandBoxItem(true);
-
-                    } else {
-                        console.log('No product found for the user tier.');
-                    }
-                } else {
-                    updateCart(variantId, 0);
-                    const hideElement = document.querySelector(`[data-product-id="${variantId[0]}"]`);
-                    if (hideElement) hideElement.hidden = true;
-                    console.log('brandBoxPoints is not greater than 0.');
-                }
-            }
-        } else {
-            console.log('No products available.');
         }
-    });
+
+        function checkCartTiers(cart, tiers) {
+            const variant = cart.reduce((acc, item) => {
+                if (tiers.some(tier => tier.variant_id === item.variant_id)) {
+                    acc.push(item.variant_id);
+                }
+                return acc;
+            }, []);
+
+            return variant;
+        }
+        const { tier, brandBoxPoints } = user;
+        const tiersInCart =  checkCartTiers(productsInCartFilter, tiersProducts);
+
+        function cartTiersAreEqual(array1, array2) {
+            if (array1.length === 0) {
+                return false; // Масиви мають різну довжину, вони не можуть бути однаковими
+            }
+            console.log('tiersInCart', array1);
+            console.log('userTier', array2);
+            // Перевірка кожного елемента масивів
+            return array1.every((element, index) => element === array2[index]);
+        }
+
+        function checkArraysEquality(array1, array2) {
+            return cartTiersAreEqual(array1, array2);
+        }
+
+        console.log('productsInCartFilter', productsInCartFilter)
+        if (user.tier === "-1" || brandBoxPoints < 1 ) {
+
+            console.log('user.tier', user.tier );
+            console.log('brandBoxPoints < 1', brandBoxPoints < 1 );
+
+            const removeTiersVariantId = checkCartTiers(productsInCartFilter, tiersProducts)
+            console.log('removeTiersVariantId.length' ,removeTiersVariantId.length)
+            if (removeTiersVariantId > 0) {
+                const updates = {
+                    [removeTiersVariantId]: 0
+                }
+                updateCartNew(updates);
+                // console.log('location reload')
+                // setTimeout(() => {
+                //     location.reload();
+                // }, 500);
+            } else {
+                console.log('no tiers product to remove')
+            }
+
+            // updateCart(variantId, 0);
+            // const hideElement = document.querySelector(`[data-product-id="${variantId[0]}"]`);
+            // if (hideElement) hideElement.hidden = true;
+        } else {
+
+            console.log('brandBoxPoints > 0');
+            const selectedProduct = tiersProducts.find(product => product.id == tier);
+            const userTiers = [selectedProduct.variant_id];
+            const checkTierIdEquality = checkArraysEquality(tiersInCart, userTiers);
+            console.log('checkTierIdEquality', checkTierIdEquality);
+            console.log('tiersInCart.length', tiersInCart.length);
+            const emptyTearsInCart = tiersInCart.length === 0;
+            console.log('emptyTearsInCart', emptyTearsInCart);
+
+            if (!checkTierIdEquality) {
+                const userTierVariantId = selectedProduct.variant_id;
+                const cartUpdates = {}
+                if (selectedProduct && emptyTearsInCart) {
+                    cartUpdates[userTierVariantId] = 1;
+                    console.log('cartUpdates if empty cart', cartUpdates)
+                } else {
+                    console.log('cartUpdates with remove', cartUpdates)
+                    cartUpdates[userTierVariantId] = 1;
+                    cartUpdates[tiersInCart] = 0;
+                }
+                console.log('cartUpdates', cartUpdates)
+                updateCartNew(cartUpdates);
+                updateBrandBoxItem(true);
+                // console.log('location reload')
+                // setTimeout(() => {
+                //     location.reload();
+                // }, 500);
+            } else {
+                console.log('product tiers are the same');
+            }
+
+        }  // brandBoxPoints < 0 or tear = -1
+    } else { // tiersProducts.length < 0
+        console.log('No products available.');
+    }
+});
+
+
+{% comment %}
+    if (products.length > 0) {
+
+      const productIds = products.filter(product => product.id !== '-1').map(product => product.product_id);
+      let productsInCartFilter = productsInCart?.filter(item => productIds.includes(item.product_id));
+      const variantId = productsInCartFilter?.map(item => item.variant_id) || [];
+      function updateCart(productId, quantity) {
+          const updates = {};
+          if (variantId.length > 1) {
+              const hideItemId = variantId.filter(item => !productId.includes(item));
+              const hideElement = document.querySelector(`[data-product-id="${hideItemId[0]}"]`);
+              if (hideElement) hideElement.hidden = true;
+
+              variantId.forEach(id => {
+                  if (id === productId[0]) {
+                      updates[id] = 1; // A value of 1 for productId, which has the same value as the first element of variantId
+                  } else {
+                      updates[id] = 0; // Value 0 for other productId elements
+                  }
+              });
+          } else {
+              productId.forEach(id => {
+                  updates[id] = quantity;
+              });
+          }
+
+          jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
+              updates: updates
+          });
+      }
+
+      if (user.tier === "-1") {
+          updateCart(variantId, 0);
+      } else {
+
+          const { tier, brandBoxPoints } = user;
+          const selectedProduct = products.find(product => product.id == tier);
+
+          if (brandBoxPoints > 0) {
+
+              if (selectedProduct) {
+                  const { variant_id } = selectedProduct;
+                  const variantIdArray = [];
+                  variantIdArray.push(variant_id);
+
+                  updateCart(variantIdArray, 1);
+                  updateBrandBoxItem(true);
+
+              } else {
+                  console.log('No product found for the user tier.');
+              }
+          } else {
+              updateCart(variantId, 0);
+              const hideElement = document.querySelector(`[data-product-id="${variantId[0]}"]`);
+              if (hideElement) hideElement.hidden = true;
+              console.log('brandBoxPoints is not greater than 0.');
+          }
+      }
+    } else {
+        console.log('No products available.');
+    }
+    {% endcomment %}
+});
 </script>

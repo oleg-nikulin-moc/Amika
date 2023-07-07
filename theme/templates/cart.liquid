@@ -585,7 +585,37 @@
         {% endif %}
 
         <form action="/cart" method="post" id="cartform" class="clearfix">
-          <div class="ac-table-cart">
+
+         <table>
+            <thead class="thead__section small--hide">
+            <tr class="top-labels">
+              <th></th>
+              <th>
+                <table>
+                  <tr class="item-line item-first-line">
+                    <td class="title animation two-twelfths small--hide medium--hide">
+                      <span class="line-header">Description</span>
+                    </td>
+                    <td class="unit-price small--hide two-twelfths small--hide medium--hide">
+                      <span class="line-header">Price</span>
+                    </td>
+                    <td class="qtty two-twelfths small--hide medium--hide">
+                      <span class="line-header">Quantity</span>
+                    </td>
+                    <td class="total-price two-twelfths small--hide medium--hide">
+                      <span class="line-header">Total</span>
+                    </td>
+                    <td class="remove one-twelfth small--hide medium--hide">
+                    </td>
+                  </tr>
+                </table>
+              </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% comment %}   
+                <div class="ac-table-cart">
             <div class="ac-table-cart__row ac-table-cart__row--head">
               <div class="ac-table-cart__cell ac-table-cart__cell--image"></div>
               <div class="ac-table-cart__cell ac-table-cart__cell--title">Description</div>
@@ -594,12 +624,13 @@
               <div class="ac-table-cart__cell ac-table-cart__cell--total-price">Total</div>
               <div class="ac-table-cart__cell ac-table-cart__cell--remove"></div>
             </div>
-            {% comment %}        {% endcomment %}
+      </div{% endcomment %}
             {% for item in cart.items %}
-              {% include '_cart-item-new' %}
+              {% include '_cart-item' %}
             {% endfor %}
-
-          </div>
+  </tbody>
+        </table>
+    
 
           {% if settings.allow_note %}
           <div id="checkout-addnote">
