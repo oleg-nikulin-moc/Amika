@@ -5,39 +5,10 @@
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        function getCart() {
-            return fetch('/cart.js')
-                .then(response => response.json())
-                .then(data => {
-                    const cartItems = data.items;
-                    const productsInCart = cartItems.map(item => {
-                        return {
-                            product_id: item.product_id,
-                            variant_id: item.variant_id
-                        };
-                    });
-                    return productsInCart;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
 
         const BrandBoxEls = document.querySelectorAll('[data-brandbox-icon]');
         const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
-
-        {% comment %}
-            const user = {
-                "tier": "-1",
-                "points": "",
-                "pointsExpireDate": "2024-07-07",
-                "brandBoxPoints": "150"
-            }
-         {% endcomment %}
-        console.log('user', user);
-
         const tiersProducts = JSON.parse('{{ tiersProducts }}');
-        console.log('tiersProducts', tiersProducts)
 
         function updateBrandBoxItem(condition) {
             if (condition) {
@@ -66,8 +37,6 @@
             }
         }
 
-        showMsg();
-
         function getCart() {
             return fetch('/cart.js')
                 .then(response => response.json())
@@ -86,12 +55,14 @@
                 });
         }
 
+        if (user.brandBoxPoints > 0 && user.tier !== '-1') {
+            updateBrandBoxItem(true);
+        }
+        showMsg();
+
         getCart().then(productsInCartFilter => {
-            // if (tiersProducts.length > 0) {
             function updateCartNew(updates) {
-                console.log('updateCartNew', updates)
                 if (Object.keys(updates).length !== 0) {
-                    console.log('cart not update? objrct is empty');
                     jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
                         updates: updates
                     });
@@ -114,11 +85,8 @@
 
             function cartTiersAreEqual(array1, array2) {
                 if (array1.length === 0) {
-                    return false; // Масиви мають різну довжину, вони не можуть бути однаковими
+                    return false;
                 }
-                console.log('tiersInCart', array1);
-                console.log('userTier', array2);
-                // Перевірка кожного елемента масивів
                 return array1.every((element, index) => element === array2[index]);
             }
 
@@ -126,14 +94,10 @@
                 return cartTiersAreEqual(array1, array2);
             }
 
-            console.log('productsInCartFilter', productsInCartFilter)
             if (user.tier === "-1" || brandBoxPoints < 1) {
 
-                console.log('user.tier', user.tier);
-                console.log('brandBoxPoints < 1', brandBoxPoints < 1);
-
                 const removeTiersVariantId = checkCartTiers(productsInCartFilter, tiersProducts)
-                console.log('removeTiersVariantId.length', removeTiersVariantId.length)
+
                 if (removeTiersVariantId > 0) {
                     const updates = {
                         [removeTiersVariantId]: 0
@@ -143,37 +107,26 @@
                         updateCartDesc(); // update sidebarCart
                     }, 500);
                 } else {
-                    console.log('no tiers product to remove')
+                    console.log('No product tiers to remove')
                 }
 
-                // updateCart(variantId, 0);
-                // const hideElement = document.querySelector(`[data-product-id="${variantId[0]}"]`);
-                // if (hideElement) hideElement.hidden = true;
             } else {
-
-                console.log('brandBoxPoints > 0');
                 const selectedProduct = tiersProducts.find(product => product.id == tier);
                 const userTiers = [selectedProduct.variant_id];
                 const checkTierIdEquality = checkArraysEquality(tiersInCart, userTiers);
-                console.log('checkTierIdEquality', checkTierIdEquality);
-                console.log('tiersInCart.length', tiersInCart.length);
                 const emptyTearsInCart = tiersInCart.length === 0;
-                console.log('emptyTearsInCart', emptyTearsInCart);
 
                 if (!checkTierIdEquality) {
                     const userTierVariantId = selectedProduct.variant_id;
                     const cartUpdates = {}
                     if (selectedProduct && emptyTearsInCart) {
                         cartUpdates[userTierVariantId] = 1;
-                        console.log('cartUpdates if empty cart', cartUpdates)
                     } else {
-                        console.log('cartUpdates with remove', cartUpdates)
                         cartUpdates[userTierVariantId] = 1;
                         cartUpdates[tiersInCart] = 0;
                     }
                     console.log('cartUpdates', cartUpdates)
                     updateCartNew(cartUpdates);
-                    // update sidebarCart
                     updateBrandBoxItem(true);
                     setTimeout(() => {
                         updateCartDesc() // update sidebarCart
@@ -181,75 +134,7 @@
                 } else {
                     console.log('product tiers are the same');
                 }
-
-            }  // brandBoxPoints < 0 or tear = -1
-            // } else { // tiersProducts.length < 0
-            //     console.log('No products available.');
-            // }
-        });
-
-
-        {% comment %}
-            if (products.length > 0) {
-
-              const productIds = products.filter(product => product.id !== '-1').map(product => product.product_id);
-              let productsInCartFilter = productsInCart?.filter(item => productIds.includes(item.product_id));
-              const variantId = productsInCartFilter?.map(item => item.variant_id) || [];
-              function updateCart(productId, quantity) {
-                  const updates = {};
-                  if (variantId.length > 1) {
-                      const hideItemId = variantId.filter(item => !productId.includes(item));
-                      const hideElement = document.querySelector(`[data-product-id="${hideItemId[0]}"]`);
-                      if (hideElement) hideElement.hidden = true;
-
-                      variantId.forEach(id => {
-                          if (id === productId[0]) {
-                              updates[id] = 1; // A value of 1 for productId, which has the same value as the first element of variantId
-                          } else {
-                              updates[id] = 0; // Value 0 for other productId elements
-                          }
-                      });
-                  } else {
-                      productId.forEach(id => {
-                          updates[id] = quantity;
-                      });
-                  }
-
-                  jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
-                      updates: updates
-                  });
-              }
-
-              if (user.tier === "-1") {
-                  updateCart(variantId, 0);
-              } else {
-
-                  const { tier, brandBoxPoints } = user;
-                  const selectedProduct = products.find(product => product.id == tier);
-
-                  if (brandBoxPoints > 0) {
-
-                      if (selectedProduct) {
-                          const { variant_id } = selectedProduct;
-                          const variantIdArray = [];
-                          variantIdArray.push(variant_id);
-
-                          updateCart(variantIdArray, 1);
-                          updateBrandBoxItem(true);
-
-                      } else {
-                          console.log('No product found for the user tier.');
-                      }
-                  } else {
-                      updateCart(variantId, 0);
-                      const hideElement = document.querySelector(`[data-product-id="${variantId[0]}"]`);
-                      if (hideElement) hideElement.hidden = true;
-                      console.log('brandBoxPoints is not greater than 0.');
-                  }
-              }
-            } else {
-                console.log('No products available.');
             }
-            {% endcomment %}
+        });
     });
 </script>
