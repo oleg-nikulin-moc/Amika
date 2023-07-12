@@ -7,7 +7,17 @@
     window.addEventListener("DOMContentLoaded", () => {
 
         const BrandBoxEls = document.querySelectorAll('[data-brandbox-icon]');
+
         const user = JSON.parse('{{ customer.metafields.amika_loyalty_program.points }}');
+
+        {% comment %}
+        const user = {
+          "tier": "-1",
+          "points": "",
+          "pointsExpireDate": "2024-07-07",
+          "brandBoxPoints": "150"
+        }
+           {% endcomment %}
         const tiersProducts = JSON.parse('{{ tiersProducts }}');
 
         function updateBrandBoxItem(condition) {

@@ -35,13 +35,23 @@
         const passwordPattern = /^[a-zA-Z0-9]{8,50}$/;
         const textFieldPattern = /^[A-Za-z ]{2,50}$/
 
+        const isSuit = document.getElementById('isSuit');
+        const fileInput = document.getElementById('file-input');
+
         termsCheckbox.addEventListener('change', function () {
-            if (termsCheckbox.checked && valid) {
+            if (termsCheckbox.checked && valid && isSuit.value === 'false' || termsCheckbox.checked && valid && isSuit.value === 'true'  && fileInput.files.length > 0) {
                 submitButton.disabled = false; // Enable the "Submit" button
-                // nextButton.disabled = false; // Enable the "Next" button
-            } else {
+            } else if (isSuit.value === 'true' && fileInput.files.length === 0){
+                console.log('step2')
                 submitButton.disabled = true; // Disable the "Submit" button
-                // nextButton.disabled = true; // Disable the "Next" button
+            }
+        });
+
+        isSuit.addEventListener('change', function () {
+            if (isSuit.value === 'true' && fileInput.files.length === 0) {
+                submitButton.disabled = true; // Disable the "Submit" button
+            } else if (termsCheckbox.checked && valid && isSuit.value === 'true' && fileInput.files.length > 0) {
+                submitButton.disabled = false; // Enable the "Submit" button
             }
         });
 

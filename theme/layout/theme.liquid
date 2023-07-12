@@ -283,7 +283,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body class="{% if customer %}customer-logged-in {% endif %}template{{ template | split: '.' | first | camelize }} template-{{ template | replace: '.', '-'| replace: '/', '-'}}">
 {% unless customer %}
-{{ 'registrationFormJsMinify.js' | asset_url | script_tag }}
+{% comment %}{{ 'registrationFormJsMinify.js' | asset_url | script_tag }}{% endcomment %}
+  {% render 'registrationFormJs' %}
 {% endunless %}
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <!--script async src="https://www.googletagmanager.com/gtag/js?id=UA-150668327-1"></script>
