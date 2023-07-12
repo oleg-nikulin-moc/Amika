@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const changedDataInfo = {};
   const destributorEl = document.querySelector('[data-account-distributor]');
   const destributorValue = "{{ customerDistributorName }}";
+
+  const email = 'oleg.nikulin@masterofcode.com';
+  {% comment %}const shopifyId = '{{ customer.id }}';{% endcomment %}
+  const shopifyId = '6434978693328'
+  const url = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
+
   if (destributorValue) {
     const modifiedStr = destributorValue.replace(/([A-Z])/g, ' $1');
     destributorEl.textContent = modifiedStr;
@@ -83,13 +89,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
       event.preventDefault();
       const tabId = tab.getAttribute('data-tab');
       setActiveTab(tabId);
+      if (tabId === 'tiers') {
+        fetchData(url)
+                .then(data => {
+                  console.log('data', data)
+                  displayTable(data);
+                });
+      }
       window.location.hash = `#${tabId}`;
     });
   });
 
-  if (window.location.hash == '#orders') { setActiveTab('orders') }
-  else if (window.location.hash == '#info') { setActiveTab('info') }
-  else if (window.location.hash == '#tiers') { setActiveTab('info') }
+  if (window.location.hash == '#orders' || window.location.hash == '/account/#orders' ) { setActiveTab('orders') }
+  else if (window.location.hash == '#info' || window.location.hash == '/account/#info' ) { setActiveTab('info') }
+  else if (window.location.hash == '#tiers' || window.location.hash == '/account/#tiers' ) {
+    setActiveTab('tiers');
+    fetchData(url)
+            .then(data => {
+              console.log('data', data)
+              displayTable(data);
+            });
+  }
   // const tabs = document.querySelectorAll('.ac-tab');
   // const tabContents = document.querySelectorAll('.ac-tab__content');
   //
@@ -474,6 +494,103 @@ document.addEventListener('DOMContentLoaded', (event) => {
               });
     }
   });
+
+  // Tiers
+
+  const table = document.querySelector('[data-table-tiers]');
+  const tiersButtons = document.querySelectorAll('[data-tab="tiers"]');
+
+  // Функція для відображення таблиці з отриманими даними
+  function displayTable(data) {
+    table.innerHTML = '';
+
+    let dataArray;
+    try {
+      dataArray = JSON.parse(data);
+    } catch (error) {
+      table.textContent = 'Invalid data format'; // Повідомлення про неправильний формат даних
+      return;
+    }
+
+    if (dataArray.length === 0) {
+      const messageRow = document.createElement("div");
+      messageRow.classList.add("ac-grid-tiers__row--message");
+      const messageCell = document.createElement("p");
+      messageCell.classList.add("ac-grid-tiers__cell--message");
+      messageCell.textContent = "You haven't qualified yet.";
+      messageRow.appendChild(messageCell);
+      table.appendChild(messageRow);
+      return;
+    }
+
+    const headerRow = document.createElement('div');
+    headerRow.classList.add('ac-grid-tiers__row', 'ac-grid-tiers__row--header');
+    headerRow.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">bi-monthly period</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier level</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">points earned</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">date issued</div>`;
+    table.appendChild(headerRow);
+
+    if (Array.isArray(dataArray)) {
+      dataArray.forEach(item => {
+        const row = document.createElement('div');
+        row.classList.add('ac-grid-tiers__row');
+
+        const expirationDate = new Date(item.expirationDate);
+        const formattedExpirationDate = `${getMonthName(expirationDate.getMonth())} ${expirationDate.getDate()}, ${expirationDate.getFullYear()}`;
+        const dates = item.date.split('/');
+        const formattedDate = `${getMonthYear(dates[0])} - ${getMonthYear(dates[1])}`;
+
+        row.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">${formattedDate}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier ${item.tier}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">${item.amount}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">${formattedExpirationDate}</div>`;
+        table.appendChild(row);
+      });
+    } else {
+      console.log('Invalid data format');
+    }
+  }
+// .ac-grid-tiers__cell--biMothly { grid-area: tiersBiMothly; }
+// .ac-grid-tiers__cell--tiers { grid-area: tiers; }
+// .ac-grid-tiers__cell--tiersPoints { grid-area: tiersPoints; }
+// .ac-grid-tiers__cell--tiersDate { grid-area: tiersDate; }
+
+  // Функція для виконання запиту та отримання даних
+    function fetchData(url) {
+      return fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                return data;
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+    }
+
+    function getMonthName(month) {
+        const monthNames = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames[month];
+      }
+
+  function getMonthYear(date) {
+    const [year, month] = date.split('-');
+    return `${getMonthName(month - 1)}, ${year}`;
+  }
+
+  // Обробка кліку на кожну кнопку
+  // tiersButtons.forEach(button => {
+  //     button.addEventListener('click', () => {
+  //       fetchData(url)
+  //           .then(data => {
+  //             console.log('data', data)
+  //               displayTable(data);
+  //           });
+  //     });
+  //   });
 });
 </script>
 <style>
@@ -725,6 +842,57 @@ p.ac-account__text:last-of-type {
     margin-left: 0;
   }
 }
+
+  /* tiers */
+  .ac-grid-tiers__table {
+    display: grid;
+    width: 100%;
+    grid-gap: 8px;
+   }
+  .ac-grid-tiers__row:not(:first-of-type) {
+    border-bottom: 1px solid #FF6B26;
+  }
+  .ac-grid-tiers__row {
+    display: grid;
+    grid-template-columns: 2fr repeat(2, 1fr) 1.5fr;
+    grid-template-areas: "tiersBiMothly tiers tiersPoints tiersDate";
+    align-items: center;
+    min-height: 48px;
+    box-sizing: border-box;
+    }
+  .ac-grid-tiers__cell {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #000;
+    text-align: left;
+  }
+
+  .ac-grid-tiers__row--header .ac-grid-tiers__cell {
+    font-family: 'Founders Grotesk Mono';
+    color: #666666!important;
+    font-weight: 400!important;
+  }
+
+  .ac-grid-tiers__cell--biMothly { grid-area: tiersBiMothly; }
+  .ac-grid-tiers__cell--tiers { grid-area: tiers; }
+  .ac-grid-tiers__cell--tiersPoints { grid-area: tiersPoints; color: #FF6B26; font-weight: 600; }
+  .ac-grid-tiers__cell--tiersDate { grid-area: tiersDate; text-align: right; }
+
+  @media screen and (max-width: 767.98px) {
+    .ac-grid-tiers__row--header {
+      display: none;
+    }
+    .ac-grid-tiers__row {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas: "tiersBiMothly tiersPoints"
+                           "tiersDate tiers";
+    }
+    .ac-grid-tiers__cell--biMothly { font-weight: 600; }
+    .ac-grid-tiers__cell--tiers { text-align: right; }
+    .ac-grid-tiers__cell--tiersPoints { text-align: right; }
+    .ac-grid-tiers__cell--tiersDate { text-align: left; }
+  }
 </style>
 <div class="clearfix my-account account">
   
@@ -860,8 +1028,15 @@ p.ac-account__text:last-of-type {
         {% endcomment %}
       </div>
     </div>
-    <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="tiers"></div>
-    <div class="ac-account__item ac-tab__content" id="customer_orders" data-tab="wishes"></div>
+    <div class="ac-account__item ac-tab__content" id="customer_tiers" data-tab="tiers">
+      <div class="ac-account__header">
+          <h1 class="ac-account-header__title hello">tiers</h1>
+      </div>
+      <div class="ac-account__body">
+        <div class="ac-grid-tiers__table" id="table-tiers" data-table-tiers> </div>
+      </div>
+    </div>
+    <div class="ac-account__item ac-tab__content" id="customer_wishes" data-tab="wishes"></div>
   </div>
 </div>
 {% comment %}
