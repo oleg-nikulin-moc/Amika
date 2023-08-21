@@ -1,4 +1,40 @@
 <script type="text/javascript">
+    function getEmailByDistributor(distributor) {
+        switch (distributor) {
+            case "Armstrong McCall":
+                return "KEdgar@cosmoprofbeauty.com";
+            case "Aurora Beauty Supply":
+                return "Venessa@aurorabeautyak.com";
+            case "Beauty Craft":
+                return "meghanm@beautycraft.com";
+            case "Cosmo Prof":
+                return "kswick@sallybeauty.com";
+            case "Goldwell New York":
+                return "mhaight@goldwellny.com";
+            case "Hair-Lines":
+                return "jessjpms@hotmail.com";
+            case "MAKA Beauty Systems":
+                return "MichelleK@makabeauty.com";
+            case "ManocoBlue":
+                return "wwatene@manocoblue.com";
+            case "Paramount Beauty Distributors":
+                return "erin@paramountbeauty.com";
+            case "Prestige Salon Products":
+                return "rhonda@prestigesalonproducts.com";
+            case "SalonCentric":
+                return "tcarroll@saloncentric.com";
+            case "Salon Service Group":
+                return "brandstrategists@salonservicegroup.com";
+            case "Salon Services Pro":
+                return "cdaniels@salonservicespro.com";
+            case "State Beauty/RDA Pro Mart":
+                return "tdavidson@saloncentric.com";
+            case "TruBeauty Concepts":
+                return "myrta@trubeautyconcepts.com";
+            default:
+                return "";
+        }
+    }
     function validateForm() {
         const tabs = document.getElementsByClassName("tab");
         const requiredFields = tabs[currentTab].querySelectorAll("[required]");
@@ -36,22 +72,37 @@
         const textFieldPattern = /^[A-Za-z ]{2,50}$/
 
         const isSuit = document.getElementById('isSuit');
+
+        const distributorSelect =document.getElementById('distributorName');
+        const distributorError = document.getElementById('distributorNameError');
+
+        const uploadFileFields = tabs[currentTab].querySelector('#isSuit');
+        const uploadImage = document.querySelector("[ data-upload-image]");
         const fileInput = document.getElementById('file-input');
 
         termsCheckbox.addEventListener('change', function () {
-            if (termsCheckbox.checked && valid && isSuit.value === 'false' || termsCheckbox.checked && valid && isSuit.value === 'true'  && fileInput.files.length > 0) {
+            if (termsCheckbox.checked && valid && isSuit.value === 'false'  && fileInput.files.length < 1 && distributorSelect.value !== ''  || termsCheckbox.checked && valid && isSuit.value === 'true'  && fileInput.files.length > 0 && distributorSelect.value !== '') {
+            // if (termsCheckbox.checked && valid && distributorSelect.value !== ''  || termsCheckbox.checked && valid && distributorSelect.value !== '') {
                 submitButton.disabled = false; // Enable the "Submit" button
-            } else if (isSuit.value === 'true' && fileInput.files.length === 0){
+                console.log('step1')
+            } else if (distributorSelect.value === '') {
+                distributorError.textContent = "Please select a distributor";
+                distributorError.style.display = 'block';
+                termsCheckbox.checked = false;
+                console.log('step3')
+                valid = false;
+            } else if (isSuit.value === 'true' && fileInput.files.length < 1){
                 console.log('step2')
                 submitButton.disabled = true; // Disable the "Submit" button
             }
         });
 
         isSuit.addEventListener('change', function () {
-            if (isSuit.value === 'true' && fileInput.files.length === 0) {
-                submitButton.disabled = true; // Disable the "Submit" button
-            } else if (termsCheckbox.checked && valid && isSuit.value === 'true' && fileInput.files.length > 0) {
+            termsCheckbox.checked = false;
+            if (isSuit.value === 'true' && fileInput.files.length > 0 || isSuit.value === 'false' && fileInput.files.length < 1 ) {
                 submitButton.disabled = false; // Enable the "Submit" button
+            } else  {
+                submitButton.disabled = true; // Disable the "Submit" button
             }
         });
 
@@ -148,7 +199,17 @@
                     accountNumberInput.classList.remove('invalid');
                 }
             }
-
+            console.log('1 uploadImage.value', uploadImage.value)
+            console.log('1 fileInput.files.length', fileInput.files)
+            // Valid upload file field
+            if (uploadImage.value === 'true' && fileInput.files.length === 1 || uploadImage.value === 'false'  && fileInput.files.length < 1){
+                valid = true;
+                console.log('valid', valid)
+            } else {
+                console.log('files.length', fileInput.files.length);
+                valid = false;
+                console.log('valid', valid)
+            }
 
             // if (valid) {
             //     nextButton.disabled = false; // Enable the "Next" button
@@ -185,7 +246,11 @@
         }
 
         requiredFields.forEach(function (field) {
-            field.addEventListener('input', handleInputChange);
+            if (field.tagName.toLowerCase() === 'select') {
+                field.addEventListener('change', handleInputChange);
+            } else {
+                field.addEventListener('input', handleInputChange);
+            }
         });
 
         emailInput.addEventListener('input', handleInputChange);
@@ -195,7 +260,9 @@
         confirmPasswordInput.addEventListener('input', handleInputChange);
         termsCheckbox.addEventListener('change', checkFormValidity);
         zipInput.addEventListener('change', checkFormValidity);
-
+        distributorSelect.addEventListener('change', checkFormValidity);
+        isSuit.addEventListener('change', checkFormValidity);
+        fileInput.addEventListener('change', checkFormValidity);
         checkFormValidity();
         return valid;
     }
@@ -263,14 +330,24 @@
         const labelText = document.querySelector("[data-upload-text]");
         const labelRemove = document.querySelector("[data-remove-img]");
         const uploadWrap = document.querySelector("[data-upload-file]");
+        const submitBtn = document.querySelector("#submitBtn");
+        const termsCheckBox = document.querySelector("[data-terms-field]");
         const preview = document.getElementById("preview");
         const labelDefault = labelText.textContent;
+        const isSuit = document.getElementById('isSuit');
 
-        file.value = "";
+        fileField.value = ''; // Скидуємо значення поля вводу файлу на порожній рядок
         labelText.textContent = labelDefault;
         labelRemove.style.display = "none";
         preview.style.display = "none";
         uploadWrap.style.display = "block";
+        submitBtn.disabled = true;
+        termsCheckBox.checked = false;
+        // isSuit.value = 'false';
+
+;        console.log('remove image file.length', file.length)
+
+        console.log('remove image file.value', file.value)
     }
 
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -457,6 +534,7 @@
                                     window.showSuccessForm();
                                     hideSpinner();
                                 } else {
+                                    hideSpinner();
                                     alert('Image not uploaded.'); // Calling a function to display a message about the unloaded image.
                                 }
                             })
