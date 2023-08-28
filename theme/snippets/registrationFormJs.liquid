@@ -80,20 +80,31 @@
         const uploadImage = document.querySelector("[ data-upload-image]");
         const fileInput = document.getElementById('file-input');
 
+        function isSubmitButtonEnabled() {
+            return (
+                termsCheckbox.checked &&
+                valid &&
+                distributorSelect.value !== '' &&
+                (
+                    (isSuit.value === 'false' && fileInput.files.length < 1 && accountNumberInput.value !== '') ||
+                    (isSuit.value === 'true' && fileInput.files.length > 0 && accountNumberInput.value !== '')
+                )
+            );
+        }
+
         termsCheckbox.addEventListener('change', function () {
-            if (termsCheckbox.checked && valid && isSuit.value === 'false'  && fileInput.files.length < 1 && distributorSelect.value !== ''  || termsCheckbox.checked && valid && isSuit.value === 'true'  && fileInput.files.length > 0 && distributorSelect.value !== '') {
-            // if (termsCheckbox.checked && valid && distributorSelect.value !== ''  || termsCheckbox.checked && valid && distributorSelect.value !== '') {
-                submitButton.disabled = false; // Enable the "Submit" button
-                console.log('step1')
+            if (isSubmitButtonEnabled()) {
+                submitButton.disabled = false;
+                console.log('step1');
             } else if (distributorSelect.value === '') {
                 distributorError.textContent = "Please select a distributor";
                 distributorError.style.display = 'block';
                 termsCheckbox.checked = false;
-                console.log('step3')
+                console.log('step3');
                 valid = false;
-            } else if (isSuit.value === 'true' && fileInput.files.length < 1){
-                console.log('step2')
-                submitButton.disabled = true; // Disable the "Submit" button
+            } else if (isSuit.value === 'true' && fileInput.files.length < 1) {
+                console.log('step2');
+                submitButton.disabled = true;
             }
         });
 
@@ -199,35 +210,8 @@
                     accountNumberInput.classList.remove('invalid');
                 }
             }
-            console.log('1 uploadImage.value', uploadImage.value)
-            console.log('1 fileInput.files.length', fileInput.files)
-            // Valid upload file field
-            if (uploadImage.value === 'true' && fileInput.files.length === 1 || uploadImage.value === 'false'  && fileInput.files.length < 1){
-                valid = true;
-                console.log('valid', valid)
-            } else {
-                console.log('files.length', fileInput.files.length);
-                valid = false;
-                console.log('valid', valid)
-            }
-
-            // if (valid) {
-            //     nextButton.disabled = false; // Enable the "Next" button
-            // } else {
-            //     nextButton.disabled = true; // Disable the "Next" button
-            // }
         }
 
-        // requiredFields.forEach(function (field) {
-        //     field.addEventListener('input', checkFormValidity);
-        // });
-        //
-        // emailInput.addEventListener('input', checkFormValidity);
-        // phoneNumberInput.addEventListener('input', checkFormValidity);
-        // passwordInput.addEventListener('input', checkFormValidity);
-        // confirmPasswordInput.addEventListener('input', checkFormValidity);
-        // termsCheckbox.addEventListener('change', checkFormValidity);
-        // zipInput.addEventListener('change', checkFormValidity);
         function handleInputChange(event) {
             const target = event.target;
             const targetId = target.getAttribute("id");
@@ -246,8 +230,9 @@
         }
 
         requiredFields.forEach(function (field) {
+            console.log('field ',field);
             if (field.tagName.toLowerCase() === 'select') {
-                field.addEventListener('change', handleInputChange);
+                field.addEventListener('change', checkFormValidity);
             } else {
                 field.addEventListener('input', handleInputChange);
             }
@@ -260,8 +245,16 @@
         confirmPasswordInput.addEventListener('input', handleInputChange);
         termsCheckbox.addEventListener('change', checkFormValidity);
         zipInput.addEventListener('change', checkFormValidity);
-        distributorSelect.addEventListener('change', checkFormValidity);
-        isSuit.addEventListener('change', checkFormValidity);
+
+        distributorSelect?.addEventListener('change', function () {
+            distributorError.textContent = '';
+            checkFormValidity();
+        });
+
+        isSuit.addEventListener('change', function () {
+            checkFormValidity();
+        });
+
         fileInput.addEventListener('change', checkFormValidity);
         checkFormValidity();
         return valid;
@@ -282,6 +275,9 @@
         const uploadImageWrap = document.querySelector("[ data-upload-image-wrap]");
         const labelDefault = labelText.textContent;
         const preview = document.getElementById("preview");
+
+        const termsCheckBox = document.querySelector("[data-terms-field]");
+        termsCheckBox.checked = false;
 
         // on file change
         // file.addEventListener("change", (event) => {
@@ -444,6 +440,7 @@
         const form = document.getElementById('create_customer');
 
         event.preventDefault(); // Stop the default form submission
+        validateForm();
         const fileInput = document.getElementById('file-input');
         const phoneNumber = form.phone.value.trim().replace(/-/g, ''); // and remove dashes
         let phoneWithCountryCode = "";

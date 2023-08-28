@@ -270,6 +270,7 @@
       const hasOtherProductIds = cartProductIds.some(productId => !productIds.find(product => product.product_id === productId));
 
       if (submitOrderButton && (cartProductIds.length === 0 || hasOtherProductIds)) {
+        console.log('ttt')
         submitOrderButton.disabled = false;
       } else {
         submitOrderButton.disabled = true;
@@ -694,7 +695,7 @@
                 </div>
               </div>
               <div class="number"></div>
-              <div class="checkout-button ac-offset__bottom--sm"><button type="button" id="update-cart" class="animation button--primary button--rounded button--fullWidth" data-submit-order {% if percentageFreeShip > 100 %} disabled {% endif %}>SUBMIT ORDER</button></div>
+              <div class="checkout-button ac-offset__bottom--sm"><button type="button" id="update-cart" class="animation button--primary button--rounded button--fullWidth" data-submit-order onclick="showSubmitOrderPopup(true);" {% if percentageFreeShip > 100 %} disabled {% endif %}>SUBMIT ORDER</button></div>
               {% comment %}<div class="checkout-button ac-offset__bottom--sm"><input type="submit" id="update-cart" class="animation button--primary button--rounded button--fullWidth" name="checkout" value="checkout" /></div>{% endcomment %}
               <p class="">rewards orders are limited to one per month</p>
               <!-- Removal of checkout options on cart page -->
