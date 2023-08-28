@@ -30,9 +30,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const destributorEl = document.querySelector('[data-account-distributor]');
   const destributorValue = "{{ customerDistributorName }}";
 
-  const email = 'oleg.nikulin@masterofcode.com';
-  {% comment %}const shopifyId = '{{ customer.id }}';{% endcomment %}
-  const shopifyId = '6434978693328'
+  // const email = 'oleg.nikulin@masterofcode.com';
+  // const shopifyId = '6434978693328'
+  const email = '{{ customer.email }}';
+  const shopifyId = '{{ customer.id }}';
   const url = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
 
   if (destributorValue) {
