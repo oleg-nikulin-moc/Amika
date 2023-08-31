@@ -88,7 +88,7 @@
                 valid &&
                 distributorSelect.value !== '' &&
                 (
-                    (isSuit.value === 'false' && fileInput.files.length < 1 && accountNumberInput.value !== '') ||
+                    (isSuit.value === 'false' && accountNumberInput.value !== '') ||
                     (isSuit.value === 'true' && fileInput.files.length > 0 && accountNumberInput.value !== '')
                 )
             );
@@ -461,6 +461,7 @@
         event.preventDefault(); // Stop the default form submission
         validateForm();
         const fileInput = document.getElementById('file-input');
+        const isSuit = document.getElementById('isSuit');
         const phoneNumber = form.phone.value.trim().replace(/-/g, ''); // and remove dashes
         let phoneWithCountryCode = "";
         if (phoneNumber !== "") {
@@ -530,7 +531,7 @@
             .then(response => response.json())
             .then(response => {
                 if (response.success) {
-                    if (fileInput.files.length > 0) {
+                    if (isSuit.value === 'true' && fileInput.files.length > 0) {
                         const file = fileInput.files[0];
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
                         const fileName = btoa(form.email) + '&' + validateFileName;
