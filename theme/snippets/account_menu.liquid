@@ -1,10 +1,15 @@
+{%  assign activeLink = active_link %}
+
 <div class="my-account-menu animation ac-account__sidebar">
   <ul class="ac-tabs">
-    <li class="animation ac-tab active" data-tab="info">
+    <li class="animation ac-tab {% unless activeLink == 'wishlist' %}active{% endunless %}" data-tab="info">
       <a role="button" href="/account" class="ac-account-sidebar__link">my account</a>
     </li>
     <li class="animation ac-tab" data-tab="tiers">
-      <a role="button" href="/account" class="ac-account-sidebar__link">my tier</a>
+      <a role="button" href="/account#tiers" class="ac-account-sidebar__link">my tier</a>
+    </li>
+    <li class="animation ac-tab" data-tab="points">
+      <a role="button" href="/account#points" class="ac-account-sidebar__link">my points</a>
     </li>
     {% if template == "customers/account" %}
       <li class="animation ac-tab" data-tab="orders">
@@ -15,7 +20,7 @@
         <a href="/account#orders" class="ac-account-sidebar__link">my orders</a>
       </li>
     {% endif %}
-    <li class="animation ac-tab" data-tab="wishes">
+    <li class="animation ac-tab {% if activeLink == 'wishlist' %}active{% endif %}" data-tab="wishes">
       <a href="/apps/iwish" class="ac-account-sidebar__link">my wishlist</a>
     </li>
   </ul>

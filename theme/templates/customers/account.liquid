@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   console.log('brandBoxPoints', {{ brandBoxPoints }});
 
   console.log('email_new', email);
-  const url = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
-
+  const urlTiers = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
+  const urlPoints = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
   if (destributorValue) {
     const modifiedStr = destributorValue.replace(/([A-Z])/g, ' $1');
     destributorEl.textContent = modifiedStr;
@@ -96,11 +96,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
       event.preventDefault();
       const tabId = tab.getAttribute('data-tab');
       setActiveTab(tabId);
+
       if (tabId === 'tiers') {
-        fetchData(url)
+        fetchData(urlTiers)
                 .then(data => {
                   console.log('data', data)
-                  displayTable(data);
+                  displayTableTiers(data);
+                });
+      } else if (tabId === 'points') {
+        fetchData(urlPoints)
+                .then(data => {
+                  console.log('dataPoints', data)
+                  displayTablePoints(data);
                 });
       }
       window.location.hash = `#${tabId}`;
@@ -111,10 +118,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
   else if (window.location.hash == '#info' || window.location.hash == '/account/#info' ) { setActiveTab('info') }
   else if (window.location.hash == '#tiers' || window.location.hash == '/account/#tiers' ) {
     setActiveTab('tiers');
-    fetchData(url)
+    fetchData(urlTiers)
             .then(data => {
               console.log('data', data)
-              displayTable(data);
+              displayTableTiers(data);
+            });
+  } else if (window.location.hash == '#points' || window.location.hash == '/account/#points' ) {
+    setActiveTab('points');
+    console.log({urlPoints})
+    fetchData(urlPoints)
+            .then(data => {
+              console.log('data', data)
+              displayTablePoints(data);
             });
   }
   // const tabs = document.querySelectorAll('.ac-tab');
@@ -504,18 +519,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Tiers
 
-  const table = document.querySelector('[data-table-tiers]');
+  const tableTiers = document.querySelector('[data-table-tiers]');
   const tiersButtons = document.querySelectorAll('[data-tab="tiers"]');
 
   // Функція для відображення таблиці з отриманими даними
-  function displayTable(data) {
-    table.innerHTML = '';
+  function displayTableTiers(data) {
+    tableTiers.innerHTML = '';
 
     let dataArray;
     try {
       dataArray = JSON.parse(data);
     } catch (error) {
-      table.textContent = 'Invalid data format'; // Повідомлення про неправильний формат даних
+      tableTiers.textContent = 'Invalid data format'; // Повідомлення про неправильний формат даних
       return;
     }
 
@@ -526,7 +541,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       messageCell.classList.add("ac-grid-tiers__cell--message");
       messageCell.textContent = "You haven't qualified yet.";
       messageRow.appendChild(messageCell);
-      table.appendChild(messageRow);
+      tableTiers.appendChild(messageRow);
       return;
     }
 
@@ -536,7 +551,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                           <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier level</div>
                           <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">points earned</div>
                           <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">date issued</div>`;
-    table.appendChild(headerRow);
+    tableTiers.appendChild(headerRow);
 
     if (Array.isArray(dataArray)) {
       dataArray.forEach(item => {
@@ -552,7 +567,64 @@ document.addEventListener('DOMContentLoaded', (event) => {
                        <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier ${item.tier}</div>
                        <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">${item.amount}</div>
                        <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">${formattedExpirationDate}</div>`;
-        table.appendChild(row);
+        tableTiers.appendChild(row);
+      });
+    } else {
+      console.log('Invalid data format');
+    }
+  }
+
+  // Tiers
+
+  const tablePoints = document.querySelector('[data-table-points]');
+  const pointsButtons = document.querySelectorAll('[data-tab="points"]');
+
+  // Функція для відображення таблиці з отриманими даними
+  function displayTablePoints(data) {
+    tablePoints.innerHTML = '';
+    console.log('start')
+    let dataArray;
+    try {
+      dataArray = JSON.parse(data);
+    } catch (error) {
+      tablePoints.textContent = 'Invalid data format'; // Повідомлення про неправильний формат даних
+      return;
+    }
+
+    if (dataArray.length === 0) {
+      const messageRow = document.createElement("div");
+      messageRow.classList.add("ac-grid-tiers__row--message");
+      const messageCell = document.createElement("p");
+      messageCell.classList.add("ac-grid-tiers__cell--message");
+      messageCell.textContent = "You haven't qualified yet.";
+      messageRow.appendChild(messageCell);
+      tablePoints.appendChild(messageRow);
+      return;
+    }
+
+    const headerRow = document.createElement('div');
+    headerRow.classList.add('ac-grid-tiers__row', 'ac-grid-tiers__row--header');
+    headerRow.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">bi-monthly period</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier level</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">points earned</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">date issued</div>`;
+    tablePoints.appendChild(headerRow);
+
+    if (Array.isArray(dataArray)) {
+      dataArray.forEach(item => {
+        const row = document.createElement('div');
+        row.classList.add('ac-grid-tiers__row');
+
+        const expirationDate = new Date(item.expirationDate);
+        const formattedExpirationDate = `${getMonthName(expirationDate.getMonth())} ${expirationDate.getDate()}, ${expirationDate.getFullYear()}`;
+        const dates = item.date.split('/');
+        const formattedDate = `${getMonthYear(dates[0])} - ${getMonthYear(dates[1])}`;
+
+        row.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">${formattedDate}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier ${item.tier}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">${item.amount}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">${formattedExpirationDate}</div>`;
+        tablePoints.appendChild(row);
       });
     } else {
       console.log('Invalid data format');
@@ -594,7 +666,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   //       fetchData(url)
   //           .then(data => {
   //             console.log('data', data)
-  //               displayTable(data);
+  //               displayTableTiers(data);
   //           });
   //     });
   //   });
@@ -1037,10 +1109,18 @@ p.ac-account__text:last-of-type {
     </div>
     <div class="ac-account__item ac-tab__content" id="customer_tiers" data-tab="tiers">
       <div class="ac-account__header">
-          <h1 class="ac-account-header__title hello">tiers</h1>
+          <h1 class="ac-account-header__title">tiers</h1>
       </div>
       <div class="ac-account__body">
         <div class="ac-grid-tiers__table" id="table-tiers" data-table-tiers> </div>
+      </div>
+    </div>
+    <div class="ac-account__item ac-tab__content" id="customer_tiers" data-tab="points">
+      <div class="ac-account__header">
+        <h1 class="ac-account-header__title">points</h1>
+      </div>
+      <div class="ac-account__body">
+        <div class="ac-grid-tiers__table" id="table-points" data-table-points> </div>
       </div>
     </div>
     <div class="ac-account__item ac-tab__content" id="customer_wishes" data-tab="wishes"></div>
