@@ -120,15 +120,6 @@
             // }
         });
 
-        isSuit.addEventListener('change', function () {
-            termsCheckbox.checked = false;
-            if (isSuit.value === 'true' && fileInput.files.length > 0 || isSuit.value === 'false' && fileInput.files.length < 1 ) {
-                submitButton.disabled = false; // Enable the "Submit" button
-            } else  {
-                submitButton.disabled = true; // Disable the "Submit" button
-            }
-        });
-
         function validateZipCode(zipCode) {
             const zipPatternUSA = '/^\(\d{3}\)\s\d{3}-\d{4}$/';
             const zipPatternCanada =  '/^(\+?1\s?)?(\()?(\d{3})(?(2)\))[-.\s]?(\d{3})[-.\s]?(\d{4})$/';
@@ -253,7 +244,11 @@
 
         accountNumberInput?.addEventListener('input', function (event) {
             accountNumberError.textContent = '';
+            сonsole.log('tets')
             let accountNumberValue = event.target.value.trim();
+            if (termsCheckbox.checked) {
+                termsCheckbox.checked = false;
+            }
             handleInputChange();
             if (!validateAccountNumber(accountNumberValue)) {
                 accountNumberError.style.display = 'block';
@@ -270,6 +265,9 @@
         });
 
         isSuit.addEventListener('change', function () {
+            if (termsCheckbox.checked) {
+                termsCheckbox.checked = false;
+            }
             checkFormValidity();
         });
 
@@ -280,8 +278,7 @@
 
     function validatePhoneNumber(phoneNumber) {
         const phonePattern = /^\d{10}$/;
-
-        return phonePattern.test(phoneNumber);
+        return phonePattern.test(phoneNumber.replace(/\s/g, ''));
     }
 
     // Upload function
