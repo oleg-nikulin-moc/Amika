@@ -2,6 +2,7 @@
 {% render 'spinner' %}
 {% assign cartItem = productsArray %}
 {% assign loyaltyPersentage = loyalty %}
+
 <div class="ac-shipping-information" id="shipping-information">
     <h3 class="ac-shipping-information__heading">shipping information</h3>
     <hr class="ac-shipping-information__divider">
@@ -38,16 +39,16 @@
             </div>
         </div>
         <div id="submit-order-block" style="display: none;" data-popup-block>
-            <h1 class="address-information__title">submit order</h1>
-            <p class="ac-address-information__text ac-offset__bottom--md">once submitted, orders are unable to be canceled or modified</p>
+            <h1 class="address-information__title">submit order?</h1>
+            <p class="ac-address-information__text ac-offset__bottom--md"><b>once submitted, orders are unable to be canceled or modified</b></p>
             <div class="ac-submit__wrap--vertical">
                 <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm()" data-submit-new-order>Yes, submit order</button>
                 <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" data-close-popup-btn>No, back to order</button>
             </div>
         </div>
         <div id="submit-order-block-main" style="display: none;" data-popup-block>
-            <h1 class="address-information__title">submit order</h1>
-            <p class="ac-address-information__text ac-offset__bottom--md">once submitted, orders are unable to be canceled or modified</p>
+            <h1 class="address-information__title">submit order?</h1>
+            <p class="ac-address-information__text ac-offset__bottom--md"><b>once submitted, orders are unable to be canceled or modified</b></p>
             <div class="ac-submit__wrap--vertical">
                 <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm(true)" data-submit-order-main>Yes, submit order</button>
                 <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" data-close-popup-btn>No, back to order</button>
@@ -465,7 +466,6 @@
                     // Error response
                     console.log('Form submission error:', response.error_message);
                     hideSpinner();
-
                 }
             })
             .catch(error => {

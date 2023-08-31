@@ -38,6 +38,8 @@
     function validateForm() {
         const tabs = document.getElementsByClassName("tab");
         const requiredFields = tabs[currentTab].querySelectorAll("[required]");
+        console.log({tabs})
+        console.log('currentTab', tabs[currentTab]);
         const passwordInput = document.getElementById("password");
         const confirmPasswordInput = document.getElementById("confirmPassword");
         const confirmPasswordError = document.getElementById("confirmPasswordError");
@@ -93,19 +95,24 @@
         }
 
         termsCheckbox.addEventListener('change', function () {
-            if (!termsCheckbox.checked) {
-                console.log('start');
-                submitButton.disabled = true;
-            }
-            else if (isSubmitButtonEnabled()) {
-                submitButton.disabled = false;
-                console.log('step1');
-            } else if (distributorSelect.value === '') {
+            if (distributorSelect.value === '') {
                 distributorError.textContent = "Please select a distributor";
                 distributorError.style.display = 'block';
                 termsCheckbox.checked = false;
                 console.log('step3');
                 valid = false;
+            } else if (accountNumberInput.value === '') {
+                accountNumberError.textContent = "Please type account number";
+                accountNumberError.style.display = 'block';
+                termsCheckbox.checked = false;
+                console.log('step4');
+                valid = false;
+            }else if(!termsCheckbox.checked) {
+                console.log('start');
+                submitButton.disabled = true;
+            } else if (isSubmitButtonEnabled()) {
+                submitButton.disabled = false;
+                console.log('step1');
             }
             // else if (isSuit.value === 'true' && fileInput.files.length < 1) {
             //     console.log('step2');
@@ -130,7 +137,8 @@
         }
 
         function validateAccountNumber(accountNumber) {
-            const patternNumber = '/^\d{3,50}$/';
+            console.log({accountNumber})
+            const patternNumber = /^\d{3,50}$/;
             return patternNumber.test(accountNumber);
         }
 
@@ -201,34 +209,22 @@
                     zipInput.classList.remove("invalid");
                 }
             }
-
-            // Accountnumber validation
-            if (accountNumberFields  === !null) {
-                if (!validateAccountNumber(accountNumber)) {
-                    accountNumberError.style.display = 'block';
-                    accountNumberError.textContent = "Incorrect phone number";
-                    accountNumberInput.classList.add('invalid');
-                    valid = false;
-                } else {
-                    accountNumberError.style.display = 'none';
-                    accountNumberError.textContent = "";
-                    accountNumberInput.classList.remove('invalid');
-                }
-            }
         }
 
         function handleInputChange(event) {
-            const target = event.target;
-            const targetId = target.getAttribute("id");
+            if (event) {
+                const target = event.target;
+                const targetId = target.getAttribute("id");
 
-            if (targetId === "email") {
-                emailValue = target.value;
-            } else if (targetId === "phone") {
-                phoneNumber = target.value;
-            } else if (targetId === "account_number") {
-                accountNumber = target.value;
-            } else if (targetId === "zip") {
-                zipValue = target.value;
+                if (targetId === "email") {
+                    emailValue = target.value;
+                } else if (targetId === "phone") {
+                    phoneNumber = target.value;
+                } else if (targetId === "account_number") {
+                    accountNumber = target.value;
+                } else if (targetId === "zip") {
+                    zipValue = target.value;
+                }
             }
 
             checkFormValidity();
@@ -245,7 +241,7 @@
 
         emailInput.addEventListener('input', handleInputChange);
         phoneNumberInput.addEventListener('input', handleInputChange);
-        accountNumberInput.addEventListener('input', handleInputChange);
+        // accountNumberInput.addEventListener('input', handleInputChange);
         passwordInput.addEventListener('input', handleInputChange);
         confirmPasswordInput.addEventListener('input', handleInputChange);
         termsCheckbox.addEventListener('change', checkFormValidity);
@@ -254,6 +250,24 @@
         distributorSelect?.addEventListener('change', function () {
             distributorError.textContent = '';
             checkFormValidity();
+        });
+
+        accountNumberInput?.addEventListener('input', function (event) {
+            accountNumberError.textContent = '';
+            let accountNumberValue = event.target.value.trim();
+            handleInputChange();
+            if (!validateAccountNumber(accountNumberValue)) {
+                accountNumberError.style.display = 'block';
+                accountNumberError.textContent = "Incorrect phone number";
+                accountNumberInput.classList.add('invalid');
+                valid = false;
+            } else {
+                accountNumberError.style.display = 'none';
+                accountNumberError.textContent = "";
+                accountNumberInput.classList.remove('invalid');
+                valid = true;
+                termsCheckbox.checked = false;
+            }
         });
 
         isSuit.addEventListener('change', function () {
@@ -502,6 +516,7 @@
         //     }
         // }
         showSpinner();
+        // Prod link https://cbb5e9xp3a.execute-api.us-east-1.amazonaws.com/auth/registration?auth_data=${i}
         fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?auth_data=${authData}`, {
             method: 'POST',
             headers: {
@@ -519,13 +534,14 @@
                         const file = fileInput.files[0];
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
                         const fileName = btoa(form.email) + '&' + validateFileName;
+                        // Prod https://nrn4n1ioml.execute-api.us-east-1.amazonaws.com/auth/suits-images/${fileName}?auth_data=${authData}
                         const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}?auth_data=${authData}`;
 
                         return fetch(uploadUrl, {
                             method: 'POST',
-                            'x-api-key': token,
                             // mode: 'no-cors',
                             headers: {
+                                'x-api-key': token,
                                 'Content-Type': 'multipart/form-data'
                             },
                             body: file
@@ -559,6 +575,7 @@
                     }
                     // Success response
                     hideSpinner();
+                    window.showSuccessForm();
                     console.log('Form submitted successfully');
                 } else {
                     // Error response
