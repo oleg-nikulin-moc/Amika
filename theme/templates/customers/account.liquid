@@ -32,8 +32,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // const email = 'oleg.nikulin@masterofcode.com';
   // const shopifyId = '6434978693328'
+  {% comment %}const productIds = JSON.parse('{{ tiersProducts }}');{% endcomment %}
   const email = '{{ customer.email }}';
   const shopifyId = '{{ customer.id }}';
+
+  console.log('loyaltyProgram', {{ loyaltyProgram }});
+  console.log('brandBoxPoints', {{ brandBoxPoints }});
+
+  console.log('email_new', email);
   const url = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
 
   if (destributorValue) {

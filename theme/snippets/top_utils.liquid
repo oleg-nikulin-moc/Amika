@@ -1,6 +1,10 @@
 {% assign loyaltyProgram = customer.metafields.amika_loyalty_program.points.value['points'] %}
 {% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints']  %}
 {% assign points = loyaltyProgram | plus: brandBoxPoints %}
+<script>
+  console.log('loyaltyProgram', {{ loyaltyProgram }});
+  console.log('brandBoxPoints', {{ brandBoxPoints }});
+</script>
 <div class="top-utils clearfix">
   <ul class="ac-nav-right__list right clearfix">
     {% if settings.show_newsletter_header %}

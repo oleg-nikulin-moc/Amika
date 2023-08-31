@@ -69,7 +69,6 @@ function validateForm() {
     const fileInput = document.getElementById('file-input');
     const distributorSelect =document.getElementById('distributorName');
     const distributorError = document.getElementById('distributorNameError');
-    const uploadImage = document.querySelector("[ data-upload-image]");
     function B() {
         var e;
         (l = !0),
@@ -145,7 +144,7 @@ function validateForm() {
     return (
         i.addEventListener("change", function () {
             console.log('checked', i.checked)
-            if (i.checked && l && isSuit.value === 'false' && fileInput.files.length < 1 && distributorSelect.value !== '' || i.checked && l && isSuit.value === 'true' && fileInput.files.length > 0 && distributorSelect.value !== '') {
+            if (i.checked && l && isSuit.value === 'false' && distributorSelect.value !== '' || i.checked && l && isSuit.value === 'true' && fileInput.files.length > 0 && distributorSelect.value !== '') {
                 r.disabled = !1; // Enable the "Submit" button
             } else if (distributorSelect.value === '') {
                 distributorError.textContent = "Please select a distributor";
@@ -159,10 +158,9 @@ function validateForm() {
             // i.checked && l ? (r.disabled = !1) : (r.disabled = !0);
         }),
             isSuit.addEventListener('change', function () {
-                i.checked = false;
-                if (isSuit.value === 'true' && fileInput.files.length > 0 || isSuit.value === 'false' && fileInput.files.length < 1 ) {
+                if (isSuit.value === 'true' && fileInput.files.length === 0) {
                     r.disabled = !0; // Disable the "Submit" button
-                } else {
+                } else if (i.checked && l && isSuit.value === 'true' && fileInput.files.length > 0) {
                     r.disabled = !1; // Enable the "Submit" button
                 }
             }),
@@ -183,8 +181,6 @@ function validateForm() {
             i?.addEventListener("change", B),
             S?.addEventListener("change", B),
             distributorSelect?.addEventListener('change', B),
-            isSuit?.addEventListener('change', B),
-            fileInput?.addEventListener('change', B),
             B(),
             l
     );
@@ -193,8 +189,6 @@ function validatePhoneNumber(e) {
     return /^\d{10}$/.test(e.replace(/\s/g, ""));
 }
 function imagePreview() {
-    const termsCheckBox = document.querySelector("[data-terms-field]");
-    termsCheckBox.checked = false;
     const e = document.getElementById("file-input"),
         t = document.querySelector("[data-upload-text]"),
         n = document.querySelector("[data-remove-img]"),
@@ -246,18 +240,11 @@ function removePreview() {
         a = document.querySelector("[data-upload-file]"),
         o = document.getElementById("preview"),
         s = t.textContent;
-    const fileField = document.getElementById("file-input");
-    const submitBtn = document.querySelector("#submitBtn");
-    const termsCheckBox = document.querySelector("[data-terms-field]");
-    const isSuit = document.getElementById('isSuit');
-    fileField.value = '',
-        (e.value = ""),
+    (e.value = ""),
         (t.textContent = s),
         (n.style.display = "none"),
         (o.style.display = "none"),
         (a.style.display = "block");
-    submitBtn.disabled = true;
-    termsCheckBox.checked = false;
 }
 const countrySelect = document.getElementById("country"),
     citySelect = document.getElementById("city"),
@@ -373,7 +360,7 @@ function submitForm(e) {
                                     ? (console.log("Response success"),
                                         window.showSuccessForm(),
                                         hideSpinner())
-                                    : hideSpinner();
+                                    : alert("Image not uploaded.");
                             })
                             .catch(function (e) {
                                 hideSpinner(), console.error("Error:", e);

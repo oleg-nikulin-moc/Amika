@@ -1,7 +1,45 @@
 <script type="text/javascript">
+    function getEmailByDistributor(distributor) {
+        switch (distributor) {
+            case "Armstrong McCall":
+                return "KEdgar@cosmoprofbeauty.com";
+            case "Aurora Beauty Supply":
+                return "Venessa@aurorabeautyak.com";
+            case "Beauty Craft":
+                return "meghanm@beautycraft.com";
+            case "Cosmo Prof":
+                return "kswick@sallybeauty.com";
+            case "Goldwell New York":
+                return "mhaight@goldwellny.com";
+            case "Hair-Lines":
+                return "jessjpms@hotmail.com";
+            case "MAKA Beauty Systems":
+                return "MichelleK@makabeauty.com";
+            case "ManocoBlue":
+                return "wwatene@manocoblue.com";
+            case "Paramount Beauty Distributors":
+                return "erin@paramountbeauty.com";
+            case "Prestige Salon Products":
+                return "rhonda@prestigesalonproducts.com";
+            case "SalonCentric":
+                return "tcarroll@saloncentric.com";
+            case "Salon Service Group":
+                return "brandstrategists@salonservicegroup.com";
+            case "Salon Services Pro":
+                return "cdaniels@salonservicespro.com";
+            case "State Beauty/RDA Pro Mart":
+                return "tdavidson@saloncentric.com";
+            case "TruBeauty Concepts":
+                return "myrta@trubeautyconcepts.com";
+            default:
+                return "";
+        }
+    }
     function validateForm() {
         const tabs = document.getElementsByClassName("tab");
         const requiredFields = tabs[currentTab].querySelectorAll("[required]");
+        console.log({tabs})
+        console.log('currentTab', tabs[currentTab]);
         const passwordInput = document.getElementById("password");
         const confirmPasswordInput = document.getElementById("confirmPassword");
         const confirmPasswordError = document.getElementById("confirmPasswordError");
@@ -36,23 +74,50 @@
         const textFieldPattern = /^[A-Za-z ]{2,50}$/
 
         const isSuit = document.getElementById('isSuit');
+
+        const distributorSelect =document.getElementById('distributorName');
+        const distributorError = document.getElementById('distributorNameError');
+
+        const uploadFileFields = tabs[currentTab].querySelector('#isSuit');
+        const uploadImage = document.querySelector("[ data-upload-image]");
         const fileInput = document.getElementById('file-input');
 
-        termsCheckbox.addEventListener('change', function () {
-            if (termsCheckbox.checked && valid && isSuit.value === 'false' || termsCheckbox.checked && valid && isSuit.value === 'true'  && fileInput.files.length > 0) {
-                submitButton.disabled = false; // Enable the "Submit" button
-            } else if (isSuit.value === 'true' && fileInput.files.length === 0){
-                console.log('step2')
-                submitButton.disabled = true; // Disable the "Submit" button
-            }
-        });
+        function isSubmitButtonEnabled() {
+            return (
+                termsCheckbox.checked &&
+                valid &&
+                distributorSelect.value !== '' &&
+                (
+                    (isSuit.value === 'false' && accountNumberInput.value !== '') ||
+                    (isSuit.value === 'true' && fileInput.files.length > 0 && accountNumberInput.value !== '')
+                )
+            );
+        }
 
-        isSuit.addEventListener('change', function () {
-            if (isSuit.value === 'true' && fileInput.files.length === 0) {
-                submitButton.disabled = true; // Disable the "Submit" button
-            } else if (termsCheckbox.checked && valid && isSuit.value === 'true' && fileInput.files.length > 0) {
-                submitButton.disabled = false; // Enable the "Submit" button
+        termsCheckbox.addEventListener('change', function () {
+            if (distributorSelect.value === '') {
+                distributorError.textContent = "Please select a distributor";
+                distributorError.style.display = 'block';
+                termsCheckbox.checked = false;
+                console.log('step3');
+                valid = false;
+            } else if (accountNumberInput.value === '') {
+                accountNumberError.textContent = "Please type account number";
+                accountNumberError.style.display = 'block';
+                termsCheckbox.checked = false;
+                console.log('step4');
+                valid = false;
+            }else if(!termsCheckbox.checked) {
+                console.log('start');
+                submitButton.disabled = true;
+            } else if (isSubmitButtonEnabled()) {
+                submitButton.disabled = false;
+                console.log('step1');
             }
+            // else if (isSuit.value === 'true' && fileInput.files.length < 1) {
+            //     console.log('step2');
+            //     submitButton.disabled = true;
+            // }
         });
 
         function validateZipCode(zipCode) {
@@ -63,7 +128,8 @@
         }
 
         function validateAccountNumber(accountNumber) {
-            const patternNumber = '/^\d{3,50}$/';
+            console.log({accountNumber})
+            const patternNumber = /^\d{3,50}$/;
             return patternNumber.test(accountNumber);
         }
 
@@ -134,76 +200,85 @@
                     zipInput.classList.remove("invalid");
                 }
             }
-
-            // Accountnumber validation
-            if (accountNumberFields  === !null) {
-                if (!validateAccountNumber(accountNumber)) {
-                    accountNumberError.style.display = 'block';
-                    accountNumberError.textContent = "Incorrect phone number";
-                    accountNumberInput.classList.add('invalid');
-                    valid = false;
-                } else {
-                    accountNumberError.style.display = 'none';
-                    accountNumberError.textContent = "";
-                    accountNumberInput.classList.remove('invalid');
-                }
-            }
-
-
-            // if (valid) {
-            //     nextButton.disabled = false; // Enable the "Next" button
-            // } else {
-            //     nextButton.disabled = true; // Disable the "Next" button
-            // }
         }
 
-        // requiredFields.forEach(function (field) {
-        //     field.addEventListener('input', checkFormValidity);
-        // });
-        //
-        // emailInput.addEventListener('input', checkFormValidity);
-        // phoneNumberInput.addEventListener('input', checkFormValidity);
-        // passwordInput.addEventListener('input', checkFormValidity);
-        // confirmPasswordInput.addEventListener('input', checkFormValidity);
-        // termsCheckbox.addEventListener('change', checkFormValidity);
-        // zipInput.addEventListener('change', checkFormValidity);
         function handleInputChange(event) {
-            const target = event.target;
-            const targetId = target.getAttribute("id");
+            if (event) {
+                const target = event.target;
+                const targetId = target.getAttribute("id");
 
-            if (targetId === "email") {
-                emailValue = target.value;
-            } else if (targetId === "phone") {
-                phoneNumber = target.value;
-            } else if (targetId === "account_number") {
-                accountNumber = target.value;
-            } else if (targetId === "zip") {
-                zipValue = target.value;
+                if (targetId === "email") {
+                    emailValue = target.value;
+                } else if (targetId === "phone") {
+                    phoneNumber = target.value;
+                } else if (targetId === "account_number") {
+                    accountNumber = target.value;
+                } else if (targetId === "zip") {
+                    zipValue = target.value;
+                }
             }
 
             checkFormValidity();
         }
 
         requiredFields.forEach(function (field) {
-            field.addEventListener('input', handleInputChange);
+            if (field.tagName.toLowerCase() === 'select') {
+                field.addEventListener('change', checkFormValidity);
+            } else {
+                field.addEventListener('input', handleInputChange);
+            }
         });
 
         emailInput.addEventListener('input', handleInputChange);
         phoneNumberInput.addEventListener('input', handleInputChange);
-        accountNumberInput.addEventListener('input', handleInputChange);
+        // accountNumberInput.addEventListener('input', handleInputChange);
         passwordInput.addEventListener('input', handleInputChange);
         confirmPasswordInput.addEventListener('input', handleInputChange);
         termsCheckbox.addEventListener('change', checkFormValidity);
         zipInput.addEventListener('change', checkFormValidity);
 
+        distributorSelect?.addEventListener('change', function () {
+            distributorError.textContent = '';
+            checkFormValidity();
+        });
+
+        accountNumberInput?.addEventListener('input', function (event) {
+            accountNumberError.textContent = '';
+            сonsole.log('tets')
+            let accountNumberValue = event.target.value.trim();
+            if (termsCheckbox.checked) {
+                termsCheckbox.checked = false;
+            }
+            handleInputChange();
+            if (!validateAccountNumber(accountNumberValue)) {
+                accountNumberError.style.display = 'block';
+                accountNumberError.textContent = "Incorrect phone number";
+                accountNumberInput.classList.add('invalid');
+                valid = false;
+            } else {
+                accountNumberError.style.display = 'none';
+                accountNumberError.textContent = "";
+                accountNumberInput.classList.remove('invalid');
+                valid = true;
+                termsCheckbox.checked = false;
+            }
+        });
+
+        isSuit.addEventListener('change', function () {
+            if (termsCheckbox.checked) {
+                termsCheckbox.checked = false;
+            }
+            checkFormValidity();
+        });
+
+        fileInput.addEventListener('change', checkFormValidity);
         checkFormValidity();
         return valid;
     }
 
     function validatePhoneNumber(phoneNumber) {
         const phonePattern = /^\d{10}$/;
-
-        return phonePattern.test(phoneNumber);
+        return phonePattern.test(phoneNumber.replace(/\s/g, ''));
     }
 
     // Upload function
@@ -215,6 +290,9 @@
         const uploadImageWrap = document.querySelector("[ data-upload-image-wrap]");
         const labelDefault = labelText.textContent;
         const preview = document.getElementById("preview");
+
+        const termsCheckBox = document.querySelector("[data-terms-field]");
+        termsCheckBox.checked = false;
 
         // on file change
         // file.addEventListener("change", (event) => {
@@ -263,14 +341,24 @@
         const labelText = document.querySelector("[data-upload-text]");
         const labelRemove = document.querySelector("[data-remove-img]");
         const uploadWrap = document.querySelector("[data-upload-file]");
+        const submitBtn = document.querySelector("#submitBtn");
+        const termsCheckBox = document.querySelector("[data-terms-field]");
         const preview = document.getElementById("preview");
         const labelDefault = labelText.textContent;
+        const isSuit = document.getElementById('isSuit');
 
-        file.value = "";
+        fileField.value = ''; // Скидуємо значення поля вводу файлу на порожній рядок
         labelText.textContent = labelDefault;
         labelRemove.style.display = "none";
         preview.style.display = "none";
         uploadWrap.style.display = "block";
+        submitBtn.disabled = true;
+        termsCheckBox.checked = false;
+        // isSuit.value = 'false';
+
+;        console.log('remove image file.length', file.length)
+
+        console.log('remove image file.value', file.value)
     }
 
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -339,26 +427,28 @@
     // start Auth
     const secretCode = "32kMURYG2ryEG5n4UEgzeaMpzpKMcoxJBNkvSiA2";
 
-    function generateAuthData(body){
-        return toBase64(JSON.stringify(body));
-    }
-
     function generateToken(body, secretCode){
-        const salt = generateSecretSalt(body, secretCode);
-        const encodedBody = toBase64(JSON.stringify(body));
-        const ab =   encodedBody + salt;
+        const email = { email: body.customer.email };
+        const jsonEmail = JSON.stringify(email);
+        const salt = generateSecretSalt(jsonEmail, secretCode);
+        const ab =   jsonEmail + salt;
         const hash = CryptoJS.SHA256(ab);
         const encodedHash = CryptoJS.enc.Hex.stringify(hash);
-        return toBase64(encodedHash);
+        const result = {
+            payload: email,
+            signature: encodedHash
+        };
+        return toBase64(JSON.stringify(result));
     }
 
-    function generateSecretSalt(body, secretCode){
-        const email = body.customer.email;
-        return toBase64(email + "/" + secretCode);
+    function generateSecretSalt(jsonEmail, secretCode){
+        console.log('salt', {jsonEmail})
+        console.log('salt', {secretCode})
+        return toBase64(jsonEmail + secretCode);
     }
 
     function toBase64(body) {
-        const base64 = btoa(decodeURIComponent(encodeURIComponent(body)));
+        const base64 = btoa(body);
         return base64;
     }
     // end Auth
@@ -367,7 +457,9 @@
         const form = document.getElementById('create_customer');
 
         event.preventDefault(); // Stop the default form submission
+        validateForm();
         const fileInput = document.getElementById('file-input');
+        const isSuit = document.getElementById('isSuit');
         const phoneNumber = form.phone.value.trim().replace(/-/g, ''); // and remove dashes
         let phoneWithCountryCode = "";
         if (phoneNumber !== "") {
@@ -400,7 +492,7 @@
         };
 
         const token = generateToken(formData, secretCode);
-        const authData = generateAuthData(formData);
+        console.log({token});
 
         // const formData = {
         //     customer :{
@@ -423,11 +515,12 @@
         //     }
         // }
         showSpinner();
-        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?auth_data=${authData}`, {
+        // Prod link https://cbb5e9xp3a.execute-api.us-east-1.amazonaws.com/auth/registration?auth_data=${i}
+        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': token
+                'x-api-key': token,
+                'Content-Type': 'application/json'
                 // mode: 'no-cors',
 
             },
@@ -436,17 +529,18 @@
             .then(response => response.json())
             .then(response => {
                 if (response.success) {
-                    if (fileInput.files.length > 0) {
+                    if (isSuit.value === 'true' && fileInput.files.length > 0) {
                         const file = fileInput.files[0];
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
                         const fileName = btoa(form.email) + '&' + validateFileName;
-                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}?auth_data=${authData}`;
+                        // Prod https://nrn4n1ioml.execute-api.us-east-1.amazonaws.com/auth/suits-images/${fileName}?auth_data=${authData}
+                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
 
                         return fetch(uploadUrl, {
                             method: 'POST',
-                            'x-api-key': token,
                             // mode: 'no-cors',
                             headers: {
+                                'x-api-key': token,
                                 'Content-Type': 'multipart/form-data'
                             },
                             body: file
@@ -457,6 +551,7 @@
                                     window.showSuccessForm();
                                     hideSpinner();
                                 } else {
+                                    hideSpinner();
                                     alert('Image not uploaded.'); // Calling a function to display a message about the unloaded image.
                                 }
                             })
@@ -479,6 +574,7 @@
                     }
                     // Success response
                     hideSpinner();
+                    window.showSuccessForm();
                     console.log('Form submitted successfully');
                 } else {
                     // Error response

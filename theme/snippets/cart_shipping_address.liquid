@@ -2,6 +2,7 @@
 {% render 'spinner' %}
 {% assign cartItem = productsArray %}
 {% assign loyaltyPersentage = loyalty %}
+
 <div class="ac-shipping-information" id="shipping-information">
     <h3 class="ac-shipping-information__heading">shipping information</h3>
     <hr class="ac-shipping-information__divider">
@@ -27,7 +28,7 @@
 <div class="popup" id="address-information-popup" style="display: none;">
     <button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
     <form id="address_information">
-        <div id="address-information-block">
+        <div id="address-information-block" data-popup-block>>
             <h1 class="address-information__title">edit shipping information</h1>
             <div class="ac-address-information__wrap">
                 {% render 'shipping_address' %}
@@ -37,12 +38,27 @@
                 <button class="ac-form__btn ac-form__btn--black" type="button" id="submitBtn1" onclick="showSubmitOrderPopup()">Save</button>
             </div>
         </div>
-        <div id="submit-order-block" style="display: none;">
-            <h1 class="address-information__title">submit order</h1>
-            <p class="ac-address-information__text ac-offset__bottom--md">once submitted, orders are unable to be canceled or modified</p>
+        <div id="submit-order-block" style="display: none;" data-popup-block>
+            <h1 class="address-information__title">submit order?</h1>
+            <p class="ac-address-information__text ac-offset__bottom--md"><b>once submitted, orders are unable to be canceled or modified</b></p>
             <div class="ac-submit__wrap--vertical">
-                <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm()" data-submit-new-order {% if loyalty != true %}disabled{% endif %}>Yes, submit order</button>
-                <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" onclick="hideSubmitOrderPopup(); return false;">No, back to order</button>
+                <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm()" data-submit-new-order>Yes, submit order</button>
+                <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" data-close-popup-btn>No, back to order</button>
+            </div>
+        </div>
+        <div id="submit-order-block-main" style="display: none;" data-popup-block>
+            <h1 class="address-information__title">submit order?</h1>
+            <p class="ac-address-information__text ac-offset__bottom--md"><b>once submitted, orders are unable to be canceled or modified</b></p>
+            <div class="ac-submit__wrap--vertical">
+                <button class="ac-form__btn ac-form__btn--black ac-block__width--full ac-offset__bottom--xs" type="button" id="submitBtn2" onclick="submitForm(true)" data-submit-order-main>Yes, submit order</button>
+                <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" data-close-popup-btn>No, back to order</button>
+            </div>
+        </div>
+        <div id="success-block" style="display: none;" data-popup-block>
+            <h1 class="address-information__title">order submitted</h1>
+            <p class="ac-address-information__text ac-offset__bottom--md">we have received your rewards order!  keep an eye on your email for shipping updates and delivery details</p>
+            <div class="ac-submit__wrap--vertical">
+                <button class="ac-form__btn ac-form__btn--solid ac-form__btn--offset ac-block__width--full" type="button" id="cancelBtn" onclick="window.location.href = '/account#customer_orders'">back to site</button>
             </div>
         </div>
     </form>
@@ -219,9 +235,13 @@
             ]
         };
 
-        stateSelect.disabled = true;
         citySelect.disabled = true;
         zipField.disabled = true;
+
+        stateSelect.addEventListener('change', () => {
+            citySelect.disabled = false;
+            zipField.disabled = false;
+        });
 
         function renderStates(country) {
             stateSelect.innerHTML = ''; //очищаємо список штатів перед додаванням нових елементів
@@ -265,7 +285,9 @@
         closeMethods: ['escape'],
         cssClass: ['ac-popup',  'ac-popup--lg','ac-shipping__popup'],
     });
-    const submitOrder = document.querySelector("[data-submit-order]");
+
+    // const submitOrder = document.querySelector("[data-submit-order-main]");
+
     const submitNewOrder = document.querySelector("[data-submit-new-order]")
 
     const newCartItems = cartJson.items.map(function(item) {
@@ -310,6 +332,7 @@
             event.preventDefault();
             formResize('lg');
             addressEdit.open();
+            showBlock('#address-information-block');
         });
     })
 
@@ -373,46 +396,52 @@
         return valid;
     }
 
-    submitOrder.addEventListener("click", () => {
-         console.log("clicked element");
+    // submitOrder.addEventListener("click", () => {
+    //      console.log("clicked element");
+    //
+    //     showSpinner();
+    //     fetch('https://ny8a87hmzg.execute-api.us-east-1.amazonaws.com/create-order', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(formData)
+    //     })
+    //     .then(response => response.json())
+    //     .then(response => {
+    //         if (response.success) {
+    //             // Success response
+    //             console.log('Form submitted successfully');
+    //             alert('tst');
+    //             clearCart();
+    //         } else {
+    //             // Error response
+    //             console.log('Form submission error:', response.error_message);
+    //             alert(response.error_message);
+    //         }
+    //         hideSpinner();
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+    // });
 
-        showSpinner();
-        fetch('https://ny8a87hmzg.execute-api.us-east-1.amazonaws.com/create-order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(response => {
-            if (response.success) {
-                // Success response
-                console.log('Form submitted successfully');
-                clearCart();
-            } else {
-                // Error response
-                console.log('Form submission error:', response.error_message);
-                alert(response.error_message);
-            }
-            hideSpinner();
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    });
 
-
-    function submitForm(event) {
-        const form = document.getElementById('address_information');
-        // event.preventDefault(); // Stop the default form submission
-        formData.order.shipping_address.address1 = form.salon_address.value;
-        formData.order.shipping_address.country = form.country.value.toUpperCase();
-        formData.order.shipping_address.province = form.province.value;
-        formData.order.shipping_address.city = form.city.value;
-        formData.order.shipping_address.zip = form.zip.value;
-        formData.order.shipping_address.first_name = form.first_name.value;
-        formData.order.shipping_address.last_name = form.last_name.value;
+    function submitForm(show) {
+        console.log('start' )
+        if (!show) {
+            console.log('new date')
+            const form = document.getElementById('address_information');
+            // event.preventDefault(); // Stop the default form submission
+            formData.order.shipping_address.address1 = form.salon_address.value;
+            formData.order.shipping_address.country = form.country.value.toUpperCase();
+            formData.order.shipping_address.province = form.province.value;
+            formData.order.shipping_address.city = form.city.value;
+            formData.order.shipping_address.zip = form.zip.value;
+            formData.order.shipping_address.first_name = form.first_name.value;
+            formData.order.shipping_address.last_name = form.last_name.value;
+        }
+        console.log('finish')
 
         showSpinner();
         fetch('https://ny8a87hmzg.execute-api.us-east-1.amazonaws.com/create-order', {
@@ -431,6 +460,7 @@
                     hideSubmitOrderPopup()
                     hideSpinner();
                     clearCart();
+                    showSuccessPopup();
 
                 } else {
                     // Error response
@@ -443,20 +473,37 @@
             });
     };
 
-    function showSubmitOrderPopup() {
-        if (!validateForm()) {
-            console.log('Not valid', validateForm());
-            return false;
-        }
-
+    function showSuccessPopup() {
+        addressEdit.open();
         formResize('sm');
-        document.getElementById('submit-order-block').style.display = 'block';
-        document.getElementById('address-information-block').style.display='none';
+        document.getElementById('success-block').style.display='block';
+    }
+    function showBlock(showSelector) {
+        console.log('showSelector', showSelector)
+        const blocks = document.querySelectorAll('[data-popup-block]');
+        blocks.forEach(block => block.style.display = 'none');
+        document.querySelector(`${showSelector}`).style.display = 'block';
+    }
+
+    function showSubmitOrderPopup(show) {
+        if (show) {
+            addressEdit.open();
+            formResize('sm');
+            showBlock('#submit-order-block-main');
+        }
+        else if (!validateForm()) {
+            console.log('Not valid', validateForm());
+        } else {
+            formResize('sm');
+            showBlock('#submit-order-block');
+        }
         return false;
+
     }
     function hideSubmitOrderPopup() {
         document.getElementById('submit-order-block').style.display = 'none';
-        document.getElementById('address-information-block').style.display = 'block';
+        document.getElementById('submit-order-block-main').style.display = 'none';
+        document.getElementById('address-information-block').style.display = 'none';
         document.getElementById('address-information-popup').style.display='none';
         document.querySelector('.tingle-modal').style.display='none';
         formResize('lg');
@@ -475,7 +522,7 @@
                 // Error handling for cart clearing
             }
         });
-        window.location.href = '/account#customer_orders';
+        // window.location.href = '/account#customer_orders';
     }
     function formResize(size) {
         const popups = document.querySelectorAll('.ac-popup');

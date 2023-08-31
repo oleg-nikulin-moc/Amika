@@ -43,7 +43,7 @@
         </div>
 
         <div id="phone-wrap" class="clearfix form-row register-form__fieldset">
-          <label for="phone" class="ac-form__label login">Mobile Number*</label>
+          <label for="phone" class="ac-form__label login">Mobile Number</label>
           <input type="text" id="phone" name="phone" title="Please provide the phone number without the country code." placeholder="(XXX)XXXXXXX" class="large ac-form__field ac-form_feild"/>
           <span id="phoneError" class="ac-text--error"></span>
         </div>
@@ -57,7 +57,8 @@
         <p class="ac-form-distributor__description">salons can only earn rewards based on the purchase totals reported by their designated primary distributor as purchase totals cannot be combined. once submitted, this field is unable to be modified.</p>
          <div id="distributor_wrap" class="clearfix form-row register-form__fieldset ac-offset-right--sm">
             <label for="distributorName" class="ac-form__label login ac-text--truncate">primary distributor name*</label>
-            <select id="distributorName" name="distributorName" class="ac-form__selector form-control" required>
+            <select id="distributorName" name="distributorName" class="ac-form__selector form-control" required data-distributor-field>
+                <option value="" disabled selected hidden>select one</option>
                 <option value="armstrongMcCall">Armstrong McCall</option>
                 <option value="beautyCraft">Beauty Craft</option>
                 <option value="goldwellOfNY">Goldwell of NY</option>
@@ -77,8 +78,9 @@
             <!-- <input type="text" value="" name="customer[distributor]" required placeholder="primary distributor name" id="distributor" class="large ac-form__field {% if form.errors contains 'distributor' %} error{% endif %}" size="30" />-->
         </div>
           <div id="distributor_wrap" class="clearfix form-row register-form__fieldset ac-offset-right--none">
-              <label for="account_number" class="ac-form__label login ac-text--truncate">account number*</label>
+              <label for="account_number" class="ac-form__label login ac-text--truncate">primary distributor account number*</label>
               <input type="text" id="account_number" name="account_number" title="Check if the value consists of only digits and has a length between 3 and 50 characters" placeholder="account number" class="large ac-form__field ac-form_feild" required />
+              <p class="ac-form__note" style="margin-top: 8px;"><b>note: </b>incorrect account numbers will not be reported</p>
               <span id="accountNumberError" class="ac-text--error"></span>
               <!-- <input type="text" value="" name="customer[distributor]" required placeholder="primary distributor name" id="distributor" class="large ac-form__field {% if form.errors contains 'distributor' %} error{% endif %}" size="30" />-->
           </div>
