@@ -231,7 +231,6 @@
         }
 
         requiredFields.forEach(function (field) {
-            console.log('field ',field);
             if (field.tagName.toLowerCase() === 'select') {
                 field.addEventListener('change', checkFormValidity);
             } else {
@@ -431,26 +430,28 @@
     // start Auth
     const secretCode = "32kMURYG2ryEG5n4UEgzeaMpzpKMcoxJBNkvSiA2";
 
-    function generateAuthData(body){
-        return toBase64(JSON.stringify(body));
-    }
-
     function generateToken(body, secretCode){
-        const salt = generateSecretSalt(body, secretCode);
-        const encodedBody = toBase64(JSON.stringify(body));
-        const ab =   encodedBody + salt;
+        const email = { email: body.customer.email };
+        const jsonEmail = JSON.stringify(email);
+        const salt = generateSecretSalt(jsonEmail, secretCode);
+        const ab =   jsonEmail + salt;
         const hash = CryptoJS.SHA256(ab);
         const encodedHash = CryptoJS.enc.Hex.stringify(hash);
-        return toBase64(encodedHash);
+        const result = {
+            payload: email,
+            signature: encodedHash
+        };
+        return toBase64(JSON.stringify(result));
     }
 
-    function generateSecretSalt(body, secretCode){
-        const email = body.customer.email;
-        return toBase64(email + "/" + secretCode);
+    function generateSecretSalt(jsonEmail, secretCode){
+        console.log('salt', {jsonEmail})
+        console.log('salt', {secretCode})
+        return toBase64(jsonEmail + secretCode);
     }
 
     function toBase64(body) {
-        const base64 = btoa(decodeURIComponent(encodeURIComponent(body)));
+        const base64 = btoa(body);
         return base64;
     }
     // end Auth
@@ -494,7 +495,7 @@
         };
 
         const token = generateToken(formData, secretCode);
-        const authData = generateAuthData(formData);
+        console.log({token});
 
         // const formData = {
         //     customer :{
@@ -518,11 +519,11 @@
         // }
         showSpinner();
         // Prod link https://cbb5e9xp3a.execute-api.us-east-1.amazonaws.com/auth/registration?auth_data=${i}
-        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration?auth_data=${authData}`, {
+        fetch(`https://3m3119r1fj.execute-api.us-east-1.amazonaws.com/development/registration`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': token
+                'x-api-key': token,
+                'Content-Type': 'application/json'
                 // mode: 'no-cors',
 
             },
@@ -536,7 +537,7 @@
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
                         const fileName = btoa(form.email) + '&' + validateFileName;
                         // Prod https://nrn4n1ioml.execute-api.us-east-1.amazonaws.com/auth/suits-images/${fileName}?auth_data=${authData}
-                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}?auth_data=${authData}`;
+                        const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
 
                         return fetch(uploadUrl, {
                             method: 'POST',
