@@ -104,11 +104,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                   displayTableTiers(data);
                 });
       } else if (tabId === 'points') {
-        fetchData(urlPoints)
-                .then(data => {
-                  console.log('dataPoints', data)
-                  displayTablePoints(data);
-                });
+        // const dataNew = '[{"date":"2023-03/2023-04","tier":3,"amount":713,"expirationDate":"2024-5-16"},{"date":"2023-05/2023-06","tier":1,"amount":201,"expirationDate":"2024-7-16"},{"date":"2023-07/2023-08","tier":2,"amount":413,"expirationDate":"2024-9-16"},{"date":"2022-09/2022-10","tier":5,"amount":175,"expirationDate":"2023-11-16"},{"date":"2022-09/2022-10","tier":5,"amount":175,"expirationDate":"2023-11-16"},{"date":"2022-11/2022-12","tier":4,"amount":175,"expirationDate":"2024-1-16"},{"date":"2022-09/2022-10","tier":2,"amount":75,"expirationDate":"2023-12-16"},{"date":"2022-09/2022-10","tier":2,"amount":75,"expirationDate":"2023-12-16"},{"date":"2022-09/2022-10","tier":2,"amount":75,"expirationDate":"2023-12-16"},{"date":"2023-09/2023-10","tier":1,"amount":75,"expirationDate":"2024-12-16"},{"date":"2023-11/2023-12","tier":1,"amount":75,"expirationDate":"2025-1-16"},{"date":"2024-01/2024-02","tier":1,"amount":75,"expirationDate":"2025-3-16"},{"date":"2024-01/2024-02","tier":1,"amount":75,"expirationDate":"2025-3-16"}]';
+        const dataNew = '[{"description":"bi-monthly period july-august point","tier":"+150","amount":"250","expirationDate":"2023-8-16"},{"description":"order #63452432","tier":"-50","amount":"150","expirationDate":"2023-8-20"},{"description":"bonus points - camp amika offer","tier":"+100","amount":"300","expirationDate":"2023-8-25"},{"description":"bi-monthly period july-august point","tier":"-200","amount":"400","expirationDate":"2023-8-30"}]';
+        displayTablePoints(dataNew);
+        // fetchData(urlPoints)
+        //         .then(data => {
+        //           console.log('dataPoints', data)
+        //           displayTablePoints(data);
+        //         });
       }
       window.location.hash = `#${tabId}`;
     });
@@ -126,11 +129,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   } else if (window.location.hash == '#points' || window.location.hash == '/account/#points' ) {
     setActiveTab('points');
     console.log({urlPoints})
-    fetchData(urlPoints)
-            .then(data => {
-              console.log('data', data)
-              displayTablePoints(data);
-            });
+    const dataNew = '[{"description":"bi-monthly period july-august point","tier":"+150","amount":"250","expirationDate":"2023-8-16"},{"description":"order #63452432","tier":"-50","amount":"150","expirationDate":"2023-8-20"},{"description":"bonus points - camp amika offer","tier":"+100","amount":"300","expirationDate":"2023-8-25"},{"description":"bi-monthly period july-august point","tier":"-200","amount":"400","expirationDate":"2023-8-30"}]';
+    displayTablePoints(dataNew);
+    // fetchData(urlPoints)
+    //         .then(data => {
+    //           console.log('data', data)
+    //           displayTablePoints(data);
+    //         });
   }
   // const tabs = document.querySelectorAll('.ac-tab');
   // const tabContents = document.querySelectorAll('.ac-tab__content');
@@ -518,12 +523,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 
   // Tiers
-
-  const tableTiers = document.querySelector('[data-table-tiers]');
-  const tiersButtons = document.querySelectorAll('[data-tab="tiers"]');
-
   // Функція для відображення таблиці з отриманими даними
   function displayTableTiers(data) {
+    const tableTiers = document.querySelector('[data-table-tiers]');
+    const tiersButtons = document.querySelectorAll('[data-tab="tiers"]');
     tableTiers.innerHTML = '';
 
     let dataArray;
@@ -574,13 +577,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   }
 
-  // Tiers
-
-  const tablePoints = document.querySelector('[data-table-points]');
-  const pointsButtons = document.querySelectorAll('[data-tab="points"]');
-
+  // Points
   // Функція для відображення таблиці з отриманими даними
   function displayTablePoints(data) {
+    console.log('data-table', data);
+    const tablePoints = document.querySelector('[data-table-points]');
+    const pointsButtons = document.querySelectorAll('[data-tab="points"]');
     tablePoints.innerHTML = '';
     console.log('start')
     let dataArray;
@@ -604,10 +606,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const headerRow = document.createElement('div');
     headerRow.classList.add('ac-grid-tiers__row', 'ac-grid-tiers__row--header');
-    headerRow.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">bi-monthly period</div>
-                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier level</div>
-                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">points earned</div>
-                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">date issued</div>`;
+    headerRow.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">date</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">description</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">amount <br> (-X or +X)</div>
+                          <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">total amount</div>`;
     tablePoints.appendChild(headerRow);
 
     if (Array.isArray(dataArray)) {
@@ -617,13 +619,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         const expirationDate = new Date(item.expirationDate);
         const formattedExpirationDate = `${getMonthName(expirationDate.getMonth())} ${expirationDate.getDate()}, ${expirationDate.getFullYear()}`;
-        const dates = item.date.split('/');
-        const formattedDate = `${getMonthYear(dates[0])} - ${getMonthYear(dates[1])}`;
+        // const dates = item.date.split('/');
+        // const formattedDate = `${getMonthYear(dates[0])} - ${getMonthYear(dates[1])}`;
 
-        row.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">${formattedDate}</div>
-                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">tier ${item.tier}</div>
-                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">${item.amount}</div>
-                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">${formattedExpirationDate}</div>`;
+        row.innerHTML = `<div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersDate">${formattedExpirationDate}</div>
+                        <div class="ac-grid-tiers__cell ac-grid-tiers__cell--biMothly">${item.description}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiers">${item.tier}</div>
+                       <div class="ac-grid-tiers__cell ac-grid-tiers__cell--tiersPoints">${item.amount}</div>`;
         tablePoints.appendChild(row);
       });
     } else {
