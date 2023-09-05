@@ -2,26 +2,18 @@
 {% assign brandBoxPoints = customer.metafields.amika_loyalty_program.points.value['brandBoxPoints'] %}
 {% assign tier = customer.metafields.amika_loyalty_program.points.value['tier'] %}
 {% assign tiersProducts = shop.metafields.amika_loyalty_program.tiers %}
+{% assign user = customer.metafields.amika_loyalty_program.points %}
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-
         const BrandBoxEls = document.querySelectorAll('[data-brandbox-icon]');
-        {% comment  %}
-              {% endcomment  %}
-            const user = JSON.parse('{{  customer.metafields.amika_loyalty_program.points }}');
-
-
-        {% comment %}
-
-        const user = {
-          "tier": "2",
-          "points": "",
-          "pointsExpireDate": "2023-09-07",
-          "brandBoxPoints": "50"
-        }
-       {% endcomment %}
         const tiersProducts = JSON.parse('{{ tiersProducts }}');
+
+        {% if user %}
+            const user = JSON.parse('{{user}}');
+        {% else %}
+            const user = {"tier": "-1", "points": "0", "pointsExpireDate": "2024-08-09", "brandBoxPoints": "0", "extraOrder": false };
+        {% endif %}
 
         function updateBrandBoxItem(condition) {
             if (condition) {
@@ -31,7 +23,6 @@
                 BrandBoxEls.forEach(element => element.classList.remove('is'));
             }
         }
-
         function showMsg() {
             if (BrandBoxEls) {
                 BrandBoxEls.forEach(el => {
