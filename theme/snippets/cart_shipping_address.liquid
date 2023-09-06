@@ -1,4 +1,5 @@
 {% comment %}{% render 'registrationFormCss' %}{% endcomment %}
+{{ 'account.js' | asset_url | script_tag }}
 {% render 'spinner' %}
 {% assign cartItem = productsArray %}
 {% assign loyaltyPersentage = loyalty %}
@@ -428,6 +429,18 @@
 
 
     function submitForm(show) {
+        const secretCode = "ytPyZKiK89x6oX7P5PwAb&in$CnJ8x!dxADQSgyX";
+        const bodyCode = {
+            "customer": {
+                "id": "{{ customer.id }}",
+                "email": "{{ customer.email }}",
+                "default_address": {
+                    "id": "{{ customer.default_address.id }}"
+                }
+            }
+        }
+        const token = generateAuthToken(bodyCode, secretCode);
+        console.log('orderAccount', {token});
         console.log('start' )
         if (!show) {
             console.log('new date')
@@ -448,6 +461,7 @@
             method: 'POST',
             // mode: 'no-cors',
             headers: {
+                'x-api-key': token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
