@@ -457,7 +457,7 @@
         console.log('finish')
 
         showSpinner();
-        fetch('https://ny8a87hmzg.execute-api.us-east-1.amazonaws.com/create-order', {
+        fetch('https://81ctzdfktb.execute-api.us-east-1.amazonaws.com/development/create-order', {
             method: 'POST',
             // mode: 'no-cors',
             headers: {
@@ -480,6 +480,7 @@
                     // Error response
                     console.log('Form submission error:', response.error_message);
                     hideSpinner();
+                    hideSubmitOrderPopup();
                 }
             })
             .catch(error => {
@@ -519,7 +520,8 @@
         document.getElementById('submit-order-block-main').style.display = 'none';
         document.getElementById('address-information-block').style.display = 'none';
         document.getElementById('address-information-popup').style.display='none';
-        document.querySelector('.tingle-modal').style.display='none';
+        const popups = document.querySelectorAll('.tingle-modal');
+        popups.forEach(popup => popup.style.display='none');
         formResize('lg');
         return false;
     }
