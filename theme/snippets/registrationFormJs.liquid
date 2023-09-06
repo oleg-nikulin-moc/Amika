@@ -129,7 +129,7 @@
 
         function validateAccountNumber(accountNumber) {
             console.log({accountNumber})
-            const patternNumber = /^\d{3,50}$/;
+            const patternNumber = /^.{3,50}$/;
             return patternNumber.test(accountNumber);
         }
 
@@ -244,7 +244,6 @@
 
         accountNumberInput?.addEventListener('input', function (event) {
             accountNumberError.textContent = '';
-            сonsole.log('tets')
             let accountNumberValue = event.target.value.trim();
             if (termsCheckbox.checked) {
                 termsCheckbox.checked = false;
@@ -252,7 +251,7 @@
             handleInputChange();
             if (!validateAccountNumber(accountNumberValue)) {
                 accountNumberError.style.display = 'block';
-                accountNumberError.textContent = "Incorrect phone number";
+                accountNumberError.textContent = "Incorrect account number";
                 accountNumberInput.classList.add('invalid');
                 valid = false;
             } else {
@@ -267,6 +266,7 @@
         isSuit.addEventListener('change', function () {
             if (termsCheckbox.checked) {
                 termsCheckbox.checked = false;
+                submitButton.disabled = true;
             }
             checkFormValidity();
         });
@@ -481,8 +481,10 @@
                 distributor_name: form.distributorName.value,
                 distributor_email: form.email.value,
                 is_suit: form.isSuit.value,
+                subscribe: form.subscribe.checked,
                 addresses: [{
                     salon_address: form.salon_address.value,
+                    salon_address2: form.salonAddress2.value,
                     country: form.country.value.toUpperCase(),
                     state: form.province.value,
                     city: form.city.value,
@@ -532,7 +534,7 @@
                     if (isSuit.value === 'true' && fileInput.files.length > 0) {
                         const file = fileInput.files[0];
                         const validateFileName = file.name.replace(/[\/+&\\]/g, '_');
-                        const fileName = btoa(form.email) + '&' + validateFileName;
+                        const fileName = btoa(form.email.value) + '&' + validateFileName;
                         // Prod https://nrn4n1ioml.execute-api.us-east-1.amazonaws.com/auth/suits-images/${fileName}?auth_data=${authData}
                         const uploadUrl = `https://dfx7dgn178.execute-api.us-east-1.amazonaws.com/development/amika-file-upload-stage/${fileName}`;
 
@@ -556,6 +558,8 @@
                                 }
                             })
                             .catch(function(error) {
+                                hideSpinner();
+                                window.showSuccessForm();
                                 console.error('Error:', error); // Handling errors during request execution.
                             });
                     } else if (response.success){
