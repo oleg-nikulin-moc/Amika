@@ -13,6 +13,7 @@
 
 {% assign daysDifference = expireDateTimestamp | minus: todayTimestamp | divided_by: 86400 | minus: 1 %}
 
+{{ 'account.js' | asset_url | script_tag }}
 <script>
 $(function(){
     $('.scroll').click(function(){
@@ -32,12 +33,49 @@ document.addEventListener('DOMContentLoaded', (event) => {
   // const email = 'oleg.nikulin@masterofcode.com';
   // const shopifyId = '6434978693328'
   {% comment %}const productIds = JSON.parse('{{ tiersProducts }}');{% endcomment %}
+
+  // start Auth
+  const secretCode = "ytPyZKiK89x6oX7P5PwAb&in$CnJ8x!dxADQSgyX";
+  const body = {
+    "customer": {
+      "id": "{{ customer.id }}",
+      "email": "{{ customer.email }}",
+      "default_address": {
+        "id": "{{ customer.default_address.id }}"
+      }
+    }
+  }
+
+  // function toBase64(body) {
+  //   const base64 = btoa(body);
+  //   return base64;
+  // }
+  //
+  // function generateAuthToken(body, secretCode){
+  //   const id = body.customer.id;
+  //   const email = body.customer.email;
+  //   const defaultAddressId = body.customer.default_address.id;
+  //
+  //   const authToken = email + "|" + defaultAddressId + "|" + id;
+  //   console.log({authToken});
+  //   const ab =   authToken + secretCode;
+  //   const hash = CryptoJS.SHA256(ab);
+  //   const signedToken = CryptoJS.enc.Hex.stringify(hash);
+  //   return toBase64(JSON.stringify(signedToken));
+  // }
+  const token = generateAuthToken(body, secretCode);
+  console.log('authAccount', {token});
+  // end Auth
+
+
   const email = '{{ customer.email }}';
   const shopifyId = '{{ customer.id }}';
 
   console.log('loyaltyProgram', {{ loyaltyProgram }});
   console.log('brandBoxPoints', {{ brandBoxPoints }});
-
+  console.log('customer:', {{ customer.default_address.id }});
+  console.log('customer:', {{ customer.default_address.customer_id }});
+  console.log({body});
   console.log('email_new', email);
   const url = `https://1lt16uv66a.execute-api.us-east-1.amazonaws.com/tier-page?shopifyId=${shopifyId}&email=${encodeURIComponent(email)}`;
 
@@ -116,29 +154,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
               displayTable(data);
             });
   }
-  // const tabs = document.querySelectorAll('.ac-tab');
-  // const tabContents = document.querySelectorAll('.ac-tab__content');
-  //
-  // tabs.forEach(tab => {
-  //   tab.addEventListener('click', () => {
-  //     const activeTab = document.querySelector('.ac-tab.active');
-  //     const activeTabContent = document.querySelector('.ac-tab__content.show');
-  //     console.log('activeTab', activeTab);
-  //     console.log('activeTabContent', activeTabContent);
-  //     activeTab.classList.remove('active');
-  //     activeTabContent.classList.remove('show');
-  //
-  //     tab.classList.add('active');
-  //     const tabId = tab.getAttribute('data-tab');
-  //     const tabContent = document.querySelector(`.ac-tab__content[data-tab="${tabId}"]`);
-  //     tabContent.classList.add('show');
-  //     window.location.hash = `#${tabId}`;
-  //     // if (window.location.hash == '#register') { showRegisterForm() }
-  //
-  //
-  //
-  //   });
-  // });
 
 
   // set content
@@ -314,6 +329,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       fetch('https://ckl0vod2t7.execute-api.us-east-1.amazonaws.com/development/customer-update', {
         method: 'POST',
         headers: {
+          'x-api-key': token,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formDataNew)
@@ -411,6 +427,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       fetch('https://ckl0vod2t7.execute-api.us-east-1.amazonaws.com/development/customer-update', {
         method: 'POST',
         headers: {
+          'x-api-key': token,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formDataNew)
@@ -479,6 +496,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       fetch('https://ckl0vod2t7.execute-api.us-east-1.amazonaws.com/development/customer-update', {
         method: 'POST',
         headers: {
+          'x-api-key': token,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formDataNew)

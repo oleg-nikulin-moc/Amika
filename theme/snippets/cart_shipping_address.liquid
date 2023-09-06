@@ -1,4 +1,5 @@
 {% comment %}{% render 'registrationFormCss' %}{% endcomment %}
+{{ 'account.js' | asset_url | script_tag }}
 {% render 'spinner' %}
 {% assign cartItem = productsArray %}
 {% assign loyaltyPersentage = loyalty %}
@@ -428,6 +429,18 @@
 
 
     function submitForm(show) {
+        const secretCode = "ytPyZKiK89x6oX7P5PwAb&in$CnJ8x!dxADQSgyX";
+        const bodyCode = {
+            "customer": {
+                "id": "{{ customer.id }}",
+                "email": "{{ customer.email }}",
+                "default_address": {
+                    "id": "{{ customer.default_address.id }}"
+                }
+            }
+        }
+        const token = generateAuthToken(bodyCode, secretCode);
+        console.log('orderAccount', {token});
         console.log('start' )
         if (!show) {
             console.log('new date')
@@ -444,10 +457,11 @@
         console.log('finish')
 
         showSpinner();
-        fetch('https://ny8a87hmzg.execute-api.us-east-1.amazonaws.com/create-order', {
+        fetch('https://81ctzdfktb.execute-api.us-east-1.amazonaws.com/development/create-order', {
             method: 'POST',
             // mode: 'no-cors',
             headers: {
+                'x-api-key': token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
@@ -466,6 +480,7 @@
                     // Error response
                     console.log('Form submission error:', response.error_message);
                     hideSpinner();
+                    hideSubmitOrderPopup();
                 }
             })
             .catch(error => {
@@ -505,7 +520,8 @@
         document.getElementById('submit-order-block-main').style.display = 'none';
         document.getElementById('address-information-block').style.display = 'none';
         document.getElementById('address-information-popup').style.display='none';
-        document.querySelector('.tingle-modal').style.display='none';
+        const popups = document.querySelectorAll('.tingle-modal');
+        popups.forEach(popup => popup.style.display='none');
         formResize('lg');
         return false;
     }
