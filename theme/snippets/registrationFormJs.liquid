@@ -1,5 +1,6 @@
 <script type="text/javascript">
     function getEmailByDistributor(distributor) {
+        console.log({distributor})
         switch (distributor) {
             case "Armstrong McCall":
                 return "KEdgar@cosmoprofbeauty.com";
@@ -461,6 +462,7 @@
         const fileInput = document.getElementById('file-input');
         const isSuit = document.getElementById('isSuit');
         const phoneNumber = form.phone.value.trim().replace(/-/g, ''); // and remove dashes
+        const distributorEmail = getEmailByDistributor(form.distributorName.value);
         let phoneWithCountryCode = "";
         if (phoneNumber !== "") {
             phoneWithCountryCode = "+1" + phoneNumber; // If the phone number is not empty, add "+1" .
@@ -479,7 +481,7 @@
                 phone: phoneWithCountryCode,
                 salon_name: form.salon_name.value,
                 distributor_name: form.distributorName.value,
-                distributor_email: form.email.value,
+                distributor_email: distributorEmail,
                 is_suit: form.isSuit.value,
                 subscribe: form.subscribe.checked,
                 addresses: [{
