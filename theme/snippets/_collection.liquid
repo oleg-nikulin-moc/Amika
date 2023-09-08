@@ -29,9 +29,7 @@
         <div class="grid-uniform">
           <div class="EndlessClick">
             {% for product in collection.products %}
-              {% unless product.handle contains 'prepack' %}
                 {% include 'product_item', currentProduct: product, quickview: settings.allow_quick_view %}
-              {% endunless %}
             {% endfor %}
             {% if paginate.next %}
             <div class="grid__item one-whole view-all clearfix">
