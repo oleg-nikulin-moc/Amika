@@ -1,0 +1,110 @@
+<style>
+  @media(max-width: 991.98px) {
+    .ac-reward-calendar:before {
+      /* display: none; */
+    }
+    .ac-reward-calendar__box {
+      flex-basis: 100%;
+    }
+  }
+  
+  .ac-reward-calendar__box {
+    flex-basis: initial;
+    flex-direction: column;
+  }
+  .ac-reward-calendar .loyalty-table {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .ac-reward-calendar {
+    padding: 0 20px;
+  }
+  .ac-loyalty__body td:first-child {
+    width: 15%;
+  }
+  .ac-loyalty__body td:nth-child(2) {
+    width: 50%;
+  }
+  .ac-loyalty__body td:last-child {
+    width: 35%;
+  }
+  .template-page-loyalty .faqs-wrapper .accordion {
+    flex-basis: 62%;
+  }
+  .ac-reward-calendar {
+    padding: 0;
+  }
+  .ac-reward-calendar__box p.container {
+    margin-left: 15px;
+  }
+  
+</style>
+
+<div class="loyalty-rewards ac-reward-calendar">
+  <div class="chart-table container ac-reward-calendar__box">
+    <h2> {{ section.settings.heading }}</h2>
+    <table class="loyalty-table">
+      <thead class="loyalty-thead">
+      <tr>
+        <td class="loyalty-td" colspan="2">bimonthly purchase period<sup>1</sup></td>
+        <td class="loyalty-td">points issued<sup>2</sup></td>
+      </tr>
+      </thead>
+      <tbody class="ac-loyalty__body">
+        <tr class="first-bg">
+          <td class="loyalty-td">1</td>
+          <td class="loyalty-td">january - february</td>
+          <td class="loyalty-td">march 16<sup>th</sup></td>
+        </tr>
+        <tr class="second-bg">
+          <td class="loyalty-td">2</td>
+          <td class="loyalty-td">march - april</td>
+          <td class="loyalty-td">may 16<sup>th</sup></td>
+        </tr>
+        <tr class="first-bg">
+          <td class="loyalty-td">3</td>
+          <td class="loyalty-td">may - june</td>
+          <td class="loyalty-td">july 16<sup>th</sup></td>
+        </tr>
+        <tr class="second-bg">
+          <td class="loyalty-td">4</td>
+          <td class="loyalty-td">july - august</td>
+          <td class="loyalty-td">september 16<sup>th</sup></td>
+        </tr>
+         <tr class="first-bg">
+          <td class="loyalty-td">5</td>
+          <td class="loyalty-td">september - october</td>
+          <td class="loyalty-td">november 16<sup>th</sup></td>
+        </tr>
+        <tr class="second-bg">
+          <td class="loyalty-td">6</td>
+          <td class="loyalty-td">november - december</td>
+          <td class="loyalty-td">january 16<sup>th</sup></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="container"><sup>1</sup> only purchases made through your primary distributor within the bimonthly purchase period will be eligible for salon loyalty rewards.</p>
+    <p class="container"><sup>2</sup> points issued to tier 1-5 members only. suite tier members will receive a coupon code issued from their primary distributor.</p>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Loyalty Rewards Calendar",
+  "settings": [
+    {
+       "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Calendat title"
+        }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty Rewards Calendar",
+      "category": "custom"
+    }
+  ]
+}
+{% endschema %}

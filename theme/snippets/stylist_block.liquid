@@ -1,0 +1,72 @@
+{% assign stylist_url = stylist_name | downcase | replace: ' ', '_' %}
+<div class="ac-stylist__box">
+  {% if photo != blank %}
+    {% assign img_url = photo | img_url: 'master' %}
+    <a class="ac-stylist-box__image-wrap" data-popup-id="{{stylist_url}}">
+      <img class="ac-stylist-box__image" width="" height="" alt="" src="{{ img_url }}"/>
+    </a>
+  {% endif %}
+  
+  <div class="ac-stylist-box__info">
+    {% if stylist_name != blank %}
+      <h2 class="ac-stylist-box__title">
+        {{ stylist_name }}
+      </h2> 
+    {% endif %}
+    {% if stylist_district != blank %}
+      <p class="ac-stylist-box__district">
+        {{ stylist_district | upcase }}
+      </p> 
+    {% endif %} 
+  </div>
+</div>
+
+<div id="{{stylist_url}}" class="ac-popup-review">
+     <a class="close-popup ac-popup-review__close-btn">&times;</a>
+    <div class="ac-popup-review__box">
+      {% if photo != blank %}
+        <div class="ac-popup-review__image-wrap">
+          <img class="ac-popup-review__image" width="" height="" alt="" src="{{ img_url }}"/>
+        </div>
+      {% endif %}
+      <div class="ac-popup-review__stylist-info">
+        {% if stylist_name != blank %}
+          <h2 class="ac-popup-review-stylist__title">
+            {{ stylist_name }}
+          </h2> 
+        {% endif %}
+        {% if stylist_district != blank %}
+          <p class="ac-popup-review-stylist__district">
+            {{ stylist_district | upcase }}
+          </p> 
+        {% endif %} 
+        {% if instagram_title != blank  or instagram_link != blank %}
+          <a class="ac-popup-review-stylist__link" target="_blank" href="{{ instagram_link }}">
+           {{ instagram_title }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    {% if stylist_about != blank %}
+      <p class="ac-popup-review-stylist__about">
+        {{ stylist_about }}
+      </p>
+    {% endif %}
+    {% if skills_title != blank %}
+      <div class="ac-popup-review-stylist__skills-title">
+        {{ skills_title | upcase }}
+      </div>
+    {% endif %}
+    <div class="ac-popup-review-stylist__skills">
+      {% if skill_one != blank %}
+        <div class="ac-popup-review-stylist__skill-item">{{ skill_one | upcase }}</div>
+      {% endif %}
+      {% if skill_two != blank %}
+        <div class="ac-popup-review-stylist__skill-item">{{ skill_two | upcase }}</div>
+      {% endif %}
+      {% if skill_three != blank %}
+        <div class="ac-popup-review-stylist__skill-item">{{ skill_three | upcase }}</div>
+      {% endif %}
+    </div>
+</div>
+

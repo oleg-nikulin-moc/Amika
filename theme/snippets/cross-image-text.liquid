@@ -1,0 +1,104 @@
+<div class="ac-image-text__section {% if grid_inverse == true %}ac-image-text__section--inverse{% endif %}" id="{{ block-id }}">
+   {% render 'image-fluid', image: image, wrapper_class: 'ac-image__wrap ac-content__box--column ac-content__box--half' %}
+  
+    <div class="ac-content__box ac-content__box--column ac-content__box--half">
+       <div class="ac-content__item">
+        {% if label == true %}
+          <div class="ac-label ac-text--sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <path id="Vector" d="M51.5449 27.5397C54.6861 26.6606 56.5204 23.3992 55.6412 20.2584C54.7619 17.1176 51.5001 15.2835 48.3589 16.1626C47.9728 16.2695 47.6073 16.4143 47.2625 16.5901C47.2625 16.5867 47.259 16.5832 47.259 16.5832C47.5762 16.3626 47.8797 16.1109 48.159 15.8248C50.4381 13.4907 50.3967 9.75351 48.0659 7.47119C45.735 5.19231 41.9939 5.23369 39.7113 7.56427C39.4285 7.85387 39.1803 8.1676 38.9699 8.49513C38.9699 8.49513 38.9665 8.49168 38.963 8.49168C39.132 8.14003 39.2699 7.76768 39.3734 7.37465C40.1802 4.21319 38.2769 0.996566 35.115 0.186377C31.9532 -0.623812 28.7362 1.28272 27.9293 4.44418C27.8259 4.84066 27.7707 5.24058 27.75 5.63361H27.7431C27.7155 5.24058 27.6466 4.8441 27.5362 4.44763C26.657 1.30685 23.3951 -0.527275 20.254 0.351866C17.1128 1.23101 15.2785 4.49245 16.1577 7.63322C16.268 8.0297 16.4198 8.40894 16.6025 8.76059L16.5991 8.76404C16.3784 8.43307 16.1198 8.12279 15.8233 7.83319C13.4889 5.55087 9.75126 5.59569 7.46866 7.92627C5.1895 10.2603 5.23088 13.9975 7.56175 16.2798C7.85828 16.5694 8.17895 16.8211 8.51686 17.0383L8.51341 17.0452C8.15482 16.8694 7.77208 16.728 7.37211 16.6246C4.21026 15.8144 0.993241 17.7209 0.1864 20.8824C-0.623889 24.0439 1.28288 27.2605 4.44473 28.0707C4.8447 28.1741 5.24467 28.2327 5.64464 28.2499V28.2568C5.24812 28.2844 4.84815 28.3499 4.44817 28.4637C1.30356 29.3394 -0.530792 32.6008 0.348458 35.7416C1.22771 38.8824 4.48955 40.7165 7.63071 39.8374C8.02379 39.7271 8.39963 39.5788 8.75133 39.3995L8.75477 39.403C8.43066 39.6236 8.12034 39.8822 7.83415 40.1753C5.555 42.5093 5.59637 46.2465 7.92725 48.5288C10.2581 50.8077 13.9992 50.7663 16.2818 48.4357C16.5646 48.1461 16.8128 47.8324 17.0266 47.5049C17.0301 47.5049 17.0301 47.5083 17.0301 47.5083C16.8611 47.86 16.7232 48.2358 16.6232 48.6288C15.8164 51.7903 17.7197 55.0069 20.8815 55.8136C24.0434 56.6238 27.2604 54.7173 28.0707 51.5558C28.1707 51.1662 28.2258 50.7767 28.2465 50.394C28.25 50.394 28.2534 50.394 28.2569 50.394C28.2845 50.7767 28.3534 51.1662 28.4603 51.5524C29.3396 54.6932 32.6014 56.5273 35.7426 55.6481C38.8837 54.769 40.7181 51.5076 39.8388 48.3668C39.732 47.9841 39.5871 47.6221 39.4147 47.2808C39.4182 47.2773 39.4216 47.2773 39.4251 47.2739C39.6423 47.5911 39.8906 47.891 40.1733 48.1668C42.5042 50.4457 46.2453 50.4043 48.5279 48.0737C50.807 45.7397 50.7657 42.0025 48.4348 39.7202C48.1521 39.4444 47.8452 39.203 47.528 38.9927C47.5314 38.9893 47.5314 38.9858 47.5349 38.9824C47.8797 39.1479 48.2452 39.2823 48.6279 39.3823C51.7897 40.189 55.0068 38.2859 55.8136 35.1245C56.6239 31.963 54.7171 28.7464 51.5553 27.9397C51.1725 27.8397 50.7864 27.7845 50.4036 27.7638C50.4036 27.7638 50.4036 27.7535 50.4036 27.75C50.7795 27.7121 51.1622 27.6466 51.5449 27.5397Z" fill="#FF580A"/>
+            </svg>
+            {% if labelText != blank %}
+                <span class="ac-label__text ac-multi-product__count">{{labelText}}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if title != blank %}
+          <h2 class="ac-image-text--heading ac-title" >{{title}}</h2>
+        {% endif %}
+        {% if description != blank %}
+            <div class="ac-image-text--description ac-offset__bottom-sm">{{ description }}</div>
+        {% endif %}
+        {% if note != blank %}
+            <p class="ac-image-text--note">{{note}}</p>
+        {% endif %}
+        {% if downloadApp == true %}
+            {% render 'download_app' %}
+        {% endif %}
+        {% if cta-link != blank %}
+          <a role="button" class="ac-button ac-button--black ac-block--center ac-offset--top-sm" href="{{ cta-link }}"> {{ cta-text }}</a>
+        {% endif %}
+      </div>
+    </div>
+</div>
+<style>
+  .ac-image-text__section {
+    display: flex;
+    flex: 1 1 50%;
+    column-gap: 20px;
+  }
+  .ac-image-text__section:not(:last-child) {
+    margin-bottom: 80px;
+  }
+  
+  .ac-image-text__section--inverse {
+    flex-direction: row-reverse;
+  }
+  .ac-image-text__section--inverse .ac-content__box {
+    justify-content: flex-start;
+  }
+  .ac-image-text__section--inverse .ac-content__item {
+    margin-right: auto;
+  }
+  .ac-label {
+    display: inline-flex;
+  }
+  .ac-image-text--heading.ac-image-text--heading {
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+  .ac-image-text--description li:before {
+    content: url('data:image/svg+xml; utf8, <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none"><path id="Vector" d="M0 8C4.41611 8 8 11.5808 8 16C8 11.5808 11.5839 8 16 8C11.5839 8 8 4.41918 8 0C8 4.41918 4.41611 8 0 8Z" fill="black"/></svg>');
+    width: 16px;
+    height: 16px;
+    vertical-align: sub;
+    margin-right: 8px;
+  }
+  .ac-image-text--note {
+    color: #000;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .ac-content__item {
+    max-width: 420px;
+    width: 100%;
+  }
+  .ac-content__box {
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .ac-title--small:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .ac-image-text__section,
+    .ac-image-text__section--inverse {
+      flex-direction: column;
+    }
+    .ac-image-text__section:not(:last-child) {
+      margin-bottom: 40px;
+    }
+    .ac-image-text--heading {
+      font-size: 24px;
+      font-weight: 500;
+    }
+    .ac-image-text--heading br {
+      display: none;
+    }
+    .ac-content__item {
+      max-width: 100%;
+    }
+  }
+  
+</style>

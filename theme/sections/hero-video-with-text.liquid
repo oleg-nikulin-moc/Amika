@@ -1,0 +1,39 @@
+<div class="ac-hero-video ac-container">
+    {% render 'hero-video',
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        video_url: section.settings.video_url,
+        image: section.settings.custom_image
+    %}
+</div>
+
+
+{% schema %}
+{
+    "name": "Video with Text and Title",
+    "class": "shopify-section--offset-md",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading Text"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Sub Heading Text"
+        },
+        {
+            "type": "url",
+            "id": "video_url",
+            "label": "Video URL"
+        },
+        {
+            "type": "image_picker",
+            "id": "custom_image",
+            "label": "Custom Image"
+        }
+      
+    ]
+}
+{% endschema %}

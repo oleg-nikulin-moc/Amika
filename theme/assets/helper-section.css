@@ -1,0 +1,212 @@
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+  
+  h2 {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 36px;
+    margin: 0;
+  }
+  .ac-text,
+  .ac-text--sm{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+  .ac-title--medium.ac-title--medium {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    text-transform: lowercase;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .ac-title--small.ac-title--small {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+    text-transform: lowercase;
+    margin-bottom: 4px;
+  }
+  .ac-text--xsmall {
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: lowercase;
+  }
+
+  .ac-image__wrap {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ac-image {
+    width: 100%;
+    height: auto;
+  }
+  .ac-container {
+    max-width: 1100px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .ac-container--large {
+    max-width: 1280px;
+  }
+  .ac-offset__right--xs.ac-offset__right--xs {
+    margin-right: 10px;
+  }
+  .ac-offset__right--sm.ac-offset__right--sm {
+    margin-right: 20px;
+  }
+  .ac-offset__bottom-xs.ac-offset__bottom-xs {
+    margin-bottom: 4px;
+  }
+  .ac-offset__bottom-lg.ac-offset__bottom-lg {
+    margin-bottom: 40px;
+  }
+  .ac-offset__bottom-md.ac-offset__bottom-md {
+    margin-bottom: 32px;
+  }
+  .ac-offset__bottom-sm.ac-offset__bottom-sm {
+    margin-bottom: 16px; 
+  }
+  .ac-video__wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+  }
+  .ac-video__wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /*  marquee */
+  .as-marquee__wrap .ico.world-heart {
+    margin-left: 45px;
+    margin-right: 48px;
+  }
+  .as-marquee__wrap span {
+    text-transform: uppercase!important;
+    color: var(--Primary-Black, #000);
+    font-family: 'Founders Grotesk Mono', helvetica, sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 50px; /* 178.571% */
+    letter-spacing: 2px;
+  }
+  .ac-label {
+    position: relative;
+  }
+  .ac-list {
+    list-style: none;
+    padding-left: 0;
+  } 
+  .ac-list li { padding-left: 4px; }
+  .ac-content__box--column {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  .ac-content__box--half {
+    width: 50%;
+  }
+  .ac-content__box--forty {
+    width: 40%;
+  }
+  .ac-content__box--sixty {
+    width: 60%;
+  }
+  .ac-section--double-half {
+    display: flex;
+    flex: 1 1 50%;
+    column-gap: 20px;
+  }
+  .shopify-section--offset-lg {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+  .shopify-section--offset-md,
+  .ac-container--offset-md {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .ac-block--desktop {
+    display: block;
+  }
+  .ac-block--mobile {
+    display: none;
+  }
+  .ac-offset--top-sm {
+    margin-top: 24px;
+  }
+  .ac-button {
+    cursor: pointer;
+    padding: 13px 33px 11px;
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 1.167px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid #000;
+    background-color: transparent;
+    border-radius: 100px;
+  }
+  .ac-button--black {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .ac-button--black:hover,
+  .ac-button--black:focus {
+    background-color: transparent;
+    color: #000;
+    opacity: 1!important;
+  }
+  .ac-block--center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  
+  @media screen and (max-width: 767.98px) {
+    .ac-block--desktop {
+      display: none;
+    }
+    .ac-block--mobile {
+      display: block;
+    }
+    .ac-content__box--half,
+    .ac-content__box--forty,
+    .ac-content__box--sixty {
+      width: 100%;
+    }
+
+    .ac-content__box--half:not(:last-of-type) {
+      margin-bottom: 40px;
+    } 
+    .ac-section--double-half {
+      flex-direction: column;
+    }
+
+    .ac-section--double-half {
+      margin-bottom: 0;
+    }
+    .shopify-section--offset-lg {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    #shopify-section-hero-video-with-text {
+      margin-bottom: 80px
+    }
+
+  }

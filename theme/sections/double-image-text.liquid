@@ -1,0 +1,125 @@
+<div class="ac-section--double-half ac-double-image-with-text ac-container" id="resources">
+  {% for block in section.blocks %}
+      <div class="ac-content__box--column ac-content__box--half  ac-block--center">
+        {% if block.settings.description != blank %}
+          <h2 class="ac-title" >{{block.settings.title}}</h2>
+        {% endif %}
+        {% if block.settings.description != blank %}
+          <p class="ac-text">{{ block.settings.description }}</p>
+        {% endif %}
+        {% if block.settings.cta-link != blank %}
+          <a role="button" class="ac-button ac-button--black ac-block--center ac-offset--top-sm ac-offset__bottom-sm" href="{{ block.settings.cta-link }}"> {{ block.settings.cta-text }}</a>
+        {% endif %}
+        {% if block.settings.idDownloadBTn == true %}
+            {% render 'download_app' %}
+        {% endif %}
+        {% if block.settings.cta-link-2 != blank %}
+          <a role="button" class="ac-button ac-button--black ac-block--center ac-offset--top-xs ac-offset__bottom-sm" href="{{ block.settings.cta-link-2 }}"> {{ block.settings.cta-text-2 }}</a>
+        {% endif %}
+        {% if block.settings.image != blank %}
+          {% render 'image-fluid', image: block.settings.image, wrapper_class: 'ac-image__wrap ac-content__box--half ac-block--center' %}
+        {% endif %}
+      </div>
+  {% endfor %}
+</div>
+<style>
+  .ac-double-image-with-text .ac-content__box--column {
+    background-color: {{ section.settings.background_color }};
+    text-align: center;
+    padding-top: 40px;
+  }
+  .ac-double-image-with-text .ac-text,
+  .ac-double-image-with-text .ac-title{
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ac-double-image-with-text .ac-content__box--column:nth-of-type(2) .ac-button {
+    margin-top: 45px;
+  }
+  .ac-double-image-with-text .ac-image__wrap {
+    margin-top: auto;
+    display: inline-flex;
+  }
+  @media screen and (max-width: 767.98px) {
+    .ac-content__box--column.ac-image__wrap {
+      padding-top: 0;
+    }
+    .ac-content__box--column.ac-content__box--half {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .ac-double-image-with-text .ac-content__box--column:nth-of-type(2) .ac-button {
+      margin-top: 16px;
+      margin-bottom: 70px;
+    }
+  }
+  
+</style>
+
+{% schema %}
+{
+  "name": "Double Image Button Text",
+  "class": "shopify-section--offset-lg",
+  "blocks": [
+        {
+        "type": "grid_block",
+        "name": "Grid Item",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "text",
+                "id": "description",
+                "label": "Description"
+            },
+            {
+              "type": "url",
+              "id": "cta-link",
+              "label": "CTA Link"
+            },
+            {
+              "type": "url",
+              "id": "cta-link-2",
+              "label": "CTA Link 2"
+            },
+            {
+              "type": "text",
+              "id": "cta-text",
+              "label": "CTA Text",
+              "default": "Learn More"
+            },
+            {
+              "type": "text",
+              "id": "cta-text-2",
+              "label": "CTA Text 2",
+              "default": "Learn More"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+              "type": "checkbox",
+              "id": "idDownloadBTn",
+              "label": "Is download buttons?"
+            }
+        ]
+     }
+  ],
+  "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#FFF3A2"
+      }
+  ]
+}
+
+{% endschema %}

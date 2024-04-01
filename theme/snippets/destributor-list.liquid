@@ -1,0 +1,974 @@
+const states = {
+    "AL": "Alabama",
+    "AK": "Alaska",
+    "AS": "American Samoa",
+    "AZ": "Arizona",
+    "AR": "Arkansas",
+    "CA": "California",
+    "CO": "Colorado",
+    "CT": "Connecticut",
+    "DE": "Delaware",
+    "DC": "District Of Columbia",
+    "FM": "Federated States Of Micronesia",
+    "FL": "Florida",
+    "GA": "Georgia",
+    "GU": "Guam",
+    "HI": "Hawaii",
+    "ID": "Idaho",
+    "IL": "Illinois",
+    "IN": "Indiana",
+    "IA": "Iowa",
+    "KS": "Kansas",
+    "KY": "Kentucky",
+    "LA": "Louisiana",
+    "ME": "Maine",
+    "MH": "Marshall Islands",
+    "MD": "Maryland",
+    "MA": "Massachusetts",
+    "MI": "Michigan",
+    "MN": "Minnesota",
+    "MS": "Mississippi",
+    "MO": "Missouri",
+    "MT": "Montana",
+    "NE": "Nebraska",
+    "NV": "Nevada",
+    "NH": "New Hampshire",
+    "NJ": "New Jersey",
+    "NM": "New Mexico",
+    "NY": "New York",
+    "NC": "North Carolina",
+    "ND": "North Dakota",
+    "MP": "Northern Mariana Islands",
+    "OH": "Ohio",
+    "OK": "Oklahoma",
+    "OR": "Oregon",
+    "PW": "Palau",
+    "PA": "Pennsylvania",
+    "PR": "Puerto Rico",
+    "RI": "Rhode Island",
+    "SC": "South Carolina",
+    "SD": "South Dakota",
+    "TN": "Tennessee",
+    "TX": "Texas",
+    "UT": "Utah",
+    "VT": "Vermont",
+    "VI": "Virgin Islands",
+    "VA": "Virginia",
+    "WA": "Washington",
+    "WV": "West Virginia",
+    "WI": "Wisconsin",
+    "WY": "Wyoming",
+    "AB": "Alberta",
+    "BC": "British Columbia",
+    "MB": "Manitoba",
+    "NB": "New Brunswick",
+    "NL": "Newfoundland and Labrador",
+    "NT": "Northwest Territories",
+    "NS": "Nova Scotia",
+    "NU": "Nunavut",
+    "ON": "Ontario",
+    "PE": "Prince Edward Island",
+    "QC": "Quebec",
+    "SK": "Saskatchewan",
+    "YT": "Yukon Territory"
+}
+const distributors = {
+    "MN": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "WI": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "KS": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "MO": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "IA": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "ND": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "SD": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "IL": [
+        {
+            "distributor name": "Beauty Craft",
+            "website": "https://www.beautycraft.com/"
+        },
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "MI": [
+        {
+            "distributor name": "ManocoBlue",
+            "website": "https://www.shopmanocoblue.com/s/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "IN": [
+        {
+            "distributor name": "ManocoBlue",
+            "website": "https://www.shopmanocoblue.com/s/"
+        },
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "OH": [
+        {
+            "distributor name": "ManocoBlue",
+            "website": "https://www.shopmanocoblue.com/s/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "NE": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "AR": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "TX": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "OK": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "GA": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "Prestige Salon Products",
+            "website": "https://prestigesalonproducts.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "TN": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "KY": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "AL": [
+        {
+            "distributor name": "Salon Service Group",
+            "website": "https://www.salonservicegroup.com/home/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "UT": [
+        {
+            "distributor name": "MAKA Beauty Systems",
+            "website": "https://www.makabeauty.com/"
+        },
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "NV": [
+        {
+            "distributor name": "MAKA Beauty Systems",
+            "website": "https://www.makabeauty.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "AZ": [
+        {
+            "distributor name": "MAKA Beauty Systems",
+            "website": "https://www.makabeauty.com/"
+        },
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "NM": [
+        {
+            "distributor name": "MAKA Beauty Systems",
+            "website": "https://www.makabeauty.com/"
+        },
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "NY": [
+        {
+            "distributor name": "Paramount Beauty Distributors",
+            "website": "https://www.paramountbeauty.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "A&A",
+            "website": "https://www.aabeautysupplies.com/"
+        }
+    ],
+    "FL": [
+        {
+            "distributor name": "Paramount Beauty Distributors",
+            "website": "https://www.paramountbeauty.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "CT": [
+        {
+            "distributor name": "Paramount Beauty Distributors",
+            "website": "https://www.paramountbeauty.com/"
+        },
+        {
+            "distributor name": "Hair-Lines",
+            "website": "https://www.hairlinesonline.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {	
+            "distributor name": "DePasquale Salon Systems",
+            "website": "https://www.depasqualeco.com/"
+        }
+    ],
+    "NH": [
+        {
+            "distributor name": "Hair-Lines",
+            "website": "https://www.hairlinesonline.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "RI": [
+        {
+            "distributor name": "Hair-Lines",
+            "website": "https://www.hairlinesonline.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "ME": [
+        {
+            "distributor name": "Hair-Lines",
+            "website": "https://www.hairlinesonline.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "VT": [
+        {
+            "distributor name": "Hair-Lines",
+            "website": "https://www.hairlinesonline.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "MA": [
+        {
+            "distributor name": "Hair-Lines",
+            "website": "https://www.hairlinesonline.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "PA": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {	
+            "distributor name": "DePasquale Salon Systems",
+            "website": "https://www.depasqualeco.com/"
+        }
+    ],
+    "NJ": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "DePasquale Salon Systems",
+            "website": "https://www.depasqualeco.com/"
+        }
+            
+    ],
+    "VA": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "MD": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "DE": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "WV": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "NC": [
+        {
+            "distributor name": "Prestige Salon Products",
+            "website": "https://prestigesalonproducts.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "SC": [
+        {
+            "distributor name": "Prestige Salon Products",
+            "website": "https://prestigesalonproducts.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "WY": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "CO": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "WA": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "ID": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "MT": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "OR": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "CA": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "AK": [
+        {
+            "distributor name": "Salon Services Pro",
+            "website": "https://www.salonservicespro.com/"
+        },
+        {
+            "distributor name": "Aurora Beauty Supply",
+            "website": "https://aurorabeautysupplyak.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "MS": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "LA": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "State Beauty/RDA Pro Mart",
+            "website": "https://stateСode-rda.com/"
+        },
+        {
+            "distributor name": "Amstrong McCall",
+            "website": "https://www.armstrongmccall.com/"
+        }
+    ],
+    "DC": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        }
+    ],
+    "HI": [
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "Island Beauty",
+            "website": "https://islandbeautysupply.com/"
+        }
+    ],
+
+    "AB": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "Summit Salon Services",
+            "website": "https://www.summitsalons.ca/"
+        }
+    ],
+    "BC": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "Icon Salon Systems",
+            "website": "https://www.iconbc.com"
+        }
+    ],
+    "MB": [
+        {
+            "distributor name": "Summit Salon Services",
+            "website": "https://www.summitsalons.ca/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "NB": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "Maritime Beauty Supply",
+            "website": "https://www.maritimebeautyshop.com/"
+        }
+    ],
+    "NL": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "O'Regan Agencies Limited",
+            "website": "https://shop.oregan.ca/"
+        }
+    ],
+    "NS": [
+        {
+            "distributor name": "Maritime Beauty Supply",
+            "website": "https://www.maritimebeautyshop.com/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "ON": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        },
+        {
+            "distributor name": "SalonCentric",
+            "website": "https://www.saloncentric.ca/"
+        }
+    ],
+    "PE": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "PR": [
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "SK": [
+        {
+            "distributor name": "Summit Salon Services",
+            "website": "https://www.summitsalons.ca/"
+        },
+        {
+            "distributor name": "Cosmo Prof",
+            "website": "https://www.cosmoprofbeauty.com/#"
+        }
+    ],
+    "QC": [
+        {
+            "distributor name": "Beauté Star",
+            "website": "https://www.beautestar.com/en/"
+        }
+    ]
+};

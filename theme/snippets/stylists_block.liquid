@@ -1,0 +1,213 @@
+<div class="stylist stylist-{{id}}">
+  {% if photo != blank %}
+    {% assign img_url = photo | img_url: 'master' %}
+  <div class="stylist__image stylist__image-{{id}}">
+    <img class="stylist__image-content-{{id}}" src="{{ img_url }}"/>
+  </div>
+  {% endif %}
+  <div class="stylist__info stylist__info-{{id}}">
+    {% if stylist_name != blank %}
+    <h2 class="stylist__info-name">
+      {{ stylist_name }}
+    </h2>
+    {% endif %}
+    <a class="instagram__link" href="{{ instagram_link }}">
+      {{ instagram_title }}
+    </a>
+    <p class="stylist__about">
+      {{ stylist_about }}
+    </p>
+    {% if skills_title != blank %}
+    <div class="skills-title">
+      {{ skills_title | upcase }}
+    </div>
+    {% endif %}
+    <div class="skills">
+      {% if skill_one != blank %}
+      <div class="skill">{{ skill_one | upcase }}
+      </div>
+      {% endif %}
+      {% if skill_two != blank %}
+      <div class="skill">{{ skill_two | upcase }}
+      </div>
+      {% endif %}
+      {% if skill_three != blank %}
+      <div class="skill">{{ skill_three | upcase }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .stylist {
+    display: flex;
+    width: 100%;
+    margin-bottom: 100px;
+    align-items: center;
+  }
+  .stylist__image {
+    position: relative;
+    min-width: 480px;
+    height: 490px;
+    background-color: #FF6B26;
+    border-radius: 0 370px 370px 0;
+  }
+  .stylist__image img {
+    position: absolute;
+    height: 95%;
+    width: auto;
+    right: -50px;
+    top: 15%;
+    border-radius: 50%;
+  }
+  .stylist__info {
+    padding: 0 55px 0 90px;
+    text-align: start;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .skills-title {
+    font-family: 'Founders Grotesk Mono', Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .stylist__info-name {
+    font-size: 26px;
+    line-height: 24px;
+    font-family: 'FuturaND';
+    font-weight: 700;
+    margin-bottom: 38px;
+  }
+  .instagram__link {
+    color: #FF5EDB;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .stylist__about {
+    font-family: 'Founders Grotesk Mono', Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+  }
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill {
+    background-color: #FF6B26;
+    padding: 12px 26px;
+    color: #FEFAF0;
+    font-size: 12px;
+    border-radius: 25px;
+    line-height: 14.4px;
+    font-weight: 700;
+    font-family: 'Founders Grotesk Mono', Arial, Helvetica, sans-serif;
+    gap: 10px;
+  }
+  @media(max-width: 1350px) {
+    .stylist__info-name {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+    .instagram__link {
+      margin-bottom: 12px;
+    }
+    .stylist__info {
+    padding: 0 35px 0 80px;
+    } 
+    .stylist__about {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .stylist__image {
+      min-width: 380px;
+      height: 390px;
+    }
+    .skills-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .skill {
+    padding: 8px 22px;
+    font-size: 10px;
+    }
+  }
+  @media(max-width: 1000px) {
+    .stylist__image {
+      min-width: 330px;
+      height: 340px;
+    }
+  }
+  @media(max-width: 900px) {
+    .stylist {
+      display: block;
+      margin-bottom: 50px;
+    }
+    .stylist__image {
+      min-width: 100%;
+      height: 440px;
+      margin-bottom: 90px;
+      border-radius: 0;
+    }
+    .stylist__image img {
+      position: absolute;
+      height: 110%;
+      width: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 10px;
+      border-radius: 50%; 
+    }
+    .stylist__info {
+      padding: 0 20px;
+    }
+  }
+  @media(max-width: 500px) {
+    .stylist__image {
+      height: 340px;
+      margin-bottom: 50px;
+    }
+    .stylist__image img {
+      height: 100%;
+    }
+  }
+
+  {% if revers_block %}
+    .stylist__image.stylist__image-{{ id }}{
+      border-radius: 370px 0 0 370px;
+      margin: 0 0 0 auto;
+    }
+    .stylist__info-{{id}} {
+      padding: 0 90px 0 55px;
+    }
+    .stylist.stylist-{{ id }}{
+      flex-direction: row-reverse;
+    }
+    .stylist__image-content-{{ id }}{
+      left: -50px;
+    }
+    @media(max-width: 1350px) {
+      .stylist__info-{{id}} {
+      padding: 0 80px 0 35px;
+      }
+    }
+    @media(max-width: 900px) {
+      .stylist__image.stylist__image-{{id}} {
+        border-radius: 0;
+        min-width: 100%;
+        height: 440px;
+        margin-bottom: 70px;
+      }   
+      .stylist__info-{{id}} {
+      padding: 0 20px;
+      }   
+    }
+    @media(max-width: 500px) {
+    .stylist__image.stylist__image-{{id}}{
+      height: 340px;
+      margin-bottom: 50px;
+    }
+  }
+  {% endif %}
+</style>

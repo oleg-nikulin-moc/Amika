@@ -1,0 +1,216 @@
+
+
+<div class="text-center">
+  {% for block in section.blocks %}
+{%- if block.type == "header-image" -%}
+   {% if block.settings.image != blank %}
+   {% assign img_url = block.settings.image | img_url: 'master' %}
+  <div class="header-image" >
+    <img src="{{ img_url }}" alt="stylists-image"/>
+  </div>
+  {% endif %}
+  {% endif %}
+    {%- if block.type == "stylists-header" -%}
+      {% render 'stylists_header',
+                                                                           title: block.settings.title,
+                                                                           description: block.settings.description,
+                                                                         %}
+    {%- endif -%}
+    {%- if block.type == 'Marquees' and  block.settings.text_to_scroll != blank -%}
+      {% render 'component_marquee',
+                                                                              data_id: block.id,
+                                                                              wrapper_class: secondary.settings.marquee_color,
+                                                                              text_to_scroll: block.settings.text_to_scroll
+                                                                           %}
+    {%- endif -%}
+    {%- if block.type == 'Stylist' %}
+      {% render 'stylist_block',
+                                                                             id: block.id
+                                                                             photo: block.settings.photo,
+                                                                             instagram_link: block.settings.instagram_link,
+                                                                             stylist_name: block.settings.stylist_name,
+                                                                             instagram_title: block.settings.instagram_title,
+                                                                             stylist_about: block.settings.stylist_about,
+                                                                             skills_title: block.settings.skills_title,
+                                                                             skill_one: block.settings.skill_one,
+                                                                             skill_two: block.settings.skill_two,
+                                                                             skill_three: block.settings.skill_three,
+                                                                             revers_block: block.settings.revers_block
+                                                                           %}
+    {%- endif -%}
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Review",
+    "blocks": [
+      {
+        "type": "header-image",
+        "name": "Header image",
+        "settings": [
+           {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Header mage"
+          }
+        ]
+      },
+      {
+        "type": "Marquees",
+        "name": "Marquees",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Margin Settings"
+          },
+          {
+            "type": "text",
+            "id": "margin_top_mobile",
+            "label": "Mobile Section Margin Top",
+            "info": "Enter number only. Default 0. Units in px.",
+            "default": "0"
+          },
+          {
+            "type": "text",
+            "id": "margin_bottom_mobile",
+            "label": "Mobile Section Margin Bottom",
+            "info": "Enter number only. Default 50. Units in px.",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "margin_top",
+            "label": "Desktop Section Margin Top",
+            "info": "Enter number only. Default 0. Units in px.",
+            "default": "0"
+          },
+          {
+            "type": "text",
+            "id": "margin_bottom",
+            "label": "Desktop Section Margin Bottom",
+            "info": "Enter number only. Default 50. Units in px.",
+            "default": "50"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Marqee Title"
+          },
+          {
+            "type": "text",
+            "id": "section_class",
+            "label": "Section class (Optional)"
+          },
+          {
+            "type": "header",
+            "content": "Marquee Settings"
+          },
+          {
+            "type": "select",
+            "id": "marquee_color",
+            "label": "Marquee Color",
+            "options": [
+              {"value": "ico--accent-secondary", "label": "Orange"},
+              {"value": "ico--accent-primary", "label": "Pink"},
+              {"value": "", "label": "Black"}
+            ],
+            "default": ""
+          },
+          {
+            "type": "html",
+            "id": "text_to_scroll",
+            "label": "Text to Scroll"
+          }
+        ]
+      }, {
+        "type": "Stylist",
+        "name": "Stylist info",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "photo",
+            "label": "Photo",
+            "info": "Photo of stylist"
+          },
+          {
+            "type": "text",
+            "id": "stylist_name",
+            "label": "Stylist name"
+          },
+          {
+            "type": "text",
+            "id": "instagram_title",
+            "label": "Instagram link title"
+          }, {
+            "type": "text",
+            "id": "instagram_link",
+            "label": "Instagram url"
+          }, {
+            "type": "textarea",
+            "id": "stylist_about",
+            "label": "About stylist"
+          }, {
+            "type": "text",
+            "id": "skills_title",
+            "label": "Skills title"
+          }, {
+            "type": "text",
+            "id": "skill_one",
+            "label": "Skill 1"
+          }, {
+            "type": "text",
+            "id": "skill_two",
+            "label": "Skill 2"
+          }, {
+            "type": "text",
+            "id": "skill_three",
+            "label": "Skill 3"
+          }, {
+            "type": "checkbox",
+            "id": "revers_block",
+            "label": "Revers block",
+            "default": false
+          }
+        ]
+      }, {
+        "type": "stylists-header",
+        "name": "Stylists header",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          }, {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  .header-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 70px;
+    @media (max-width: 1200px){
+      margin-bottom: 50px;
+    }
+    @media (max-width: 700px){
+      margin-bottom: 20px;
+    }
+  }
+  .header-image img {
+    height: 100%;
+    width: 100%;
+  }
+</style>

@@ -1,0 +1,89 @@
+<div class="ac-image-text ac-container">
+  {% for block in section.blocks %}
+    {% render 'cross-image-text',
+        grid_inverse: block.settings.grid_inverse,
+        image: block.settings.image,
+        label: block.settings.label,
+        labelText: block.settings.labelText,
+        title: block.settings.title,
+        description: block.settings.description,
+        note: block.settings.note,
+        cta-link: block.settings.cta-link,
+        cta-text: block.settings.cta-text,
+        block-id: block.settings.block-id
+    %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Image Text",
+  "class": "shopify-section--offset-lg",
+  "blocks": [
+        {
+        "type": "grid_block",
+        "name": "Grid Item",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "label",
+                "label": "Label?"
+            },
+             {
+                "type": "text",
+                "id": "labelText",
+                "label": "Label Text"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "html",
+                "id": "description",
+                "label": "Description"
+            },
+            {
+                "type": "html",
+                "id": "note",
+                "label": "Note"
+            },
+            {
+                "type": "checkbox",
+                "id": "grid_inverse",
+                "label": "Grid Inverse?"
+            },
+            {
+              "type": "url",
+              "id": "cta-link",
+              "label": "CTA Link"
+            },
+            {
+              "type": "text",
+              "id": "cta-text",
+              "label": "CTA Text",
+              "default": "Learn More"
+            },
+            {
+              "type": "text",
+              "id": "block-id",
+              "label": "Block Id"
+            }
+        ]
+     }
+  ],
+    "presets": [
+        {
+          "name": "Image Text block",
+          "category": "Image"
+        }
+    ]
+}
+
+{% endschema %}

@@ -1,0 +1,159 @@
+<div class="ac-section--four-images ac-container ac-container--large">
+    {% if section.settings.title != blank %}
+      <h2 class="ac-four-images__title ac-offset__bottom-sm" >{{section.settings.title}}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <h3 class="ac-four-images__subtitle ac-offset__bottom-xs">{{ section.settings.subtitle }}</h3>
+    {% endif %}
+    {% if section.settings.cta-link != blank %}
+      <a role="button" class="ac-button ac-button--black ac-block--center ac-offset--top-sm ac-offset__bottom-lg" href="{{ section.settings.cta-link }}"> {{ section.settings.cta-text }}</a>
+    {% endif %}
+    <div class="ac-image-list ac-block--center" {% if section.settings.hideFeed == true %}style="display: none;"{% endif %}>
+      {% for block in section.blocks %}
+        <div class="ac-image-list__item">
+          {% if block.settings.ship != blank %}
+            <p class="ac-image-list__label"> {{ block.settings.ship }}</p>
+          {% endif %}
+          {% if block.settings.image != blank %}
+            {% render 'image-fluid', image: block.settings.image, wrapper_class: '' %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+</div>
+<style>
+
+  .ac-image-list {
+    /* display: flex;
+    column-gap: 20px; */
+  }
+  .ac-image-list .slick-track {
+    display: flex;
+    column-gap: 20px;
+  }
+  .ac-image-list__item {
+    position: relative;
+    /* max-width: calc((100% - 60px) / {{ section.blocks.size }}); */
+    /* width: 100%; */
+    margin-left: 0!important;
+    margin-right: 0!important;
+  }
+  .ac-image-list__label.ac-image-list__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transform-origin: center;
+    display: inline-block;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+    font-size: 67px;
+    text-transform: uppercase;
+  }
+  .ac-four-images__title.ac-four-images__title {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+  }
+  .ac-four-images__subtitle.ac-four-images__subtitle {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 36px;
+  }
+  @media screen and (max-width: 767.98px) {
+    .ac-image-list {
+      padding-left: 20px;
+    }
+    .ac-four-images__title.ac-four-images__title {
+      margin-bottom: 8px!important;
+      max-width: 330px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .ac-four-images__subtitle.ac-four-images__subtitle {
+      font-size: 24px;
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+  }
+</style>
+<script>
+  $(function() {
+    $('.ac-image-list').slick({
+          autoplay: false,
+          speed: 1000,
+          slidesToShow: {{ section.blocks.size }},
+          pauseOnHover: false,
+          slidesToScroll: 1,
+          arrows:false,
+          prevArrow: '<button class="lnr left-arrow animation">Prev</button>',
+          nextArrow: '<button class="lnr right-arrow animation">Next</button>',
+          responsive: [
+            {
+              breakpoint: 768,
+                settings: {
+                  slidesToShow: 1.1,
+                  slidesToScroll: 1,
+                  arrows:false,
+                  centerMode:false
+                }
+            }
+          ]
+     });
+    
+  });
+</script>
+{% schema %}
+{
+  "name": "Four Images",
+  "class": "shopify-section--offset-lg",
+  "blocks": [
+        {
+        "type": "grid_block",
+        "name": "Grid Item",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+              "type": "text",
+              "id": "ship",
+              "label": "Ship"
+            }
+        ]
+     }
+  ],
+  "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "checkbox",
+        "id": "hideFeed",
+        "label": "Hide Feed"
+      },
+      {
+        "type": "url",
+        "id": "cta-link",
+        "label": "CTA Link"
+      },
+      {
+        "type": "text",
+        "id": "cta-text",
+        "label": "CTA Text",
+        "default": "Learn More"
+      }
+    
+  ]
+}
+
+{% endschema %}

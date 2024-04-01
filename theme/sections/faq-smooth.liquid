@@ -1,0 +1,197 @@
+{% comment %} Check if we need 'Show More' button {% endcomment %}
+{% if section.blocks.size > 5 %}{% assign show_more = true %}{% endif %}
+
+<div class="faqs-wrapper ac-container ac-container--mobile ac-faq" id="faq">
+  {% if section.settings.title %}
+    <h2 class="acc-heading ac-title--medium">{{ section.settings.title }}</h2>
+  {% endif %}
+  <div class="accordion ac-faq__accordion">
+    {% for block in section.blocks %}
+
+      {% comment %} Wrap 'Show More' content in div {% endcomment %}
+      {% if forloop.index == 6%}
+        <div class="ac-show-more">
+      {% endif %}
+
+      <div class="acc-item ac-faq-accordion__item clearfix" data-item="{{forloop.index}}">
+        <h2 class="ac-faq-accordion__title-wrap">
+          <a class="acc-title  ac-faq-accordion__title" href="javascript:void(0);">{{ block.settings.question }}</a>
+          <svg class="acc-toggle ac-faq-accordion__toggle-icon" fill="none" height="12" viewBox="0 0 12 12" width="12" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#000" stroke-linecap="round" stroke-width="2">
+              <path class="vertical-bar" d="m6 1v10" />
+              <path d="m11 6h-10" />
+            </g>
+          </svg>
+        </h2>
+        <div class="hide acc-content ac-faq-accordion__content clearfix">
+          {{ block.settings.answer }}
+        </div>
+      </div>
+
+      {% comment %} Close 'Show More' wrapper {% endcomment %}
+      {% if show_more and forloop.last == true %}
+        </div>  
+      {% endif %}
+
+    {% endfor %}
+
+    {% comment %} Show More button {% endcomment %}
+    {% if show_more %}
+      <button class="ac-button ac-button--black ac-block--center ac-button--show-more">Show More</button>
+    {% endif %}
+
+  </div>
+   {% if section.settings.noteTitle %}
+    <h3 class="ac-faq-title ac-offset__bottom-xs">{{ section.settings.noteTitle }}</h3>
+  {% endif %}
+  {% if section.settings.noteText %}
+    <div class="ac-faq-text">{{ section.settings.noteText }}</div>
+  {% endif %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const $faqsWrapper = $('.ac-faq');
+    const $showMoreContainer = $('.ac-show-more');
+    const $faqsButton = $('.ac-button--show-more');
+    $faqsButton.click(toggleMore);
+
+    function toggleMore(){
+      requestAnimationFrame(function() {
+        // Change the button text
+        $showMoreContainer.hasClass('open')
+          ? $faqsButton.html('Show More')
+          : $faqsButton.html('Show Less')
+
+        // toggle 'Show More' content
+        $showMoreContainer.toggleClass('open').slideToggle();
+
+        // scroll to top of FAQs section
+        $('html,body').animate({
+            scrollTop: $faqsWrapper.offset().top - 200
+        });
+      })
+    }
+  })
+</script>
+
+<style>
+  .faqs-wrapper {
+    text-align: left;
+  }
+  .ac-faq__accordion.ac-faq__accordion { 
+    border-bottom: none;
+    border-top-color: #000;
+    margin-top: 0;
+    margin-bottom: 48px;
+    padding: 0;
+  }
+  .ac-faq .acc-heading.acc-heading {
+    margin-bottom: 32px;
+  }
+  .ac-faq__accordion .acc-toggle { 
+    display: block;
+    margin: 6px;
+  }
+  .ac-faq-accordion__title,
+  .ac-faq-title {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: lowercase;
+  }
+  .ac-faq-accordion__title-wrap.ac-faq-accordion__title-wrap {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  .ac-faq-accordion__item  {
+    padding: 16px 8px 8px;
+    border-bottom: 1px solid #000;
+  }
+  .ac-faq-accordion__content {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+  .ac-faq-accordion__item.open .vertical-bar { 
+    visibility: hidden;
+    transition: all 0.2s linear;
+  }
+  .ac-faq__accordion .ac-button {
+    margin-top: 40px;
+  }
+  
+  .ac-faq-title,
+  .ac-faq-text p {
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: lowercase;
+  }
+  .ac-faq-text a {
+    text-decoration: underline;
+  }
+  .ac-faq-title {
+    font-weight: 500;
+  }
+  @media screen and (max-width: 767.98px) {
+    .ac-faq .acc-heading.ac-title--medium {
+      margin-top: 8px;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    .ac-faq-accordion__title, 
+    h2.ac-faq-title {
+      font-weight: 400;
+      line-height: 20px;
+    }
+    .ac-faq-accordion__item.ac-faq-accordion__item {
+      padding: 8px 8px 0;
+    }
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "FAQs",
+    "class": "shopify-section--offset-lg",
+	"max_blocks": 20,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "noteTitle",
+        "label": "Note Title"
+      },
+          {
+        "type": "richtext",
+        "id": "noteText",
+        "label": "Note Text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "question",
+        "name": "Question",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "Question"
+          },
+		      {
+            "type": "richtext",
+            "id": "answer",
+            "label": "Answer"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

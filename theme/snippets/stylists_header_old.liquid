@@ -1,0 +1,31 @@
+<div class="stylist-title">
+  <h2 class="title">{{ title }}</h2>
+  <p class="description">{{ description }}</p>
+</div>
+
+<style>
+  .stylist-title {
+      margin-bottom: 70px;
+      @media (max-width: 700px){ 
+        margin-bottom: 20px
+      }
+  }
+  
+.title { 
+    margin-bottom: 20px;
+    font-size: 26px;
+    line-height: 25px;
+    font-weight: 700;
+    font-family: 'FuturaND';
+}
+
+.description {
+  font-family: 'FuturaND';
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+</style>

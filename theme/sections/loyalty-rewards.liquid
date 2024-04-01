@@ -1,0 +1,246 @@
+<style>
+  .svg-icon {
+    width: 5px;
+    height: 5px;
+    fill: #fff;
+  }
+
+  sup {
+    vertical-align: super;
+    font-size: 10px;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .loyalty-rewards {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    background: #FEFAF0;
+  }
+
+  .loyalty-rewards::before {
+     position: relative;
+     content: '';
+     border-radius: 0 999px 999px 0;
+     background-color: #FF6B26;
+     flex: 1 1 34%;
+     left: -6vw;
+     align-self: center;
+     padding-bottom: 55%;
+  }
+
+
+  .loyalty-table {
+    max-width: 800px;
+    margin-right: 13%;
+    flex-basis: 66%;
+  }
+
+  .loyalty-table {
+    font-family: 'Founders Grotesk Mono';
+    letter-spacing: 1px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    border-collapse: collapse;
+
+  }
+
+  .chart-table {
+    padding: 0;
+  }
+
+  .loyalty-thead {
+    font-family: 'FuturaND';
+    font-size: 12px;
+    line-height: 20px;
+    background-color: #FF6B26;
+    font-weight: 500;
+    color: #fff;
+    min-width: 350px;
+  }
+
+  .first-bg {
+    background-color: #f8c7b4;
+  }
+
+  .second-bg {
+    background-color: #f8e2da;
+  }
+
+  .loyalty-td {
+    padding: 15px 3px;
+    border: 2px solid #fff;
+    font-size: 9px;
+    line-height: 15px;
+  }
+
+  .subscript-copy:first-child {
+    padding-top: 30px;
+  }
+  .subscript-copy {
+    margin-left: 15%;
+  }
+  .subscript-copy:last-child {
+    margin-bottom: 50px;
+  }
+
+  @media(min-width: 750px) {
+
+    .chart-table {
+    padding: 0 30;
+     margin-right: 2%
+    }
+    
+    .loyalty-table {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .svg-icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .loyalty-td {
+      font-size: 20px;
+      line-height: 30px;
+      min-width: 120px;
+      padding: 20px 0;
+
+    }
+  }
+</style>
+<svg style="dispaly: none;" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="heartIcon" viewBox="0 0 471.701 471.701">
+    <path d="M433.601 67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7 13.6-92.4 38.3l-12.9 12.9-13.1-13.1c-24.7-24.7-57.6-38.4-92.5-38.4-34.8 0-67.6 13.6-92.2 38.2-24.7 24.7-38.3 57.5-38.2 92.4 0 34.9 13.7 67.6 38.4 92.3l187.8 187.8c2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-3.9l188.2-187.5c24.7-24.7 38.3-57.5 38.3-92.4.1-34.9-13.4-67.7-38.1-92.4zm-19.2 165.7-178.7 178-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3s10.7-53.7 30.3-73.2c19.5-19.5 45.5-30.3 73.1-30.3 27.7 0 53.8 10.8 73.4 30.4l22.6 22.6c5.3 5.3 13.8 5.3 19.1 0l22.4-22.4c19.6-19.6 45.7-30.4 73.3-30.4 27.6 0 53.6 10.8 73.2 30.3 19.6 19.6 30.3 45.6 30.3 73.3.1 27.7-10.7 53.7-30.3 73.3z"/>
+  </symbol>
+  <symbol id="heartIconFull" viewBox="0 0 123 107">
+    <path d="M60.83 17.18c8-8.35 13.62-15.57 26-17 23.17-2.64 44.44 21.08 32.74 44.43-3.33 6.65-10.11 14.56-17.61 22.32-8.23 8.52-17.34 16.87-23.72 23.2l-17.4 17.26-14.38-13.84C29.16 76.89 1 55.92 0 29.94-.63 11.74 13.73.08 30.25.29c14.76.2 21 7.54 30.58 16.89Z"/>
+  </symbol>
+</svg>
+<style>
+  .heart-icon {
+    stroke: white;
+    stroke-width: 5;
+  }
+  .heart-icon--full {
+    fill: white;
+  }
+</style>
+<div class="loyalty-rewards">
+  <div class="chart-table container">
+    <h2> {{ section.settings.heading }}</h2>
+    <table class="loyalty-table">
+      <thead class="loyalty-thead">
+      <tr>
+        <td class="loyalty-td">tiers<sup>1</sup></td>
+        <td class="loyalty-td">one
+          <br/>
+          <span class="nowrap">
+            <svg class="svg-icon"><use xlink:href="#heartIconFull" /></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+          </span>
+        </td>
+        <td class="loyalty-td">two
+          <br/>
+          <span class="nowrap">
+            <svg class="svg-icon"><use xlink:href="#heartIconFull" /></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+          </span>
+        </td>
+        <td class="loyalty-td">three
+          <br/>
+          <span class="nowrap">
+            <svg class="svg-icon"><use xlink:href="#heartIconFull" /></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+          </span>
+        </td>
+        <td class="loyalty-td">four
+          <br/>
+          <span class="nowrap">
+            <svg class="svg-icon"><use xlink:href="#heartIconFull" /></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIcon"/></svg>
+          </span>
+        </td>
+        <td class="loyalty-td">five
+          <br/>
+          <span class="nowrap">
+            <svg class="svg-icon"><use xlink:href="#heartIconFull" /></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+            <svg class="svg-icon"><use  xlink:href="#heartIconFull"/></svg>
+          </span>
+        </td>
+      </tr>
+      </thead>
+      <tr class="first-bg">
+        <td class="loyalty-td">bimonthly purchase</td>
+        <td class="loyalty-td">$1,000- $1,999</td>
+        <td class="loyalty-td">$2,000- $2,999</td>
+        <td class="loyalty-td">$3,000- $4,499</td>
+        <td class="loyalty-td">$4,500- $6,499</td>
+        <td class="loyalty-td">$6,500+</td>
+      </tr>
+      <tr class="second-bg">
+        <td class="loyalty-td">total return value <span class="nowrap">(in points)</span></td>
+        <td class="loyalty-td">15%</td>
+        <td class="loyalty-td">18%</td>
+        <td class="loyalty-td">22%</td>
+        <td class="loyalty-td">27%</td>
+        <td class="loyalty-td">33%</td>
+      </tr>
+      <tr class="first-bg">
+        <td class="loyalty-td">preselected rewards value<sup>2</sup></td>
+        <td class="loyalty-td" colspan="2">75pts</td>
+        <td class="loyalty-td" colspan="3">175pts</td>
+      </tr>
+      <tr class="second-bg">
+        <td class="loyalty-td">salon's shoppable points</td>
+        <td class="loyalty-td" colspan="5">bimonthly purchase $ <b>x</b> return value % - preselected rewards value = salon's shoppable points </td>
+      </tr>
+    </table>
+  </div>
+</div>
+  
+  <p class="subscript-copy container"><sup>1</sup> TIER LEVELS ARE CALCULATED BIMONTHLY AND CAN FLUCTUATE BASED ON CHANGES IN BIMONTHLY PURCHASES. SUITE TIER MEMBERS CAN
+QUALIFY FOR HIGHER TIERS IF THEY MEET BIMONTHLY PURCHASE THRESHOLDS. TIER ONE – FIVE MEMBERS CANNOT QUALIFY FOR SUITE TIER
+IF THEY DID NOT INITIALLY REGISTER AS A SUITE.</p>
+ <p class="subscript-copy container"><sup>2</sup> PRESELECTED REWARDS WILL BE AUTOMATICALLY ADDED TO CART AND POINTS VALUE WILL BE DEDUCTED FROM BIMONTHLY BALANCE</p>
+
+
+{% schema %}
+{
+  "name": "Loyalty Rewards",
+  "settings": [
+    {
+       "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": " salon tiers overview"
+        }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty Rewards",
+      "category": "custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,158 @@
+{% assign image = section.settings.image %}
+{% assign image_mobile= section.settings.image_mobile %}
+{% assign caption= section.settings.caption %}
+{% assign title = section.settings.title %}
+{% assign image-bg = section.settings.image-bg %}
+ 
+  {% if image != blank %}
+  {% assign img_url = image | img_url: 'master' %}
+  {% endif %}
+
+  {% if image_mobile != blank %}
+  {% assign img_url_mobile = image_mobile | img_url: 'master' %}
+  {% endif %}
+
+    {% if image-bg != blank %}
+  {% assign image_url_bg = image-bg | img_url: 'master' %}
+  {% endif %}
+  
+<div class="ac-hero">
+    <picture class="ac-hero__picture">
+      <source media="(min-width: 767.98px)" srcset="{{ img_url }}">
+      <img src="{{ img_url_mobile }}" class="ac-image" width="" height="">
+    </picture>
+    <!-- <img src="{{ img_url }}" class="ac-image ac-image--desktop" />  
+    <img src="" class="ac-image ac-image--mobile"/>   -->
+    <div class="ac-container ac-hero-container">
+      <div class="ac-hero__caption ac-content__box--half" >  
+        {% if title != blank %}
+          <h1 class="ac-hero-caption__title"> {{ title }}</h1>
+        {% endif %}
+        {% if caption != blank %}
+          <p class="ac-hero-caption__text ac-text--sm">{{ caption }}</p>
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+<style>
+  .ac-hero__picture {
+    /* max-width: 1920px; */
+    /* width: 100%;
+    margin-left: auto;
+    margin-right: auto; */
+    display: flex;
+  }
+  .ac-hero {
+    position: relative;
+    /* background-image :url('{{image_url_bg}}');
+    background-size: contain; */
+  }
+  .ac-hero__caption {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translateY(-50%);
+    width: 49%;
+    padding: 20px;
+  }
+  .ac-hero-container {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    bottom: 0;
+  }
+  .ac-hero-caption__title {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 44px;
+    margin-bottom: 24px;
+  }
+  .ac-hero-caption__text {
+    max-width: 412px;
+    margin: 0 auto;
+  }
+  .ac-image--desktop {
+    display: block;
+  }
+  .ac-image--mobile {
+    display: none;
+  }
+  @media screen and (max-width: 767.98px) {
+    .ac-image--desktop {
+      display: none;
+    }
+    .ac-image--mobile {
+      display: block;
+    }
+    .ac-hero {
+      /* background-image: url('{{ img_url_mobile }}');
+      align-items: end;
+      padding-bottom: 65px; */
+    }
+    .ac-hero__caption {
+      width: 100%;
+      transform: translateY(-10%);
+      bottom: 10%;
+      top: initial;
+    }
+    .ac-hero-caption__title {
+      font-size: 28px;
+    }
+  }
+  @media screen and (min: 500.98px) and (max-width: 767.98px) {
+    .ac-hero {
+      padding-bottom: 0;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Hero image with text",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Background Images"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-bg",
+        "label": "Background Blur Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Mobile Background Image"
+      },
+      {
+        "type": "header",
+        "content": "Caption"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "caption",
+        "label": "Caption",
+        "default": "Caption placeholder"
+      }
+    ],
+    "presets": [
+        {
+          "name": "Large Image With Text Blocks",
+          "category": "Image"
+        }
+    ]
+  }
+{% endschema %}

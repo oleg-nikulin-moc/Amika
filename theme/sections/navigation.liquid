@@ -1,0 +1,149 @@
+ {% for block in section.blocks %}
+   {% if forloop.first %}
+     {% assign linkUrl = block.settings.link_url %}
+     {% assign linkText = block.settings.link_text %}
+  {% endif %}
+{% endfor %}
+<div class="ac-nav">
+    <div class="ac-nav__button-wrap">
+      <a class="ac-nav__link  ac-text--sm" href="{{ linkUrl }}" data-nav-link>{{ linkText }}</a>
+      <button type="button" class="ac-button ac-nav__button" data-show-btn>
+        <svg class="ac-nav__icon" width="24px" height="24px">
+          <use xlink:href="#iconChevron"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="ac-nav__list">
+        {% for block in section.blocks %}
+            <li class="ac-nav__item {% if forloop.index == 1 %} ac-nav__item--first {% endif %}">
+              <a class="ac-nav__link  ac-text--sm" href="{{ block.settings.link_url }}" data-nav-link>{{ block.settings.link_text }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>  
+<style>
+  .ac-nav__button-wrap.ac-nav__button-wrap {
+    display: none;
+  }
+  .ac-nav__icon {
+    margin-left: auto;
+  }
+  .ac-nav__list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0!important;
+    padding-left: 24px;
+    padding-right: 24px;
+    
+  }
+  .ac-nav__link.ac-nav__link {
+    display: inline-block;
+    padding: 14px 16px;
+    font-weight: 500;
+  }
+  @media screen and (max-width: 767.98px) {
+    .ac-nav__button-wrap.ac-nav__button-wrap {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #000;
+    }
+    .ac-nav__button span {
+      line-height: 24px;
+    }
+    .ac-nav__item {
+      border-bottom: 1px solid #000;
+    }
+    .ac-nav__list {
+      display: none; 
+      position: absolute;
+      background-color: #fefaf0;
+      width: 100%;
+      z-index: 1;
+      flex-wrap: wrap;
+      padding: 0;
+      padding-bottom: 20px;
+    }
+    .ac-nav__link {
+      width: 100%;
+      text-align: left;
+      padding-left: 20px;
+      padding-right: 20px; 
+    }
+    .ac-nav__button.is-open .ac-nav__icon{
+      transform: rotate(180deg);
+      transition: transform 0.5s ease-out;
+    }
+    .ac-nav__button.ac-nav__button {
+      display: inline-flex;
+      border: none;
+      border-radius: 0;
+      padding: 14px 20px;
+      text-transform: lowercase;
+      text-align: left;
+    }
+    .ac-nav__item--first {
+      display: none;
+    }
+  }
+  </style>
+
+  <script>
+  const navLinks = document.querySelectorAll('[data-nav-link]');
+  console.log(navLinks)
+  navLinks.forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+        console.log('click', 'click')
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+  
+      const headerOffset = 200; // header-height;
+      const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+  
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    });
+  });
+    
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('[data-show-btn]');
+    const menuItems = document.querySelectorAll('.ac-nav__list');
+
+    toggle.addEventListener('click', function() {
+      menuItems.forEach(function(item) {
+        toggle.classList.toggle('is-open');
+        item.style.display = item.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+    "name": "Section Navigation Links",
+    "blocks": [
+        {
+            "type": "link",
+            "name": "Navigation Link",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "link_url",
+                    "label": "Link URL"
+                },
+                {
+                    "type": "text",
+                    "id": "link_text",
+                    "label": "Link Text"
+                }
+            ]
+        }
+    ],
+    "max_blocks": 8
+}
+{% endschema %}

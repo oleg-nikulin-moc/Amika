@@ -1,0 +1,20 @@
+{% assign imageWrapper = wrapper_class %}
+
+{% if imageWrapper!= blank %}
+  <div class="{{ imageWrapper }}">
+{% endif %}
+    <img class="ac-image" 
+            srcset="
+                {{ image | img_url: '2000x' }} 2000w, 
+                {{ image | img_url: '1500x' }} 1500w, 
+                {{ image | img_url: '1000x' }} 1000w, 
+                {{ image | img_url: '750x' }} 750w"
+            sizes="(min-width:750px) 50vw, 100vw"
+            src="{{ image | img_url: '2000x' }} 2000w"
+            data-src="{{ image | img_url: '2000x' }}"
+            width=""
+            height=""
+        >
+{% if imageWrapper!= blank %} 
+  </div>
+{% endif %}

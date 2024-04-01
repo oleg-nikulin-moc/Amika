@@ -1,0 +1,149 @@
+{% assign title = section.settings.title %}
+
+  
+<div class="ac-multi-product ac-container" id="product-assortment">
+  {% if title != blank %}
+     <h2 class="ac-multi-product__title">{{ title }}</h2>
+  {% endif %}
+
+    <div class="ac-multi-product__list">
+        {% for block in section.blocks %}
+            {% assign product = all_products[block.settings.product] %}
+              <a class="ac-multi-product__item" target="_blank" {% if product.url %}href="{{ product.url }}"{% endif %}>
+                  <div class="ac-image__wrap ac-image__wrap--yellow ac-offset__bottom-md">
+                    {% if block.settings.custom_image != blank %}
+                        <img class="ac-image" src="{{ block.settings.custom_image | img_url: '520x520' }}" alt="{{ product.title }}">
+                    {% else %}
+                        <img class="ac-image" src="{{ product.featured_image | img_url: '520x520' }}" alt="{{ product.title }}">
+                    {% endif %}
+                  </div>
+                  <div class="ac-multi-product__info ac-container--mobile">
+                      <div class="ac-multi-product__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                          <path id="Vector" d="M44.1814 23.6055C46.8738 22.8519 48.4461 20.0564 47.6925 17.3643C46.9388 14.6722 44.1429 13.1001 41.4505 13.8537C41.1195 13.9453 40.8062 14.0694 40.5107 14.2201C40.5107 14.2171 40.5077 14.2142 40.5077 14.2142C40.7796 14.0251 41.0397 13.8093 41.2791 13.5641C43.2327 11.5635 43.1972 8.36015 41.1993 6.40387C39.2014 4.45055 35.9947 4.48602 34.0382 6.48366C33.7959 6.73189 33.5831 7.0008 33.4028 7.28154C33.4028 7.28154 33.3998 7.27858 33.3969 7.27858C33.5417 6.97716 33.6599 6.65801 33.7486 6.32113C34.4402 3.61131 32.8088 0.854199 30.0986 0.159751C27.3884 -0.534696 24.631 1.09947 23.9394 3.8093C23.8508 4.14913 23.8035 4.49192 23.7857 4.82881H23.7798C23.7562 4.49192 23.6971 4.15209 23.6025 3.81225C22.8489 1.12016 20.053 -0.45195 17.3606 0.301599C14.6681 1.05515 13.0958 3.85067 13.8495 6.54276C13.944 6.8826 14.0741 7.20766 14.2307 7.50908L14.2278 7.51203C14.0386 7.22835 13.817 6.96239 13.5628 6.71416C11.5619 4.75788 8.35822 4.7963 6.40171 6.79395C4.44815 8.79455 4.48361 11.9979 6.4815 13.9541C6.73567 14.2024 7.01053 14.4181 7.30017 14.6043L7.29721 14.6102C6.98984 14.4595 6.66179 14.3383 6.31895 14.2497C3.60879 13.5552 0.851349 15.1894 0.159771 17.8992C-0.534762 20.609 1.09961 23.3661 3.80977 24.0606C4.1526 24.1492 4.49543 24.1995 4.83827 24.2142V24.2202C4.49839 24.2438 4.15556 24.2999 3.81272 24.3975C1.11734 25.1481 -0.454965 27.9436 0.298678 30.6357C1.05232 33.3278 3.84819 34.8999 6.54061 34.1463C6.87753 34.0518 7.19968 33.9247 7.50114 33.771L7.50409 33.774C7.22628 33.9631 6.96029 34.1847 6.71498 34.4359C4.76142 36.4365 4.79689 39.6399 6.79478 41.5961C8.79267 43.5494 11.9993 43.514 13.9559 41.5163C14.1982 41.2681 14.411 40.9992 14.5942 40.7185C14.5972 40.7185 14.5972 40.7214 14.5972 40.7214C14.4524 41.0228 14.3342 41.3449 14.2485 41.6818C13.5569 44.3917 15.1883 47.1488 17.8985 47.8402C20.6086 48.5347 23.3661 46.9005 24.0606 44.1907C24.1463 43.8568 24.1936 43.5229 24.2113 43.1948C24.2143 43.1948 24.2172 43.1948 24.2202 43.1948C24.2438 43.5229 24.3029 43.8568 24.3946 44.1878C25.1482 46.8798 27.9441 48.452 30.6365 47.6984C33.3289 46.9449 34.9012 44.1493 34.1476 41.4572C34.056 41.1292 33.9318 40.8189 33.7841 40.5264C33.787 40.5234 33.79 40.5234 33.7929 40.5205C33.9791 40.7923 34.1919 41.0494 34.4343 41.2858C36.4321 43.2392 39.6388 43.2037 41.5953 41.2061C43.5489 39.2055 43.5134 36.0021 41.5155 34.0459C41.2732 33.8094 41.0102 33.6026 40.7383 33.4223C40.7412 33.4194 40.7412 33.4164 40.7442 33.4135C41.0397 33.5553 41.353 33.6706 41.681 33.7563C44.3912 34.4477 47.1487 32.8165 47.8402 30.1067C48.5348 27.3969 46.9004 24.6398 44.1902 23.9483C43.8622 23.8626 43.5312 23.8153 43.2031 23.7976C43.2031 23.7976 43.2031 23.7887 43.2031 23.7858C43.5253 23.7533 43.8533 23.6971 44.1814 23.6055Z" fill="#FEF074"/>
+                        </svg>
+                        <span class="ac-multi-product__count">{{ forloop.index }}</span>
+                      </div>
+                      <div class="ac-multi-product__description">
+                        <h3 class="ac-multi-product__product-title">{{ block.settings.custom_title }}</h3>
+                        <p class="ac-multi-product__text ac-text--sm">{{ block.settings.custom_description }}</p>
+                        <span>{{ block.settings.custom_price }}</span>
+                      </div>
+                  </div>
+              </a>
+        {% endfor %}
+    </div>
+</div>
+<style>
+  .isNotMobile .ac-multi-product__item:hover {
+    opacity: 1;
+  }
+  .ac-multi-product__title.ac-multi-product__title {
+    margin-top: 0;
+    margin-bottom: 60px;
+  }
+  .ac-multi-product__list {
+    display: flex;
+    column-gap: 20px;
+  }
+  .ac-multi-product__item {
+    width: calc(100% / {{ section.blocks.size }});
+  }
+  .ac-image__wrap--yellow {
+    background-color: #FFF3A2;
+  }
+  .ac-multi-product__info {
+    display: flex;
+    align-items: flex-start;
+    column-gap: 24px;
+  }
+  .ac-multi-product__icon {
+    position: relative;
+  }
+  .ac-multi-product__count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .ac-multi-product__description {
+    text-align: left;
+  }
+  .ac-multi-product__product-title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    margin-bottom: 8px;
+  }
+  .ac-multi-product__text {
+    margin-bottom: 24px;
+  }
+    
+  @media screen and (max-width: 767.98px) {
+    .ac-multi-product__list {
+      flex-direction: column;
+      row-gap: 40px;
+    }
+    .ac-multi-product__title.ac-multi-product__title {
+      max-width: 300px;
+      margin: 0 auto 40px;
+    }
+    .ac-multi-product__item {
+      width: 100%
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Few Products",
+    "class": "shopify-section--offset-md",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Description text"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product Block",
+        "settings": [
+            {
+              "type": "product",
+              "id": "product",
+              "label": "Product-Handle"
+            },
+            {
+                "type": "text",
+                "id": "custom_title",
+                "label": "Custom Title"
+            },
+            {
+                "type": "textarea",
+                "id": "custom_description",
+                "label": "Custom Description"
+            },
+            {
+                "type": "image_picker",
+                "id": "custom_image",
+                "label": "Custom Image"
+            },
+            {
+                "type": "text",
+                "id": "custom_price",
+                "label": "Custom Price"
+            }
+        ]
+      }
+    ],
+    "max_blocks": 5
+
+  }
+{% endschema %}

@@ -1,0 +1,134 @@
+{{ 'helper-section.css' | asset_url | stylesheet_tag }}
+<!-- ac-container  -->
+<div class="ac-image-text ac-banner-community">
+  {% for block in section.blocks %}
+    {% render 'cross-image-text',
+        grid_inverse: block.settings.grid_inverse,
+        image: block.settings.image,
+        label: block.settings.label,
+        labelText: block.settings.labelText,
+        title: block.settings.title,
+        description: block.settings.description,
+        note: block.settings.note,
+        cta-link: block.settings.cta-link,
+        cta-text: block.settings.cta-text,
+        block-id: block.settings.block-id,
+        downloadApp: block.settings.idDownloadBTn
+    %}
+  {% endfor %}
+</div>
+
+<style>
+  .ac-banner-community.ac-banner-community .ac-image-text--heading {
+    font-family: 'FuturaND';
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 50px;
+    margin-bottom: 15px;
+  }
+  .ac-banner-community.ac-banner-community .ac-image-text--description {
+    margin-bottom: 0!important;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .ac-banner-community.ac-banner-community .ac-content__box {
+    justify-content: center;
+    text-align: center;
+  }
+  .ac-banner-community .ac-content__item {
+    max-width: 100%;
+  }
+  .ac-banner-community .ac-image__wrap {
+    border-radius: 0;
+  }
+  .ac-banner-community.ac-banner-community .ac-button {
+    font-weight: 500;
+    font-family: FuturaND;
+    padding-left: 43px;
+    padding-right: 43px;
+    margin-top: 0;
+  }
+  .ac-banner-community.ac-banner-community .ac-button:hover {
+    opacity: 0.5!important;
+    background-color: #000;
+    color: #fff;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Community Banner",
+  "class": "shopify-section--offset-lg",
+  "blocks": [
+        {
+        "type": "grid_block",
+        "name": "Grid Item",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "label",
+                "label": "Label?"
+            },
+             {
+                "type": "text",
+                "id": "labelText",
+                "label": "Label Text"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "html",
+                "id": "description",
+                "label": "Description"
+            },
+            {
+                "type": "html",
+                "id": "note",
+                "label": "Note"
+            },
+            {
+                "type": "checkbox",
+                "id": "grid_inverse",
+                "label": "Grid Inverse?"
+            },
+            {
+              "type": "url",
+              "id": "cta-link",
+              "label": "CTA Link"
+            },
+            {
+              "type": "text",
+              "id": "cta-text",
+              "label": "CTA Text",
+              "default": "Learn More"
+            },
+            {
+              "type": "text",
+              "id": "block-id",
+              "label": "Block Id"
+            },
+            {
+              "type": "checkbox",
+              "id": "idDownloadBTn",
+              "label": "Is download buttons?"
+            }
+        ]
+     }
+  ],
+    "presets": [
+        {
+          "name": "Community Banner",
+          "category": "Image"
+        }
+    ]
+}
+
+{% endschema %}
