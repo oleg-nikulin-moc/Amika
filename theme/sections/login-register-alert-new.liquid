@@ -14,18 +14,230 @@
   {% endcomment %}
 </div>
 
-{% unless customer or request.page_type == 'customers/activate_account' or request.page_type == 'customers/reset_password' or request.design_mode%}
-<script>
-  var loginRegisterAlertPopup = new tingle.modal({
-      footer: false,
-      stickyFooter: false,
-      closeMethods: ['escape'],
-      cssClass: ['login-register-alert-popup', 'ac-popup', 'ac-popup--sm'],
-    });
 
-  // set content
-  var content = $('#login-register-popup-container').html();
-  loginRegisterAlertPopup.setContent( content );
+{% unless customer or request.page_type == 'customers/activate_account' or request.page_type == 'customers/reset_password' or request.design_mode%}
+  
+<div id="customer-signIn" class="ac-login-modal" data-login-modal>
+  <button type="button" class="ac-close__btn ac-login-modal__close-btn" data-close-login>
+    <svg class="ac-close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18" stroke="black" stroke-width="1"/>
+        <path d="M6 6L18 18" stroke="black" stroke-width="1" />
+    </svg>
+  </button>
+  <h2 class="ac-login-modal__title">friends with benefits+</h2>
+  <p class="ac-login-modal__subtitle">salon loyalty program</p>
+  <hr class="ac-login-modal__divider">
+
+  <div class="register_wrap register_wrap--center" style="margin-bottom: 20px;">
+    <div class="ac-login-modal__box ac-offset-right--sm">
+      <p class="ac-login-modal__link">don't have an <br> account?</p>
+      <button class="ac-form__btn ac-form__btn--black animation" data-register>Join Now</button>
+    </div>
+    <div class="ac-login-modal__box">
+      <a class="ac-login-modal__link" href="#" data-recover-password>forgot <br> password?</a>
+      <button class="ac-form__btn ac-form__btn--black animation" data-signin>Sign In</button>
+    </div>
+  </div>
+  <div class="ac-block--horizontal" style="text-align: center;">
+    <p class="" style="font-weight: 300; margin-bottom: 0; text-transform: initial;">the Friends With Benefits+ Salon Loyalty Program is currently for US only</p>
+  </div>
+          
+</div>
+
+{% style %}
+  .ac-login-modal__box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ac-login-modal__close-btn.ac-login-modal__close-btn {
+    display: inline-flex;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    padding: 10px;
+    right: 10px;
+  }
+  svg.ac-close-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .ac-login-modal__box .ac-form__btn {
+    min-width: 140px;
+  }
+  
+  .ac-login-modal {
+    box-sizing: border-box;
+    background-color: #fefaf0;
+    border-radius: 48px 40px 0 0;
+    width: 400px;
+    padding: 24px;
+    position: fixed;
+    bottom: 0;
+    left: calc(50% - 200px);
+    text-align: center;
+    border: 1px solid #000;
+    z-index: 99999;
+  }
+  .ac-login-modal__title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .ac-login-modal__subtitle {
+    color: #ff6b26;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform: uppercase!important;
+    letter-spacing: .001em;
+    font-weight: 500;
+  }
+  .register_wrap--center {
+    justify-content: center!important;
+  }
+  .ac-login-modal__link.ac-login-modal__link {
+    margin-bottom: 16px!important;
+    line-height: 24px!important;
+    font-size: 16px;
+  }
+  .ac-login-modal__divider {
+    margin-left: -24px;
+    margin-right: -24px;
+    border-color: #000;
+  }
+
+  @media(max-width: 400px){
+    .ac-login-modal {
+      width: 380px;
+      left: calc(50% - 190px);
+    }
+    .ac-login-modal__box.ac-login-modal__box {
+      margin-right: 16px!important;
+    }
+
+  }
+  
+  @media(max-width: 380px){
+    .ac-login-modal {
+      width: 360px;
+      left: calc(50% - 180px);
+    }
+  }
+  {% endstyle %}
+
+  
+<script>
+  let loginRegisterAlertPopup; // Змінна для зберігання екземпляра модального вікна
+  
+  function openLoginRegisterModal() {
+    // Перевіряємо, чи модальне вікно вже існує
+    if (!loginRegisterAlertPopup) {
+      // Якщо немає, створюємо нове модальне вікно
+      loginRegisterAlertPopup = new tingle.modal({
+        footer: false,
+        stickyFooter: false,
+        closeMethods: ['escape'],
+        cssClass: ['login-register-alert-popup', 'ac-popup', 'ac-popup--sm'],
+      });
+  
+      // Встановлюємо вміст модального вікна
+      const content = document.getElementById('login-register-popup-container').innerHTML;
+      loginRegisterAlertPopup.setContent(content);
+      let closePopups = document.querySelectorAll('[data-close-popup-btn]');
+    }
+  
+    // Відкриваємо модальне вікно
+    loginRegisterAlertPopup.open();
+  }
+
+  function closeModal(){
+    console.log('evClose', event)
+    const elementsToRemove = document.querySelectorAll('.tingle-modal.tingle-modal--visible');
+    console.log("elementsToRemove", elementsToRemove.classList);
+    elementsToRemove.forEach(element => {
+        element.classList.remove('tingle-modal--visible');
+    });
+    if (document.body.classList.contains('tingle-enabled')) {
+        document.body.classList.remove('tingle-enabled');
+    }
+    if (window.location.hash === '#login'|| window.location.hash === '#register' ) {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const registerBtns = document.querySelectorAll('[data-register]');
+    const signinBtns = document.querySelectorAll('[data-signin');
+    
+    const recoverBtn = document.querySelector('[data-recover-password');
+    const myAccountElement = document.querySelector('[data-login-btn]');
+    const closeLoginBtn = document.querySelector('[data-close-login]');
+    const loginModal = document.querySelector('[data-login-modal]');
+
+    if (closeLoginBtn) {
+      closeLoginBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (loginModal) {
+          loginModal.style.display = 'none';
+        }
+      });
+    }
+
+    if (recoverBtn) {
+      recoverBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        openLoginRegisterModal();
+        showRecoverPasswordForm();
+        return false;
+      });
+    }
+    if (registerBtns.length !== 0) {
+      registerBtns.forEach(registerBtn => {
+        registerBtn.addEventListener('click', (event) => {
+          event.preventDefault();
+          openLoginRegisterModal();
+          showRegisterForm();
+          return false;
+        });
+      });
+    }
+    if (signinBtns.length !== 0) {
+      signinBtns.forEach(signinBtn => {
+        signinBtn.addEventListener('click', (event) => {
+          event.preventDefault();
+          openLoginRegisterModal();
+          showSignInForm();
+          return false;
+        });
+      });
+    }
+
+    // document.querySelector('.tingle-modal.login-register-alert-popup').addEventListener('click', (event) => {
+    //   const createAccountNextButton = event.target.closest('.cf-next-step');
+      
+    //   if (createAccountNextButton) {
+    //     setTimeout(() => {
+    //       if (loginRegisterAlertPopup.isOverflow()) {
+    //         loginRegisterAlertPopup.checkOverflow();
+    //       }
+    //     }, 300);
+    //   }
+    // });
+  });
+</script>
+  
+<script>
+  // var loginRegisterAlertPopup = new tingle.modal({
+  //     footer: false,
+  //     stickyFooter: false,
+  //     closeMethods: ['escape'],
+  //     cssClass: ['login-register-alert-popup', 'ac-popup', 'ac-popup--sm'],
+  //   });
+
+  // // set content
+  // var content = $('#login-register-popup-container').html();
+  // loginRegisterAlertPopup.setContent( content );
 
   // open modal
   // $('.my-account.animation').on('click', function (event) {
@@ -33,32 +245,35 @@
   //   loginRegisterAlertPopup.open();
   // });
 
-  const myAccountElement = document.querySelector('[data-login-btn]');
-  if (myAccountElement) {
-    myAccountElement.addEventListener('click', (event) => {
-      event.preventDefault();
-      loginRegisterAlertPopup.open();
-    });
-  }
+  // const myAccountElement = document.querySelector('[data-login-btn]');
+  // if (myAccountElement) {
+  //   myAccountElement.addEventListener('click', (event) => {
+  //     event.preventDefault();
+  //     loginRegisterAlertPopup.open();
+  //   });
+  // }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    loginRegisterAlertPopup.open();
-  });
+  // document.addEventListener('DOMContentLoaded', function() {
+  //   loginRegisterAlertPopup.open();
+  // });
   
-  $('.tingle-modal.login-register-alert-popup').on('click', function (event) {
+  // $('.tingle-modal.login-register-alert-popup').on('click', function (event) {
 
-    var $createAccountNextButton = $(event.target).closest('.cf-next-step');
+  //   var $createAccountNextButton = $(event.target).closest('.cf-next-step');
 
-    if ( $createAccountNextButton.length ) {
-      setTimeout(function () {
-        if (loginRegisterAlertPopup.isOverflow()) {
-          loginRegisterAlertPopup.checkOverflow();
-        }
-      }, 300)
-    }
-  })
+  //   if ( $createAccountNextButton.length ) {
+  //     setTimeout(function () {
+  //       if (loginRegisterAlertPopup.isOverflow()) {
+  //         loginRegisterAlertPopup.checkOverflow();
+  //       }
+  //     }, 300)
+  //   }
+  // })
 </script>
+  
 {% endunless %}
+
+
 <style>
   .register-alert-popup-verbiage {
     clear: both;

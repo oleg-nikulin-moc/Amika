@@ -123,16 +123,61 @@
             </ul>
         </li>
       {% else %}
-        <li class="ac-nav-right__item ac-nav-right__item--logout">
-          <a href="/account/login" class="my-account animation" data-login-btn>
+        <li class="ac-nav-right__item ac-nav-right__item--logout ac-nav-right__dropdown">
+          <a class="my-account animation" data-login-btn>
             <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5776 5.23159C13.5776 7.98719 11.3438 10.221 8.58823 10.221C5.83263 10.221 3.59863 7.98719 3.59863 5.23159C3.59863 2.47599 5.83263 0.242188 8.58823 0.242188C11.3438 0.242188 13.5776 2.47599 13.5776 5.23159Z" fill="black"/>
               <path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.2097C1.7386 12.2797 4.9338 10.3157 8.588 10.3157C12.242 10.3157 15.4374 12.2797 17.176 15.2097" fill="black"/>
             </svg>
             <span class="hide">Login</span>
           </a>
+          {% if customer == nil and template.name != 'login'%}
+            <div class="ac-nav-right-dropdown__content">
+              <a href="/#register" data-register>join now</a>
+              <a href="/#login"  data-signin>sign in</a>
+            </div>
+            <style>
+              .ac-nav-right__dropdown {
+                position: relative;
+                display: inline-block;
+              }
+              .ac-nav-right-dropdown__content {
+                display: none;
+              }
+              .ac-nav-right-dropdown__content a{
+                box-sizing: border-box;
+                width: 100%;
+                padding: 5px;
+                display: block;
+                border: none;
+                font-size: 12px;
+                line-height: 1.2;
+                cursor: pointer;
+                justify-content: center;
+              }
+              .ac-nav-right__dropdown:hover .ac-nav-right-dropdown__content {
+                display: block;
+                position: absolute;
+                background-color: #fefaf0;
+                min-width: 60px;
+                z-index: 3;
+                top: 34px;
+                right: -10px;
+              }
+              @media(max-width: 767.98px) {
+                .ac-nav-right-dropdown__content a {
+                   padding: 10px 25px;
+                }
+                .ac-nav-right-dropdown__content {
+                  min-width: 100px!important;
+                  right: -20px!important;
+                }
+              }
+            </style>
+          {% endif %}
         </li>
       {% endif %}
     {% endif %}
-  </div>
+  </ul>
 </div>
+  

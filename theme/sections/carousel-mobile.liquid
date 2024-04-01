@@ -1230,7 +1230,18 @@
           "type": "html",
           "id": "disclaimer",
           "label": "Disclaimer"
+        },
+        {
+          "type": "checkbox",
+          "id": "idDownloadBTn",
+          "label": "Is download buttons?"
+        },
+        {
+          "type": "checkbox",
+          "id": "isTargetBlank",
+          "label": "Target Blank"
         }
+        
       ]
     }
   ],
@@ -1343,8 +1354,40 @@
                     {{ block.settings.text }}
                   </div>
                 {% endif %}
+                {% if block.settings.idDownloadBTn == true %}
+                  <style>
+                    .ac-download-app__list ~ .custom-cursor.btn{
+                      margin-top: 0!important;
+                      padding-left: 75px!important;
+                      padding-right: 75px!important;
+                    }
+                    .ac-download-app__item.ac-offset__right--xs {
+                      margin-right: 20px!important;
+                    }
+                    @media (max-width: 768px) {
+                      .hero-carousel .slide-half-image .overlay .text_wrapper {
+                        padding-left: 20px;
+                        padding-right: 20px;
+                      }
+                      .hero-carousel .slide-half-image .overlay .text_wrapper .ac-download-app__list ~ .btn {
+                         white-space: nowrap;
+                         width: 100%;
+                         max-width: 333px;
+                         padding-left: 50px!important;
+                         padding-right: 50px!important;
+                      }
+                      .hero-carousel .slide-half-image .overlay .text_wrapper .text_wrapper_inner {
+                        max-width: 100%;
+                      }
+                       .ac-download-app__item.ac-offset__right--xs {
+                          margin-right: 10px!important;
+                       }
+                    }
+                  </style>
+                  {% render 'download_app' %}
+              {% endif %}
                 {% if block.settings.button != "" %}
-                  <a id="button--mobile--{{block.id}}" href="{{ block.settings.link }}" class="custom-cursor btn {% if forloop.first %}animated {{block.settings.button_effect}}{% else %}{% if block.settings.button_effect != "" %}invisible{% endif %}{% endif %}" {% if block.settings.button_effect != "" %}data-effect="{{block.settings.button_effect}}"{% endif %}
+                  <a id="button--mobile--{{block.id}}" {% if block.settings.isTargetBlank %}target="_blank"{% endif %} href="{{ block.settings.link }}" class="custom-cursor btn {% if forloop.first %}animated {{block.settings.button_effect}}{% else %}{% if block.settings.button_effect != "" %}invisible{% endif %}{% endif %}" {% if block.settings.button_effect != "" %}data-effect="{{block.settings.button_effect}}"{% endif %}
                   >
                     {{ block.settings.button }}
                   </a>
@@ -1484,6 +1527,7 @@
     var heroCarousel = $('#shopify-section-{{ section.id }} .hero-carousel');
 
     heroCarousel.on('init', function(event, slick){
+      console.log('car inir')
       if( screen.width < 600 ) {
         $('#shopify-section-{{section.id}} .hero-carousel video').each(function() {
           $(this).get(0).pause();
@@ -1511,7 +1555,7 @@
       nextArrow: '<i class="lnr animation right-arrow" style="transform: rotate(180deg);"><svg class="sprite-icon" width=60px height=60px><use href="#carousel-left-carret" /></svg></i>'
     });
     heroCarousel.on('beforeChange', function(event, slick, currentSlide, nextSlide){
-
+      console.log('1');
       if( screen.width < 600 ) {
         $('#shopify-section-{{section.id}} .hero-carousel video').each(function() {
           $(this).get(0).pause();

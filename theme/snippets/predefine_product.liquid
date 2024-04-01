@@ -7,22 +7,40 @@
     window.addEventListener("DOMContentLoaded", () => {
 
         const BrandBoxEls = document.querySelectorAll('[data-brandbox-icon]');
-        {% comment  %}
-              {% endcomment  %}
-            const user = JSON.parse('{{  customer.metafields.amika_loyalty_program.points }}');
 
+         {% comment %}      
+        const userObject = '{{  customer.metafields.amika_loyalty_program.points }}';
 
-        {% comment %}
-
-        const user = {
-          "tier": "2",
-          "points": "",
-          "pointsExpireDate": "2023-09-07",
-          "brandBoxPoints": "50"
+        if (userObject !== '') {
+          const user = JSON.parse(userObject);
+        } else {
+          const user = {
+            "tier": "2",
+            "points": "",
+            "pointsExpireDate": "2023-09-07",
+            "brandBoxPoints": "50"
+          };
         }
-       {% endcomment %}
-        const tiersProducts = JSON.parse('{{ tiersProducts }}');
+  
+        {% endcomment  %}
 
+        {% comment  %}
+
+       {% endcomment %}
+        const user = {
+            "tier": "3",
+            "points": "",
+            "pointsExpireDate": "2023-09-07",
+            "brandBoxPoints": "50"
+        };
+        // Parse the tiersProducts JSON string from Shopify's metafields
+        const tiersProducts = JSON.parse('{{ tiersProducts }}');
+      
+        console.log('predefine product');
+        console.log('user', user);
+        console.log({tiersProducts});
+
+        // Function to update the visibility of Brand Box items based on a condition
         function updateBrandBoxItem(condition) {
             if (condition) {
                 console.log('added brandbox', element)
@@ -32,6 +50,7 @@
             }
         }
 
+        // Function to show a message when a Brand Box element is clicked
         function showMsg() {
             if (BrandBoxEls) {
                 BrandBoxEls.forEach(el => {
@@ -49,7 +68,8 @@
                 });
             }
         }
-
+      
+        // Fetch the current cart and return an array of product and variant IDs
         function getCart() {
             return fetch('/cart.js')
                 .then(response => response.json())
@@ -68,20 +88,25 @@
                 });
         }
 
+    
+        // Update Brand Box items and show message if conditions are met
         if (user.brandBoxPoints > 0 && user.tier !== '-1') {
             updateBrandBoxItem(true);
         }
         showMsg();
-
+      
         getCart().then(productsInCartFilter => {
+            // Function to update the cart with the given updates object
             function updateCartNew(updates) {
+                console.log('updates', updates)
                 if (Object.keys(updates).length !== 0) {
                     jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
                         updates: updates
                     });
                 }
             }
-
+          
+            // Function to check for products with specific variants in the cart
             function checkCartTiers(cart, tiers) {
                 const variant = cart.reduce((acc, item) => {
                     if (tiers.some(tier => tier.variant_id === item.variant_id)) {
@@ -93,9 +118,12 @@
                 return variant;
             }
 
+            // Destructuring the user object to get tier and brandBoxPoints
             const {tier, brandBoxPoints} = user;
+            // Checking for the presence of products with specific variants in the cart
             const tiersInCart = checkCartTiers(productsInCartFilter, tiersProducts);
 
+            // Function to compare two arrays of variant_id
             function cartTiersAreEqual(array1, array2) {
                 if (array1.length === 0) {
                     return false;
@@ -103,19 +131,23 @@
                 return array1.every((element, index) => element === array2[index]);
             }
 
+            // Function to check equality of two arrays
             function checkArraysEquality(array1, array2) {
                 return cartTiersAreEqual(array1, array2);
             }
 
+            // Checking the condition for removing items from the cart
             if (user.tier === "-1" || brandBoxPoints < 1) {
 
                 const removeTiersVariantId = checkCartTiers(productsInCartFilter, tiersProducts)
-
+              
+                // Checking for products to remove from the cart
                 if (removeTiersVariantId > 0) {
                     const updates = {
                         [removeTiersVariantId]: 0
                     }
                     updateCartNew(updates);
+                    // Updating the sidebar cart after 500 milliseconds
                     setTimeout(() => {
                         updateCartDesc(); // update sidebarCart
                     }, 500);
@@ -128,7 +160,8 @@
                 const userTiers = [selectedProduct.variant_id];
                 const checkTierIdEquality = checkArraysEquality(tiersInCart, userTiers);
                 const emptyTearsInCart = tiersInCart.length === 0;
-
+                  
+                // Adding or removing items from the cart based on conditions
                 if (!checkTierIdEquality) {
                     const userTierVariantId = selectedProduct.variant_id;
                     const cartUpdates = {}
@@ -139,8 +172,11 @@
                         cartUpdates[tiersInCart] = 0;
                     }
                     console.log('cartUpdates', cartUpdates)
+
                     updateCartNew(cartUpdates);
                     updateBrandBoxItem(true);
+                   
+                    // Updating the sidebar cart after 1000 milliseconds
                     setTimeout(() => {
                         updateCartDesc() // update sidebarCart
                     }, 1000);
@@ -149,5 +185,41 @@
                 }
             }
         });
+
+      // Function to update the cart with the given updates object
+      function updateCartCoupon(updates) {
+          console.log('updates coupon', updates)
+          if (Object.keys(updates).length !== 0) {
+              jQuery.post(`${window.Shopify.routes.root}cart/update.js`, {
+                  updates: updates
+              });
+          }
+      }
+      
+      // Припустимо, що у вас є функція, яка перевіряє, чи купон валідний
+      const isCouponValid = true;
+      
+      // Ідентифікатор варіанту продукту, який ви хочете додати до корзини
+      const productIdToAdd = 44957824090428;
+      
+      // Кількість продукту для додавання до корзини
+      const quantityToAdd = '2';
+      
+      if (isCouponValid) {
+          const updates = {
+              [productIdToAdd]: quantityToAdd
+          };
+      
+          // Викликаємо функцію для оновлення корзини із вказаними оновленнями
+          updateCartCoupon(updates);
+      
+          // Оновлення бокової корзини після додавання продукту (якщо потрібно)
+          // setTimeout(() => {
+          //     updateCartDesc(); // оновити бокову корзину
+          // }, 1000);
+      } else {
+          console.log('Купон недійсний. Продукт не був доданий до корзини.');
+}
+      
     });
 </script>

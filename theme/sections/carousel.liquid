@@ -2161,6 +2161,16 @@
           "type": "html",
           "id": "disclaimer",
           "label": "Disclaimer Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "idDownloadBTn",
+          "label": "Is download buttons?"
+        },
+        {
+          "type": "checkbox",
+          "id": "isTargetBlank",
+          "label": "Target Blank"
         }
       ]
     }
@@ -2262,8 +2272,21 @@
                   {{ block.settings.text }}
                 </div>
               {% endif %}
+              {% if block.settings.idDownloadBTn == true %}
+                  <style>
+                    .ac-download-app__list ~ .custom-cursor.btn{
+                      margin-top: 0!important;
+                      padding-left: 75px!important;
+                      padding-right: 75px!important;
+                    }
+                    .ac-download-app__item.ac-offset__right--xs {
+                      margin-right: 20px!important;
+                    }
+                  </style>
+                  {% render 'download_app' %}
+              {% endif %}
               {% if block.settings.button != "" %}
-                <a id="button--{{block.id}}" href="{{ block.settings.link }}" class="custom-cursor btn {% if forloop.first %}animated {{block.settings.button_effect}}{% else %}{% if block.settings.button_effect != "" %}invisible{% endif %}{% endif %}" {% if block.settings.button_effect != "" %}data-effect="{{block.settings.button_effect}}"{% endif %}
+                <a id="button--{{block.id}}" {% if block.settings.isTargetBlank %}target="_blank"{% endif %} href="{{ block.settings.link }}" class="custom-cursor btn {% if forloop.first %}animated {{block.settings.button_effect}}{% else %}{% if block.settings.button_effect != "" %}invisible{% endif %}{% endif %}" {% if block.settings.button_effect != "" %}data-effect="{{block.settings.button_effect}}"{% endif %}
                 >
                   {{ block.settings.button }}
                 </a>

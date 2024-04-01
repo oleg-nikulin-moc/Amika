@@ -6,7 +6,8 @@
 {% assign customerAditionalData = customer.metafields.amika_loyalty_program | json %}
 {% assign customerSalonName =  customer.metafields.amika_loyalty_program.customer_additional_info.value['salonName'] %}
 {% assign customerDistributorName =  customer.metafields.amika_loyalty_program.customer_additional_info.value['distributorName'] %}
-{% assign pointsExpireDate = customer.metafields.amika_loyalty_program.points.value['pointsExpireDate'] %}
+{% assign pointsExpireDate = customer.metafields.amika_loyalty_program.expire_points.value['pointsToExpireDate'] %}
+{% assign expirePoints = customer.metafields.amika_loyalty_program.expire_points.value['pointsToExpire'] %}
 {% assign pointsNowDate = 'now' | date: '%Y-%m-%d' %}
 {% assign expireDateTimestamp = pointsExpireDate | date: '%s' %}
 {% assign todayTimestamp = pointsNowDate | date: '%s' %}
@@ -67,9 +68,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   console.log('authAccount', {token});
   // end Auth
 
+  console.log('amika_loyalty_program', {{ customer.metafields.amika_loyalty_program }});
+  console.log('pointsExpireDate', '{{ pointsExpireDate }}');
 
   const email = '{{ customer.email }}';
   const shopifyId = '{{ customer.id }}';
+  console.log('user_id:', '{{ customer.id }}')
 
   console.log('loyaltyProgram', {{ loyaltyProgram }});
   console.log('brandBoxPoints', {{ brandBoxPoints }});
@@ -933,7 +937,7 @@ p.ac-account__text:last-of-type {
       <div class="ac-account-header__box ac-account-header__box--right">
         <p class="ac-account-header__points">{{ points }} points</p>
         {% if pointsExpireDate %}
-        <p class="ac-account-header__expire-points"><span>1800 points</span><span> will expire in</span><span> {{ daysDifference }} days</span></p>
+        <p class="ac-account-header__expire-points"><span>{{ expirePoints }} points</span><span> will expire in</span><span> {{ daysDifference }} days</span></p>
         {% endif %}
       </div>
     </div>
@@ -947,7 +951,7 @@ p.ac-account__text:last-of-type {
         </div>
         <div class="ac-account__item ac-account__item--distributor ac-account__item--sm">
           <h3 class="ac-account__subtitle">primary distributor</h3>
-          <p class="ac-account__text ac-text--capitalize" data-account-distributor>MAKA Beauty Systems</p>
+          <p class="ac-account__text ac-text--capitalize" data-account-distributor></p>
         </div>
         <div class="ac-account__item ac-account__item--salon ac-account__item--sm">
             <h3 class="ac-account__subtitle">salon information</h3>

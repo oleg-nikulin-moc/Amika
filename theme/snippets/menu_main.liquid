@@ -46,6 +46,8 @@
       </a>
 
       {% if list_handle == "all" or list_handle == "shop-all"  or list_handle == "browse-products" %}
+                                 
+       
       <ul class="hide">
         <li>
           <div class="container">
@@ -103,7 +105,6 @@
           </div>
         </li>
       </ul>
-
       {% elsif list_handle == "our-collections" %}
       <ul id="ourcollection_menu" class="hide">
         <li>
@@ -144,13 +145,14 @@
       </ul>
 
       {% else %}
+      {% if link.title contains "loyalty" and customer == nil %}
       <ul class="hide">
         {% for level2_link in linklists[list_handle].links %}
         <li class="{% if forloop.last %}last{%endif%} animation">
           {% assign current = false %}{% if template == 'index' and level2_link.url == '/' %}{% assign current = true %}{% else %}{% if collection.url == level2_link.url %}{% assign current = true %}{% else %}{% if blog.url == level2_link.url %}{% assign current = true %}{% else %}{% if page.url == level2_link.url %}{% assign current = true %}{% else %}{% if page_title == level2_link.title %}{% assign current = true %}{% else %}{% if template == 'list-collections' and level2_link.url == '/collections' %}{% assign current = true %}{% else %}{% if page_title == 'Products' and level2_link.url == '/collections/all' %}{% assign current = true %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
           {% assign level2_handle = level2_link.title | handleize %}
           {% if linklists[level2_handle].links != blank %}
-          <div class="has-dropdown">
+          <div class="has-dropdown yes">
             <a href="{{ level2_link.url }}" {% if level2_link.url contains "http:" or link.url contains "https:" %}target="_blank"{% endif %}>{{ level2_link.title | escape }} <span class="fa arrow-right">&#xf105;</span></a>
             <ul class="hide">
               {% for level3_link in linklists[level2_handle].links %}
@@ -164,12 +166,13 @@
 
           {% else %}
           <div>
-            <a href="{{ level2_link.url }}" {% if level2_link.url contains "http:" or level2_link.url contains "https:" %}target="_blank"{% endif %}>{{ level2_link.title | escape }}</a>
+            <a href="{{ level2_link.url }}" {% if level2_link.url contains "http:" or level2_link.url contains "https:" %}target="_blank"{% endif %} {% if level2_link.title contains "join" %}data-register{% elsif level2_link.title contains "sign" %}data-signin{% endif %}>{{ level2_link.title | escape }}</a>
           </div>
           {% endif %}
         </li>
         {% endfor %}
       </ul>
+      {% endif %}
       {% endif %}
 
     </div>
@@ -183,8 +186,3 @@
   </li>
   {% endfor %}
 </ul>
-
-<script>
- 
-
-</script>

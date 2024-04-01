@@ -267,16 +267,17 @@
       // const matchingProductIds = productIds.filter(item => cartProductIds.includes(item.product_id));
       // console.log('matchingProductIds', matchingProductIds)
       const submitOrderButton = document.querySelector('[data-submit-order]');
-      const hasOtherProductIds = cartProductIds.some(productId => !productIds.find(product => product.product_id === productId));
+      // const hasOtherProductIds = cartProductIds.some(productId => !productIds.find(product => product.product_id === productId));
 
-      if (submitOrderButton && (cartProductIds.length === 0 || hasOtherProductIds)) {
+      if (submitOrderButton) {
+      //  && (cartProductIds.length === 0 || hasOtherProductIds)
         console.log('ttt')
         submitOrderButton.disabled = false;
       } else {
         submitOrderButton.disabled = true;
       }
 
-      console.log('hasOtherProductIds', hasOtherProductIds)
+      // console.log('hasOtherProductIds', hasOtherProductIds)
     }
     checkCart();
   });
@@ -627,6 +628,9 @@
             </div>
       </div{% endcomment %}
             {% for item in cart.items %}
+              {% comment %}
+              <h2>{{ item.product.first_available_variant.id }}</h2>
+              {% endcomment %}
               {% include '_cart-item' %}
             {% endfor %}
   </tbody>

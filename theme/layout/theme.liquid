@@ -118,6 +118,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {{ 'style-guide.scss.css' | asset_url | stylesheet_tag }}
   	{{ 'footer.scss.css' | asset_url | stylesheet_tag }}
   	{{ 'rs-style.scss.css' | asset_url | stylesheet_tag }}
+    {% if page.handle contains 'review' or page.handle contains 'meet-out-team' %}
+      {{ 'stylist_popup.js' | asset_url | script_tag }}
+    {% endif %}
 
   <!-- Klaviyo Signup Form Snippet -->
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RTevZm"></script>
@@ -310,13 +313,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7S6WT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
+  {% if customer %}
   <!-- Refersion Code -->
   	{{ 'https://cdn.refersion.com/assets/clients/amika/refersion-tingle.min.css' | stylesheet_tag }}
 	{{ 'https://cdn.refersion.com/assets/clients/amika/refersion-referral.css' | stylesheet_tag }}
 	{{ 'https://cdn.refersion.com/assets/clients/amika/refersion-referral.js' | script_tag }}
   <!-- End Refersion Code -->
-
+{% endif %}
   {% comment %}This code below is to prevent the multiple free products in the cart
   It does this on every page?! It else's the entire body, but not the header?
   And it forces a page reload, removing 1 item at a time?
@@ -372,7 +375,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       {% elsif template.name == 'index' %}
         {{ content_for_layout }}
         <!-- login alert -->
-        {% section 'login-register-alert-new' %}
+        {% unless customer %}
+          {% section 'login-register-alert-new' %}
+        {% endunless %}
         {% comment %}{% section 'login-register-alert' %}{% endcomment %}
 
       {% else %}

@@ -4,14 +4,19 @@
 {% endif %}
 
 
-{% assign title = 'Sorry, I am very loved' %}
+{% assign title = 'sorry, i am very loved' %}
+
+{% assign prodId = 9131378704700 %} <!-- Замініть це значення на ваше SKU -->
+{% assign prodId_2 = 9131381424444 %} <!-- Додайте друге SKU, якщо потрібно -->
+
 {% if coming_soon == true %}
-  {% assign title = 'Coming Soon' %}
+  {% assign title = 'coming soon' %}
 {% endif %} 
-{% assign subtitle = 'Enter your email address below and we will let you know when this product becomes available!' %}
+
+{% assign subtitle = 'enter your email address below and we will let you know when this product becomes available!' %}
 
 <div id="notifyMeForm" class="klaviyoBackInStock">
-  <button class="klaviyoBackInStock__close" onclick="$.magnificPopup.close(); return false;">Close</button>
+  <button class="klaviyoBackInStock__close" onclick="$.magnificPopup.close(); return false;">close</button>
     <h2 class="klaviyoBackInStock__title">
       {{title}}
     </h2>
@@ -19,15 +24,16 @@
     {{ subtitle }}
   </div>
   <div class="klaviyoBackInStock__form">
+
     {% if request.page_type == 'collection' or request.page_type == 'search' %}
       <input type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}"/>
       {% endif %}  
-      <input type="email" name="email" placeholder="Please enter your email..." class="klaviyoBackInStock__input--text">
+      <input type="email" name="email" placeholder="please enter your email..." class="klaviyoBackInStock__input--text">
       <button class="klaviyoBackInStock__button btn" onclick="submitBackInStock(); return false;" type="button" >notify me</button>
   </div>
   <div class="klaviyoBackInStock__newsletter">
     <input id="klaviyoBackInStock__acceptMarketing" name="marketing" type="checkbox" class="klaviyoBackInStock__input--checkbox">
-    <label for="klaviyoBackInStock__acceptMarketing" class="klaviyoBackInStock__label">Join our marketing list for related news and offers.</label>
+    <label for="klaviyoBackInStock__acceptMarketing" class="klaviyoBackInStock__label">join our marketing list for related news and offers.</label>
   </div>
   <div class="klaviyoBackInStock__message"></div>
 </div>

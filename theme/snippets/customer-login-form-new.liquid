@@ -3,7 +3,12 @@
 {% endcomment %}
 {% comment %}{% render 'registrationFormCss' %}{% endcomment %}
 
-<button type="button" class="ac-close__btn" data-close-popup-btn>x</button>
+<button type="button" class="ac-close__btn" onclick="closeModal(); return false;" data-close-popup-btn>
+    <svg class="ac-close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18" stroke="black" stroke-width="1"/>
+      <path d="M6 6L18 18" stroke="black" stroke-width="1" />
+    </svg>
+</button>
 <!-- Customer Account Login -->
 <div id="customer-register-success" style="display: none;" class="" >
   {% form 'customer_login', class: "ac-form--login"%}
@@ -20,44 +25,36 @@
   {% endform %}
 </div>
 
-<div id="customer-login" class="register-login">
+<div id="customer-login" class="register-login" style="display: none; text-align: center;" >
 
-  <h1>pro login</h1>
+  <h1 style="border-bottom: 3px solid black; width: 100%;">pro login</h1>
 
   <p id="success_pw" style="font-weight: bold;"></p>
 
-  {% form 'customer_login', class: "ac-form--login"%}
-  {{ form.errors | default_errors }}
-
-    <div class="ac-block--horizontal">
-      <p class="ac-offset__bottom--md" style="font-weight: 700;">the amika pro site is strictly for rewards redemption as part of our friends with benefits+ loyalty program. these products are not intended for resale.</p>
+  {% form 'customer_login', class: "ac-form--login ac-offset__bottom--md"%}
+    {{ form.errors | default_errors }}
+  
+    <div id="login_email" class="clearfix form-row">
+      <label for="customer_email" class="login ac-form__label" style="text-align: left;">email*</label>
+      <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large ac-form__field" size="30" />
     </div>
-
-  <div id="login_email" class="clearfix form-row">
-    <label for="customer_email" class="login ac-form__label">email*</label>
-    <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large ac-form__field" size="30" />
-  </div>
-
-  {% if form.password_needed %}
-  <div id="login_password" class="clearfix form-row ac-password__field">
-    <label for="customer_password" class="login ac-form__label">Password*</label>
-    <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large ac-form__field password" size="16" />
-  </div>
-  <div class="register_wrap">
-    <div id="forgot_password" class="ac-form__link">
-      <p class="ac-text--fogot">don't have an account?</p>
+  
+    {% if form.password_needed %}
+    <div id="login_password" class="clearfix form-row ac-password__field">
+      <label for="customer_password" class="login ac-form__label" style="text-align: left;">Password*</label>
+      <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large ac-form__field password" size="16" />
     </div>
-    <div id="forgot_password" class="ac-form__link">
-      <a href="#" onclick="showRecoverPasswordForm(); return false">forgot password?</a>
+  
+    <div id="forgot_password" class="ac-form__link" style="margin-bottom: 24px;">
+      <a href="#" onclick="showRecoverPasswordForm(); return false">forgot you password?</a>
     </div>
-  </div>
-  {% endif %}
-   <div class="register_wrap">
-      <a href="#" class="ac-form__btn ac-form__btn--solid ac-offset-right--sm" onclick="showRegisterForm(); return false">Register</a>
-      {% comment %}<button " type="submit" id="submit">Sign In</button>{% endcomment %}
-      <input class="ac-form__btn ac-form__btn--black animation" type="submit" id="submitBtnLogin"  value="Sign In" />
-   </div>
+    {% endif %}
+  
+    <input class="ac-form__btn ac-form__btn--black animation" type="submit" id="submitBtnLogin"  value="Sign In" />
   {% endform %}
+   <div class="ac-block--horizontal" style="text-align: center;">
+      <p class="" style="font-weight: 300;">the Friends With Benefits+ Salon Loyalty Program is currently for US only</p>
+   </div>
 </div>
 
 <!-- Password Recovery -->
@@ -90,6 +87,21 @@
 </div>
 
 {% render 'register_form'%}
+<style>
+  #customer-login.register-login {
+    width: 100%;
+  }
+   #customer-login.register-login h1 {
+    display: inline;
+  }
+   #customer-login.register-login .ac-form--login {
+    margin-top: 40px;
+  }
+  #customer-login.register-login #forgot_password {
+    margin-bottom: 16px;
+  }
+}
+</style>
     
 <script type="text/javascript">
 $("#resetPassword").on('submit', function(e){
@@ -117,46 +129,138 @@ const customerAccount = {
   }
 }
 
+  document.addEventListener('DOMContentLoaded', function() {
+  switch (window.location.hash) {
+    case '#recover':
+      showRecoverPasswordForm();
+      break;
+    case '#register':
+      showRegisterForm();
+      break;
+    case '#login':
+      showSignInForm();
+      break;
+    // Додайте додаткові випадки за потребою
+  }
+});
 
-  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
-  if (window.location.hash == '#register') { showRegisterForm() }
-  function registerFormFirst() {
-    document.getElementById('recover-password').style.display = 'block';
-    document.getElementById('customer-login').style.display='none';
-  }
-  function showRecoverPasswordForm() {
-    document.getElementById('recover-password').style.display = 'block';
-    document.getElementById('customer-login').style.display='none';
-    window.location.hash = '#recover';
-    return false;
-  }
-  function showRegisterForm() {
-    formResize('lg');
-    document.getElementById('customer-register').style.display = 'block';
-    document.getElementById('customer-login').style.display = 'none';
-    document.getElementById('submitBtn').style.display='none';
-    window.location.hash = '#register';
-    return false;
-  }
+function hideAllForms() {
+  const formIds = ['recover-password', 'customer-login', 'customer-register', 'customer-signIn', 'customer-register-success'];
+  let allHidden = true; // Переменна для відстеження, чи всі форми заховані
 
-  function showSuccessForm() {
-    window.formResize('sm');
-    document.getElementById('customer-register-success').style.display = 'block';
-    document.getElementById('customer-register').style.display = 'none';
-    document.getElementById('customer-login').style.display = 'none';
-    document.getElementById('submitBtn').style.display='none';
-    window.location.hash = '';
-    return false;
-  }
+  formIds.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.display = 'none';
+    } else {
+      // Якщо елемент не знайдений, вважаємо, що не всі форми заховані
+      allHidden = false;
+    }
+  });
 
-  function hideRecoverPasswordForm() {
-    window.formResize('sm');
-    document.getElementById('recover-password').style.display = 'none';
-    document.getElementById('customer-register').style.display='none';
-    document.getElementById('customer-login').style.display = 'block';
-    window.location.hash = '';
-    return false;
+  // Елемент, який потрібно показати, якщо всі інші заховані
+  const otherElement = document.getElementById('customer-signIn');
+
+  if (allHidden) {
+    // Якщо всі форми заховані, показуємо otherElement
+    if (otherElement) {
+      otherElement.style.display = 'block';
+    }
+  } else {
+    // Якщо хоча б одна форма відображається, ховаємо otherElement
+    if (otherElement) {
+      otherElement.style.display = 'none';
+    }
   }
+}
+
+function showForm(formId, hash = '', size = 'sm') {
+  hideAllForms();
+  const element = document.getElementById(formId);
+  if (element) { // Перевірка, чи елемент існує, перед зміною властивості style
+    element.style.display = 'block';
+  }
+  window.location.hash = hash;
+  formResize(size);
+}
+
+function showRecoverPasswordForm() {
+  openLoginRegisterModal();
+  showForm('recover-password', 'recover');
+}
+
+function showRegisterForm() {
+  openLoginRegisterModal();
+  showForm('customer-register', 'register', 'lg');
+}
+
+function showSignInForm() {
+  openLoginRegisterModal();
+  showForm('customer-login', 'login');
+}
+
+function showSuccessForm() {
+  openLoginRegisterModal();
+  showForm('customer-register-success', '', 'lg');
+}
+
+function hideRecoverPasswordForm() {
+   openLoginRegisterModal();
+  showForm('customer-login');
+}
+
+
+
+  // if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+  // if (window.location.hash == '#register') { showRegisterForm() }
+  // function registerFormFirst() {
+  //   document.getElementById('recover-password').style.display = 'block';
+  //   document.getElementById('customer-login').style.display='none';
+  // }
+  
+  // function showRecoverPasswordForm() {
+  //   document.getElementById('recover-password').style.display = 'block';
+  //   document.getElementById('customer-login').style.display='none';
+  //   window.location.hash = '#recover';
+  //   return false;
+  // }
+  // function showRegisterForm() {
+  //   formResize('lg');
+  //   document.getElementById('customer-register').style.display = 'block';
+  //   document.getElementById('customer-login').style.display = 'none';
+  //   document.getElementById('submitBtn').style.display='none';
+  //   window.location.hash = '#register';
+  //   return false;
+  // }
+
+  // function showSignInForm() {
+  //   formResize('sm');
+  //   document.getElementById('customer-signIn').style.display = 'block';
+  //   document.getElementById('customer-register').style.display = 'none';
+  //   document.getElementById('customer-login').style.display = 'none';
+  //   document.getElementById('submitBtn').style.display='none';
+  //   window.location.hash = '#signin';
+  //   return false;
+  // }
+
+  // function showSuccessForm() {
+  //   window.formResize('sm');
+  //   document.getElementById('customer-register-success').style.display = 'block';
+  //   document.getElementById('customer-register').style.display = 'none';
+  //   document.getElementById('customer-login').style.display = 'none';
+  //   document.getElementById('submitBtn').style.display='none';
+  //   window.location.hash = '';
+  //   return false;
+  // }
+
+  // function hideRecoverPasswordForm() {
+  //   window.formResize('sm');
+  //   document.getElementById('recover-password').style.display = 'none';
+  //   document.getElementById('customer-register').style.display='none';
+  //   document.getElementById('customer-login').style.display = 'block';
+  //   window.location.hash = '';
+  //   return false;
+  // }
 
   // Contact tabs
 

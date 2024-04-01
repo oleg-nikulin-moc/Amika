@@ -33,11 +33,21 @@
       {%- endif -%}
     }
   }
+   @media screen and (max-width: 767.98px) {
+     .as-marquee__wrap.as-marquee__wrap span {
+        font-size: 16px;
+        line-height: 30px;
+      }
+     .marquee__wrapper.marquee__wrapper {
+       padding: 0;
+     }
+   }
 </style>
 
 {% schema %}
   {
     "name": "Marquee",
+    "class": "shopify-section--offset-lg",
     "settings": [
       {
         "type": "header",

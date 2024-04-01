@@ -1101,22 +1101,23 @@
           "1510155414315": {
             "type": "slide",
             "settings": {
-              "image": "shopify:\/\/shop_images\/Healthy-shiny-hair-mobile-banner.jpg",
-              "reduced_motion_image": "",
-              "link": "shopify:\/\/collections\/prep-prime",
+              "image": "shopify:\/\/shop_images\/Frame_982_1.png",
+              "reduced_motion_image": "shopify:\/\/shop_images\/Frame_982_1.png",
+              "link": "#",
               "show_captions": true,
               "overlay_color": "0,0,0,0",
               "text_align": "right",
               "text_margin_left": "0",
               "text_margin_right": "0",
               "title": "",
-              "text": "<p>FREE Leave In Cream<\/p>\n<p>with purchase of an<\/p>\n<p>Oil Treatment! ($24 value)<\/p>\n<p><\/p>\n<p><br><span style=\"text-decoration: underline;\">shop now<\/span><\/p>",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "",
               "button": "",
               "button_border": "#ffffff",
               "button_text_color": "#ffffff",
               "show_email": false,
               "email__addressID": "5284766",
-              "featured_image": "",
               "featured_image_width": "25%",
               "featured_image_right": "10%",
               "featured_image_left": "auto",
@@ -1130,22 +1131,22 @@
           "1511760278700": {
             "type": "slide",
             "settings": {
-              "image": "shopify:\/\/shop_images\/banner-07.png",
-              "reduced_motion_image": "",
-              "link": "shopify:\/\/products\/polished-perfection-straightening-brush",
+              "image": "shopify:\/\/shop_images\/Frame_983_1.png",
+              "link": "",
               "show_captions": true,
               "overlay_color": "0,0,0,0",
               "text_align": "left",
               "text_margin_left": "0",
               "text_margin_right": "0",
               "title": "",
-              "text": "<p>the convenience of a brush +<\/p>\n<p>the performance of a styler<br><br><span style=\"text-decoration: underline;\">shop polished perfection<br><\/span><\/p>",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "",
               "button": "",
               "button_border": "#ffffff",
               "button_text_color": "#ffffff",
               "show_email": false,
               "email__addressID": "5284766",
-              "featured_image": "",
               "featured_image_width": "25%",
               "featured_image_right": "10%",
               "featured_image_left": "auto",
@@ -1159,22 +1160,22 @@
           "1514179054226": {
             "type": "slide",
             "settings": {
-              "image": "shopify:\/\/shop_images\/banner-08.png",
-              "reduced_motion_image": "",
-              "link": "shopify:\/\/collections\/wash-your-way",
+              "image": "shopify:\/\/shop_images\/Frame_984_1.png",
+              "link": "#",
               "show_captions": true,
               "overlay_color": "0,0,0,0",
               "text_align": "right",
               "text_margin_left": "0",
               "text_margin_right": "0",
               "title": "",
-              "text": "<p>which is for me?!<\/p>\n<p><span style=\"text-decoration: underline;\">shop now<\/span><\/p>",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "",
               "button": "",
               "button_border": "#ffffff",
               "button_text_color": "#ffffff",
               "show_email": false,
               "email__addressID": "5284766",
-              "featured_image": "",
               "featured_image_width": "25%",
               "featured_image_right": "10%",
               "featured_image_left": "auto",
@@ -1184,12 +1185,42 @@
               "button_effect": "",
               "image_effect": ""
             }
+          },
+          "slide_iGGkQm": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Frame_985.png",
+              "link": "",
+              "show_captions": true,
+              "overlay_color": "0,0,0,0",
+              "text_align": "center",
+              "text_margin_left": "0",
+              "text_margin_right": "0",
+              "title": "",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "",
+              "button": "",
+              "button_border": "#ffffff",
+              "button_text_color": "#ffffff",
+              "show_email": false,
+              "email__addressID": "",
+              "featured_image_width": "25%",
+              "featured_image_right": "10%",
+              "featured_image_left": "auto",
+              "featured_image_position": "center",
+              "title_effect": "fadeInUp",
+              "text_effect": "fadeInUp",
+              "button_effect": "fadeInUp",
+              "image_effect": "fadeInLeft"
+            }
           }
         },
         "block_order": [
           "1510155414315",
           "1511760278700",
-          "1514179054226"
+          "1514179054226",
+          "slide_iGGkQm"
         ],
         "settings": {
           "full_width": true,
@@ -1380,77 +1411,82 @@
       "1516311580520": {
         "type": "carousel",
         "blocks": {
-          "459323b8-2695-451b-b041-3ae822bceec6": {
+          "slide_half_image_6nVXj6": {
             "type": "slide-half-image",
             "settings": {
-              "image": "shopify:\/\/shop_images\/14-2_DreamRoutine_Hero_ingredients_V3_2261_WIP_v15-extended_1.webp",
-              "reduced_motion_image": "shopify:\/\/shop_images\/14-2_DreamRoutine_Hero_ingredients_V3_2261_WIP_v15-extended_1.webp",
-              "link": "shopify:\/\/products\/dream-routine-overnight-hydration-hair-treatment-amika",
-              "overlay_color": "#fefaf0",
+              "image": "shopify:\/\/shop_images\/amika_loveamikapro_HomepageBanners_Launch_1920x1180_414e42a4-eca0-4c18-9454-132b0cb03425.jpg",
+              "link": "shopify:\/\/pages\/pro-smooth-over",
+              "overlay_color": "rgba(0,0,0,0)",
               "text_align": "center",
               "text_position": "v-center h-center",
-              "title": "it's time to put <br> dry hair to bed",
+              "title": "a new way to smooth",
               "header-font-family": "FuturaND",
               "header-font-weight": "500",
-              "text": "<p>NEW dream routine overnight hydration treatment<\/p>",
-              "button": "shop now",
-              "button_border": "#000000",
-              "button_text_color": "#ffffff",
-              "button_bg_color": "#000000",
-              "button_border_hvr": "#000000",
-              "button_text_color_hvr": "#000000",
-              "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
-            }
-          },
-          "7b693269-0074-4431-9ef6-f449dba2c358": {
-            "type": "slide-half-image",
-            "disabled": true,
-            "settings": {
-              "link": "shopify:\/\/collections\/masks-treatment",
-              "overlay_color": "#fefaf0",
-              "text_align": "center",
-              "text_position": "v-center h-center",
-              "title": "multi-mask your way to the hair of your dreams",
-              "header-font-family": "FuturaND",
-              "header-font-weight": "500",
-              "text": "<p>amika hair masks are here to help every hair type + texture.<\/p>",
-              "button": "shop now",
-              "button_border": "#000000",
-              "button_text_color": "#ffffff",
-              "button_bg_color": "#000000",
-              "button_border_hvr": "#000000",
-              "button_text_color_hvr": "#000000",
-              "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
-            }
-          },
-          "a4b23c15-01c9-4e74-a58c-4bceffe3cfb8": {
-            "type": "slide-half-image",
-            "disabled": true,
-            "settings": {
-              "link": "shopify:\/\/collections\/hydration",
-              "overlay_color": "#fefaf0",
-              "text_align": "center",
-              "text_position": "v-center h-center",
-              "title": "drench your hair with <br> 3x more hydration*",
-              "header-font-family": "FuturaND",
-              "header-font-weight": "500",
-              "text": "<p>NEW hydro rush intense moisture collection​ <br> <br> \n​*products tested separately, except shampoo + conditioner tested together as a system. <\/p>",
-              "button": "shop now",
+              "text": "<p>introducing our first salon-only service that fights frizz for 6-7 weeks*<\/p>",
+              "button": "learn more",
               "button_border": "#000000",
               "button_text_color": "#ffffff",
               "button_bg_color": "#000000",
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#ffffff",
-              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
+              "disclaimer": "*based on 8-week consumer studies of 30 participants. ​",
+              "idDownloadBTn": false,
+              "isTargetBlank": false
+            }
+          },
+          "459323b8-2695-451b-b041-3ae822bceec6": {
+            "type": "slide-half-image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/IMG_6666.png",
+              "link": "https:\/\/community.loveamikapro.com\/c\/start-here",
+              "overlay_color": "#fefaf0",
+              "text_align": "center",
+              "text_position": "v-center h-center",
+              "title": "it's here!",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "the amika pro community is an inspiring space to connect with other stylists, learn from the best + take your salon business to the next level — and did we mention it's free to join?",
+              "button": "join the pro community",
+              "button_border": "#000000",
+              "button_text_color": "#ffffff",
+              "button_bg_color": "#000000",
+              "button_border_hvr": "#000000",
+              "button_text_color_hvr": "#000000",
+              "button_bg_color_hvr": "#fefaf0",
+              "disclaimer": "",
+              "idDownloadBTn": true,
+              "isTargetBlank": true
+            }
+          },
+          "a4b23c15-01c9-4e74-a58c-4bceffe3cfb8": {
+            "type": "slide-half-image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/amica1.png",
+              "link": "https:\/\/loveamikapro.com\/pages\/loyalty",
+              "overlay_color": "#fefaf0",
+              "text_align": "center",
+              "text_position": "v-center h-center",
+              "title": "friends don’t let friends miss  out",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "our new friends with \nbenefits+ salon loyalty \nprogram is now live!",
+              "button": "learn more",
+              "button_border": "#000000",
+              "button_text_color": "#ffffff",
+              "button_bg_color": "#000000",
+              "button_border_hvr": "#000000",
+              "button_text_color_hvr": "#000000",
+              "button_bg_color_hvr": "#ffffff",
+              "disclaimer": "",
+              "idDownloadBTn": false,
+              "isTargetBlank": false
             }
           }
         },
         "block_order": [
+          "slide_half_image_6nVXj6",
           "459323b8-2695-451b-b041-3ae822bceec6",
-          "7b693269-0074-4431-9ef6-f449dba2c358",
           "a4b23c15-01c9-4e74-a58c-4bceffe3cfb8"
         ],
         "settings": {
@@ -1471,74 +1507,82 @@
       "1516312391288": {
         "type": "carousel-mobile",
         "blocks": {
-          "0fbae470-aad5-487d-9f36-f0874baa66e0": {
+          "c2d112f9-a66c-4257-8e8b-ef33cb1ece54": {
             "type": "slide-half-image",
+            "disabled": true,
             "settings": {
-              "image": "shopify:\/\/shop_images\/14-2_DreamRoutine_Hero_ingredients_V3_2261_WIP_v15-extended_1.webp",
-              "link": "shopify:\/\/products\/dream-routine-overnight-hydration-hair-treatment-amika",
-              "overlay_color": "rgba(0,0,0,0)",
+              "image": "shopify:\/\/shop_images\/amika_loveamikapro_HomepageBanners_Launch_1920x1180_414e42a4-eca0-4c18-9454-132b0cb03425.jpg",
+              "link": "shopify:\/\/pages\/pro-smooth-over",
+              "overlay_color": "#fefaf0",
               "text_align": "center",
-              "title": "it's time to put dry hair to bed",
+              "title": "a new way to smooth",
               "header-font-family": "FuturaND",
               "header-font-weight": "500",
-              "text": "<p>NEW dream routine overnight hydration treatment<\/p>",
-              "button": "shop now",
+              "text": "<p>introducing our first salon-only service that fights frizz for 6-7 weeks* <\/p>",
+              "button": "learn more",
+              "button_border": "#000000",
+              "button_text_color": "#ffffff",
+              "button_bg_color": "#000000",
+              "button_border_hvr": "#000000",
+              "button_text_color_hvr": "#000000",
+              "button_bg_color_hvr": "#fefaf0",
+              "disclaimer": "*based on 8-week consumer studies of 30 participants. ​",
+              "idDownloadBTn": false,
+              "isTargetBlank": false
+            }
+          },
+          "a68e8d7f-06c0-40ab-86cf-b84be86bfcd1": {
+            "type": "slide-half-image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/IMG_6666.png",
+              "link": "https:\/\/community.loveamikapro.com\/c\/start-here",
+              "overlay_color": "#fefaf0",
+              "text_align": "center",
+              "title": "it's here!",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "the amika pro community is an inspiring space to connect with other stylists, learn from the best + take your salon business to the next level — and did we mention it's free to join?",
+              "button": "join the pro community",
+              "button_border": "#000000",
+              "button_text_color": "#ffffff",
+              "button_bg_color": "#000000",
+              "button_border_hvr": "#000000",
+              "button_text_color_hvr": "#000000",
+              "button_bg_color_hvr": "#fefaf0",
+              "disclaimer": "",
+              "idDownloadBTn": true,
+              "isTargetBlank": true
+            }
+          },
+          "0fbae470-aad5-487d-9f36-f0874baa66e0": {
+            "type": "slide-half-image",
+            "disabled": true,
+            "settings": {
+              "image": "shopify:\/\/shop_images\/amica1.png",
+              "link": "https:\/\/loveamikapro.com\/pages\/loyalty",
+              "overlay_color": "rgba(0,0,0,0)",
+              "text_align": "center",
+              "title": "friends don’t let friends miss  out",
+              "header-font-family": "FuturaND",
+              "header-font-weight": "500",
+              "text": "our new friends with \nbenefits+ salon loyalty \nprogram is now live!",
+              "button": "learn more",
               "button_border": "#000000",
               "button_text_color": "#ffffff",
               "button_bg_color": "#000000",
               "button_border_hvr": "#000000",
               "button_text_color_hvr": "#000000",
               "button_bg_color_hvr": "#ffffff",
-              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
-            }
-          },
-          "a68e8d7f-06c0-40ab-86cf-b84be86bfcd1": {
-            "type": "slide-half-image",
-            "disabled": true,
-            "settings": {
-              "link": "shopify:\/\/collections\/masks-treatment",
-              "overlay_color": "#fefaf0",
-              "text_align": "center",
-              "title": "multi-mask your way to the hair of your dreams",
-              "header-font-family": "FuturaND",
-              "header-font-weight": "500",
-              "text": "<p>amika hair masks are here to help every hair type + texture.<\/p>",
-              "button": "shop now",
-              "button_border": "#000000",
-              "button_text_color": "#ffffff",
-              "button_bg_color": "#000000",
-              "button_border_hvr": "#000000",
-              "button_text_color_hvr": "#000000",
-              "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
-            }
-          },
-          "c2d112f9-a66c-4257-8e8b-ef33cb1ece54": {
-            "type": "slide-half-image",
-            "disabled": true,
-            "settings": {
-              "link": "shopify:\/\/collections\/hydration",
-              "overlay_color": "#fefaf0",
-              "text_align": "center",
-              "title": "drench your hair with <br> 3x more hydration*",
-              "header-font-family": "FuturaND",
-              "header-font-weight": "500",
-              "text": "<p>NEW hydro rush intense moisture collection​ <br> <br> \n​*products tested separately, except shampoo + conditioner tested together as a system. <\/p>",
-              "button": "shop now",
-              "button_border": "#000000",
-              "button_text_color": "#ffffff",
-              "button_bg_color": "#000000",
-              "button_border_hvr": "#000000",
-              "button_text_color_hvr": "#000000",
-              "button_bg_color_hvr": "#fefaf0",
-              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH"
+              "disclaimer": "REWARDS ORDERS ARE LIMITED TO ONE PER MONTH",
+              "idDownloadBTn": false,
+              "isTargetBlank": false
             }
           }
         },
         "block_order": [
-          "0fbae470-aad5-487d-9f36-f0874baa66e0",
+          "c2d112f9-a66c-4257-8e8b-ef33cb1ece54",
           "a68e8d7f-06c0-40ab-86cf-b84be86bfcd1",
-          "c2d112f9-a66c-4257-8e8b-ef33cb1ece54"
+          "0fbae470-aad5-487d-9f36-f0874baa66e0"
         ],
         "settings": {
           "full_width": true,
@@ -1552,7 +1596,7 @@
           "dots_color": "#ffffff",
           "dots_active_color": "#000000",
           "text_size": 4,
-          "slider_speed": "7000"
+          "slider_speed": "5000"
         }
       },
       "bf-popup": {
@@ -2694,7 +2738,6 @@
       },
       "1596202733584": {
         "type": "fullwidth-mobile",
-        "disabled": true,
         "blocks": {
           "1596202733584-0": {
             "type": "slide",
@@ -2719,6 +2762,7 @@
         "block_order": [
           "1596202733584-0"
         ],
+        "disabled": true,
         "settings": {
           "full_width": true,
           "img_height": "45%",
@@ -2845,7 +2889,6 @@
       },
       "1603435130e0999384": {
         "type": "grid_block",
-        "disabled": true,
         "blocks": {
           "c13db110-15eb-47b7-9428-7f8b293ed371": {
             "type": "grid_block",
@@ -2878,6 +2921,7 @@
           "c13db110-15eb-47b7-9428-7f8b293ed371",
           "4c4a7fb4-9c19-425c-9d43-7acd8d6aa14c"
         ],
+        "disabled": true,
         "settings": {
           "full_width": false
         }
@@ -3047,7 +3091,6 @@
       },
       "16046099102424dd15": {
         "type": "hp-blog",
-        "disabled": true,
         "blocks": {
           "1a2550ce-6f39-4830-bcf3-5d7767524819": {
             "type": "Posts",
@@ -3073,6 +3116,7 @@
           "a4b2a7e0-f741-4dc8-ac7b-affea394ba24",
           "72cab1f7-00e8-4186-982b-cbd7bb9e0476"
         ],
+        "disabled": true,
         "settings": {
           "margin_top_mobile": "0",
           "margin_bottom_mobile": "50",
@@ -3326,6 +3370,563 @@
       },
       "login-register-alert": {
         "type": "login-register-alert",
+        "settings": {
+        }
+      },
+      "review": {
+        "type": "review",
+        "blocks": {
+          "a39ed73a-16b9-4bee-9580-e51cee3a9812": {
+            "type": "header-image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/393914944_203330049447952_8731346341214836025_n.webp"
+            }
+          },
+          "96343f0f-b196-429b-8d08-a5b57f5c84e1": {
+            "type": "Marquees",
+            "settings": {
+              "margin_top_mobile": "0",
+              "margin_bottom_mobile": "50",
+              "margin_top": "0",
+              "margin_bottom": "50",
+              "title": "",
+              "section_class": "",
+              "marquee_color": "",
+              "text_to_scroll": "<span class=\"ico rainbow\"><\/span>MEET MY SQUAD\n<span class=\"ico rainbow\"><\/span>MEET MY SQUAD"
+            }
+          },
+          "b67935c2-a59c-4a06-ad07-1749fe3e025c": {
+            "type": "Stylist",
+            "settings": {
+              "title": "",
+              "photo": "shopify:\/\/shop_images\/stylist_yene_damtew_f2841f47-d954-499e-a63c-194f0abf7226.png",
+              "stylist_name": "yene damtew",
+              "stylist_district": "WASHINGTON D.C.​ METRO AREA",
+              "instagram_title": "@yenedamtew ​",
+              "instagram_link": "https:\/\/www.instagram.com\/yenedamtew\/",
+              "stylist_about": "Yene Damtew is an ethiopian-american salon owner and hairstylist, with nearly two decades in the industry. passionate about a holistic beauty approach, she blends business, education, and hairstyling, impacting her celebrity clientele and aspiring stylists. based in Arlington, VA, her aesthetics salon prioritizes client needs. featured in key publications and honored as a hair raiser by ulta beauty, Yene aims to expand into lifestyle spheres, championing inclusivity while excelling in her field.",
+              "skills_title": "specializing in",
+              "skill_one": "texture styling + care​",
+              "skill_two": "salon business ​",
+              "skill_three": "inclusion + progression",
+              "revers_block": false
+            }
+          },
+          "dc631f67-1087-441d-9339-c8fd316cd252": {
+            "type": "Stylist",
+            "settings": {
+              "title": "",
+              "photo": "shopify:\/\/shop_images\/stylist_jes_jewel_9ed66a06-4e5a-4550-aa63-7de3b8cdc2ed.png",
+              "stylist_name": "jes jewel",
+              "stylist_district": "LOS ANGELES , CA",
+              "instagram_title": "@thejesjewel​",
+              "instagram_link": "https:\/\/www.instagram.com\/thejesjewel\/",
+              "stylist_about": "meet Jes Jewel, the talented queer color specialist and celebrity stylist at LA's acclaimed butterfly loft salon. a long-time brand influencer, Jes crafts popular salon and styling content. drawing from 90s roots and LA's artistry, she delivers stunning platinums, creative colors, and unique hair transformations. with a painting background, Jes brings fresh creativity to trends, making styles more wearable and everyday looks more imaginative.",
+              "skills_title": "specializing in",
+              "skill_one": "creative color​",
+              "skill_two": "hand painting​",
+              "skill_three": "everyday styling",
+              "revers_block": false
+            }
+          },
+          "f41e80c1-4e66-462a-be42-ec5d637a70b1": {
+            "type": "Stylist",
+            "settings": {
+              "title": "",
+              "photo": "shopify:\/\/shop_images\/stylist_pekela_riley_f5b0bb69-eae8-4227-a71e-07f5909eedc9.png",
+              "stylist_name": "pekela riley",
+              "stylist_district": "JACKSONVILLE, FL​",
+              "instagram_title": "@pekelariley​",
+              "instagram_link": "https:\/\/www.instagram.com\/pekelariley\/",
+              "stylist_about": "Pekela Riley is an award-winning stylist and educator. influencing fashion, beauty, and the 'textureverse'. her approach with textured hair shines in vogue, essence, allure, and beyond. Pekela’s clientele includes high-profile celebrities, and she works to enhance each individual's unique beauty. a 3-time naha nominee and texture artist of the year winner, her salon pk secured elle magazine's \"top 100 salons in america.\" Pekela is deeply committed to diversity and inclusion. ​",
+              "skills_title": "specializing in",
+              "skill_one": "textured hair​",
+              "skill_two": "editorial styling​",
+              "skill_three": "diversity + inclusion",
+              "revers_block": false
+            }
+          },
+          "77ba718a-b2f1-465a-ba3c-8f0176ca0a7b": {
+            "type": "Stylist",
+            "settings": {
+              "title": "",
+              "photo": "shopify:\/\/shop_images\/stylist_sal_salcedo_99effc6b-9cec-426d-b847-6bbaa4ecdb65.png",
+              "stylist_name": "sal salcedo",
+              "stylist_district": "LOS ANGELES, CA",
+              "instagram_title": "@salsalhair​",
+              "instagram_link": "https:\/\/www.instagram.com\/salsalhair\/",
+              "stylist_about": "meet Salvador Salcedo, a skilled hairstylist with a remarkable journey from Mexico to the US. with over two decades' experience, sal has crafted iconic hairstyles for celebrities, embracing hair as self-expression. nova arts, his inclusive salon, fulfills his dream. through #hairtour, he transforms hair, shares knowledge, fostering empowerment. Sal's mission? empowering others through expertise and passion. his journey from Mexico to the US reflects in his transformative work, making waves in the beauty industry.",
+              "skills_title": "specializing in",
+              "skill_one": "holistic haircutting​",
+              "skill_two": "transformative styling​",
+              "skill_three": "curls + bangs",
+              "revers_block": false
+            }
+          },
+          "0145ebab-4940-4e20-8383-d71bd4b3521d": {
+            "type": "Stylist",
+            "settings": {
+              "title": "",
+              "photo": "shopify:\/\/shop_images\/stylist_eric_vaugh_ee047e6a-99d0-467e-adc8-18ac5473ea2c.png",
+              "stylist_name": "eric vaughn",
+              "stylist_district": "HOUSTON, TX",
+              "instagram_title": "@realericvaughn",
+              "instagram_link": "https:\/\/www.instagram.com\/realericvaughn",
+              "stylist_about": "Eric Vaughn, rev salon's owner in Houston, holds 14 years in beauty. renowned for miss texas usa and miss texas teen usa collaborations, he styles contestants for national stages. featured in modern salon, beauty launchpad, elle, allure, and more, showcasing his artistry. a mentor fostering talent in his salon, he cherishes roles as husband to Tony and dad to twins, Harlow and Monroe. Eric’s industry excellence matches his dedication to family.",
+              "skills_title": "​  SPECIALIZING IN",
+              "skill_one": "extensions ",
+              "skill_two": "pageant styling",
+              "skill_three": "everyday styling",
+              "revers_block": false
+            }
+          },
+          "848aafb5-b27d-43c7-b93b-e388b830cb86": {
+            "type": "stylists-header",
+            "settings": {
+              "title": "stylist collective",
+              "description": "introducing the amika stylist collective: a team of visionaries who  are breaking boundaries + rewriting hair rules in the amikaverse + beyond. independently, each one of these elite artists offers their own unique style, diverse background + industry-leading experience. together, they’re an empowering force that fuels the exciting future of amika pro artistry + education."
+            }
+          }
+        },
+        "block_order": [
+          "a39ed73a-16b9-4bee-9580-e51cee3a9812",
+          "96343f0f-b196-429b-8d08-a5b57f5c84e1",
+          "b67935c2-a59c-4a06-ad07-1749fe3e025c",
+          "dc631f67-1087-441d-9339-c8fd316cd252",
+          "f41e80c1-4e66-462a-be42-ec5d637a70b1",
+          "77ba718a-b2f1-465a-ba3c-8f0176ca0a7b",
+          "0145ebab-4940-4e20-8383-d71bd4b3521d",
+          "848aafb5-b27d-43c7-b93b-e388b830cb86"
+        ],
+        "settings": {
+        }
+      },
+      "hero-text": {
+        "type": "hero-text",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/Hero_Image.jpg",
+          "image_mobile": "shopify:\/\/shop_images\/Screenshot_2024-01-25_at_10.14.53_cleanup.png",
+          "title": "we’re redefining smooth​",
+          "caption": "with our first salon-only, clinically proven*smoothing treatment that reduces frizz for all hair types without compromising on personal style or hair texture"
+        }
+      },
+      "navigation": {
+        "type": "navigation",
+        "blocks": {
+          "link_hHQEY7": {
+            "type": "link",
+            "settings": {
+              "link_url": "#product-assortment",
+              "link_text": "product assortment"
+            }
+          },
+          "link_tEWawD": {
+            "type": "link",
+            "settings": {
+              "link_url": "#ingredients",
+              "link_text": "ingredients"
+            }
+          },
+          "link_MhAXkH": {
+            "type": "link",
+            "settings": {
+              "link_url": "#salon-services",
+              "link_text": "in-salon services"
+            }
+          },
+          "link_9bcWmB": {
+            "type": "link",
+            "settings": {
+              "link_url": "#certification",
+              "link_text": "certification"
+            }
+          },
+          "link_PmAyAP": {
+            "type": "link",
+            "settings": {
+              "link_url": "#resources",
+              "link_text": "resources"
+            }
+          },
+          "link_XgmDEK": {
+            "type": "link",
+            "settings": {
+              "link_url": "#faq",
+              "link_text": "FAQs"
+            }
+          }
+        },
+        "block_order": [
+          "link_hHQEY7",
+          "link_tEWawD",
+          "link_MhAXkH",
+          "link_9bcWmB",
+          "link_PmAyAP",
+          "link_XgmDEK"
+        ],
+        "settings": {
+        }
+      },
+      "double-product-block": {
+        "type": "double-product-block",
+        "blocks": {
+          "product_TN9HjA": {
+            "type": "product",
+            "settings": {
+              "product": "pro-smooth-over-priming-shampoo",
+              "custom_title": "pro smooth over priming shampoo",
+              "custom_description": "a clarifying + deeply cleansing shampoo to help breakdown product buildup for the ultimate hair prep​",
+              "custom_image": "shopify:\/\/shop_images\/amika_230925_PDP_Pro_Smooth_Over_Collection_Shampoo_1L_4415_Edit-RGB-trans-shadow_1.png",
+              "custom_price": "available in 1L\/33.8 fl. oz"
+            }
+          },
+          "product_bWXew3": {
+            "type": "product",
+            "settings": {
+              "product": "pro-smooth-over-frizz-fighting-treatment",
+              "custom_title": "pro smooth over frizz-fighting treatment",
+              "custom_description": "a vegan, heat-activated, intensive smoothing spray that reduces frizz for all hair types​",
+              "custom_image": "shopify:\/\/shop_images\/amika_230925_PDP_Pro_Smooth_Over_Collection_frizz-fighting_200ml_4407-RGB-trans-shadow-2000x2000_1.png",
+              "custom_price": "available in 200 ml\/6.7 fl. oz , 500 ml\/16.9 fl.oz​"
+            }
+          }
+        },
+        "block_order": [
+          "product_TN9HjA",
+          "product_bWXew3"
+        ],
+        "settings": {
+          "title": "your salon’s new smoothing duo​"
+        }
+      },
+      "hero-video": {
+        "type": "hero-video",
+        "settings": {
+          "heading": "a new way to smooth",
+          "subheading": "",
+          "video_url": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/f83a668de7e247b389f4ac75a0d50670.mp4",
+          "video": "shopify:\/\/files\/videos\/amika_231017_amika_anti_frizz_campaign_30SecHYPEVideoPro_1920x1080_FINAL.mp4"
+        }
+      },
+      "hp-marquee": {
+        "type": "hp-marquee",
+        "settings": {
+          "section_class": "as-marquee__wrap",
+          "margin_top_mobile": "20",
+          "margin_bottom_mobile": "20",
+          "margin_top": "40",
+          "margin_bottom": "40",
+          "marquee_color": "",
+          "text_to_scroll": "<span>cruelty free<\/span>\n<span class=\"ico world-heart\"><\/span>\n<span>vegan<\/span>\n<span class=\"ico world-heart\"><\/span>\n<span>no harsh smell<\/span>\n<span class=\"ico world-heart\"><\/span>\n<span>color safe<\/span>\n<span class=\"ico world-heart\"><\/span>"
+        }
+      },
+      "image-text": {
+        "type": "image-text",
+        "blocks": {
+          "grid_block_nzTmDE": {
+            "type": "grid_block",
+            "settings": {
+              "label": false,
+              "labelText": "",
+              "image": "shopify:\/\/shop_images\/CCRAIG_SMOOTH_OVER_FRIZZ_CONSUMER_CAMPAIGN_IMAGE_11_0868-main_3877FC_C_1.png",
+              "title": "better ingredients for a smoother service",
+              "description": "<h3 class=\"ac-title--small\"> glyoxylic acid<\/h3>\n<p class=\"ac-text--small\">an organic acid compound that restructures keratin in the hair cortex to smooth while increasing shine + manageability of all hair types. when heat is applied to the hair, the glyoxylic acid creates a hydrophobic barrier—think of it like a raincoat for your strands—temporarily blocking humidity for the smoothest results.​<\/p>\n<h3 class=\"ac-title--small\">\nwater lily extract<\/h3>\n<p class=\"ac-text--small\">contains keratin-building tannins to help smooth the cuticle while defrizzing strands to improve manageability.<\/p>\n<h3 class=\"ac-title--small\">sea buckthorn<\/h3>\n<p class=\"ac-text--small\">our signature superfruit ingredient that’s loaded with vitamin C, A, fatty acid omega 7 + antioxidants making it the ultimate holy grail ingredient for hair + scalp.<\/p>",
+              "note": "",
+              "grid_inverse": false,
+              "cta-link": "",
+              "cta-text": "",
+              "block-id": "ingredients"
+            }
+          }
+        },
+        "block_order": [
+          "grid_block_nzTmDE"
+        ],
+        "settings": {
+        }
+      },
+      "tabs-image-text": {
+        "type": "tabs-image-text",
+        "blocks": {
+          "tab_PzxT8C": {
+            "type": "tab",
+            "settings": {
+              "sub-heading": "ideal for clients with waves, curls + coils that most often wear their hair naturally (no hair straighteners here!) + are looking for increased smoothing + manageability while reducing frizz.",
+              "image": "shopify:\/\/shop_images\/IMG_9366.jpg",
+              "cta-tab": "natural curl",
+              "title_1": "6 weeks",
+              "text_1": "reduces frizz for 6 weeks*",
+              "title_2": "100%",
+              "text_2": "said hair immediately felt smoother*",
+              "title_3": "80%",
+              "text_3": "said that their curl pattern was maintained after 8 weeks*",
+              "note": "*based on an 8-week consumer study of 30 participants using the natural curl smoothing instructions."
+            }
+          },
+          "tab_CeDTjn": {
+            "type": "tab",
+            "settings": {
+              "sub-heading": "ideal for all hair types that typically blow out or straighten their hair. for clients with wavy, curly, or coily hair types using these instructions, there will be temporary elongation + hair will be straighter than before the treatment but will still require heat styling to achieve a ‘straight’ look after the first 48 hours.",
+              "image": "shopify:\/\/shop_images\/IMG_9367.jpg",
+              "cta-tab": "straight",
+              "title_1": "7 weeks",
+              "text_1": "reduces frizz for 7 weeks**",
+              "title_2": "100%",
+              "text_2": "said hair immediately felt smoother**",
+              "title_3": "97%",
+              "text_3": "after 8 weeks 97% said their hair looks smoother than before the treatment**",
+              "note": "**based on an 8-week consumer study of 30 participants using the straight smoothing instructions."
+            }
+          }
+        },
+        "block_order": [
+          "tab_PzxT8C",
+          "tab_CeDTjn"
+        ],
+        "settings": {
+          "heading": "in-salon smoothing results",
+          "subheading": ""
+        }
+      },
+      "hero-video-with-text": {
+        "type": "hero-video-with-text",
+        "settings": {
+          "heading": "watch and learn",
+          "subheading": "featuring Pekela Riley, a member of our amika stylist collective",
+          "video_url": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/85767aa440084131882f329e313aab49.mp4"
+        }
+      },
+      "image-text-2": {
+        "type": "image-text-2",
+        "blocks": {
+          "grid_block_wVeTKB": {
+            "type": "grid_block",
+            "settings": {
+              "label": false,
+              "labelText": "",
+              "image": "shopify:\/\/shop_images\/Image.jpg",
+              "title": "is your client scared of commitment? ​",
+              "description": "<p style=\"text-align:center;\">we get it. an in-salon smoothing service that lasts 6-7 weeks* may not be right for every client. enter our in-shower smoothing treatment that instantly reduces frizz by 73%** with results that last up to 72 hours. <br><br> <b>tip:<\/b> this 60-second mask is also a great add-on service at the backbar ​<\/p>",
+              "note": "*based on 8-week consumer studies of 30 participants.​\n**clinically proven, after one use.",
+              "grid_inverse": true,
+              "cta-link": "",
+              "cta-text": "Learn More",
+              "block-id": ""
+            }
+          },
+          "grid_block_UFFqXF": {
+            "type": "grid_block",
+            "settings": {
+              "label": false,
+              "labelText": "",
+              "image": "shopify:\/\/shop_images\/Image_6.png",
+              "title": "certifiably smoother strands",
+              "description": "<p style=\"text-align: center;\">ready to be a smooth over pro? get certified online in less than an hour + receive access to in-salon marketing materials + more!<\/p>",
+              "note": "",
+              "grid_inverse": false,
+              "cta-link": "https:\/\/community.loveamikapro.com\/c\/pro-smooth-over-5e034b\/",
+              "cta-text": "START NOW",
+              "block-id": "certification"
+            }
+          }
+        },
+        "block_order": [
+          "grid_block_wVeTKB",
+          "grid_block_UFFqXF"
+        ],
+        "custom_css": [
+          ".ac-content__box--column:not(.ac-image__wrap) {text-align: center; max-width: 320px; margin-left: auto; margin-right: auto;}"
+        ],
+        "settings": {
+        }
+      },
+      "double-image-text": {
+        "type": "double-image-text",
+        "blocks": {
+          "grid_block_jwU8Mr": {
+            "type": "grid_block",
+            "settings": {
+              "title": "download the app",
+              "description": "download the amika pro community app for exclusive access to: certification programs, on-demand education, learn + connect with other pros",
+              "cta-link": "",
+              "cta-link-2": "",
+              "cta-text": "download for android",
+              "cta-text-2": "download for iPhone",
+              "image": "shopify:\/\/shop_images\/dwonloadApp.png",
+              "idDownloadBTn": true
+            }
+          },
+          "grid_block_eJyHT3": {
+            "type": "grid_block",
+            "settings": {
+              "title": "unlock salon support",
+              "description": "digital salon marketing materials like product, model visuals, social assets",
+              "cta-link": "https:\/\/heatmakessense.app.box.com\/folder\/248866415799?s=vdbc9m6wvxg0knk3095bmm88ocq8wcvj",
+              "cta-link-2": "",
+              "cta-text": "view resources",
+              "cta-text-2": "Learn More",
+              "image": "shopify:\/\/shop_images\/700_x_1000_MTHOMPSON_SMOOTH_OVER_FRIZZ_PRO_CAMPAIGN_IMAGE_DIAMONDE_HELPER_45_1634.jpg",
+              "idDownloadBTn": false
+            }
+          }
+        },
+        "block_order": [
+          "grid_block_jwU8Mr",
+          "grid_block_eJyHT3"
+        ],
+        "settings": {
+          "background_color": "#fff3a2"
+        }
+      },
+      "fake-instagram-block": {
+        "type": "fake-instagram-block",
+        "blocks": {
+          "grid_block_Lf7DFr": {
+            "type": "grid_block",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Frame_982_1.png",
+              "ship": ""
+            }
+          },
+          "grid_block_TYmf8w": {
+            "type": "grid_block",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Frame_983_1.png",
+              "ship": ""
+            }
+          },
+          "grid_block_NEiNrC": {
+            "type": "grid_block",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Frame_984_1.png",
+              "ship": ""
+            }
+          },
+          "grid_block_iPD9xh": {
+            "type": "grid_block",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Frame_985.png",
+              "ship": ""
+            }
+          }
+        },
+        "block_order": [
+          "grid_block_Lf7DFr",
+          "grid_block_TYmf8w",
+          "grid_block_NEiNrC",
+          "grid_block_iPD9xh"
+        ],
+        "settings": {
+          "title": "see real smoothing results at @amikapro",
+          "subtitle": "#prosmoothover",
+          "hideFeed": true,
+          "cta-link": "https:\/\/www.instagram.com\/amikapro\/",
+          "cta-text": "FOLLOW US"
+        }
+      },
+      "faq-smooth": {
+        "type": "faq-smooth",
+        "blocks": {
+          "question_G9gdkD": {
+            "type": "question",
+            "settings": {
+              "question": "what is the active ingredient + what does it do?",
+              "answer": "<p>the active ingredient in pro smooth over frizz-fighting treatment is glyoxylic acid. glyoxylic acid is an organic acid compound that restructures keratin in the hair cortex to smooth while increasing shine + manageability of all hair types. when heat is applied to the hair, the glyoxylic acid creates a hydrophobic barrier—think of it like a raincoat for your strands—temporarily blocking humidity for the smoothest results.<\/p>"
+            }
+          },
+          "question_y837FD": {
+            "type": "question",
+            "settings": {
+              "question": "will the pro smooth over frizz-fighting treatment make my hair more manageable and easier to style?",
+              "answer": "<p>in an 8-week consumer study of 30 participants using the straight smoothing instructions, 93% said their hair was more manageable than before the treatment.<\/p>"
+            }
+          },
+          "question_NYf4yd": {
+            "type": "question",
+            "settings": {
+              "question": "will the treatment make my hair feel coated?",
+              "answer": "<p>hair may feel coated when your client first leaves the salon, but this effect will dissipate quickly after washing.<\/p>"
+            }
+          },
+          "question_pLzU3Y": {
+            "type": "question",
+            "settings": {
+              "question": "can this treatment be done at the root to help grow out a traditional relaxer? can it overlap a relaxer?",
+              "answer": "<p>no, the treatment should not be applied at the root as contact should be avoided with the scalp for safety purposes. please pay close attention to the instructions + safety warnings + only apply the treatment starting 0.5” from the scalp.<\/p>"
+            }
+          },
+          "question_3EPnH9": {
+            "type": "question",
+            "settings": {
+              "question": "is it safe to receive the smooth over professional treatment within two months of a perm?",
+              "answer": "<p>we do not have data to confirm or deny the safety of combination treatments. however, we would not recommend more than one treatment within two months.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "question_G9gdkD",
+          "question_y837FD",
+          "question_NYf4yd",
+          "question_pLzU3Y",
+          "question_3EPnH9"
+        ],
+        "settings": {
+          "title": "faqs",
+          "noteTitle": "more questions?",
+          "noteText": "<p><a href=\"https:\/\/community.loveamikapro.com\/c\/smooth-over\/\" target=\"_blank\" title=\"https:\/\/community.loveamikapro.com\/c\/smooth-over\/\">join the open forum discussion <\/a>on the amika pro community app or email us at <a href=\"mailto:info@loveamikapro.com\" title=\"mailto:info@loveamikapro.com\">info@loveamikapro.com<\/a><\/p>"
+        }
+      },
+      "text-image": {
+        "type": "text-image",
+        "blocks": {
+          "grid_block_UckbnQ": {
+            "type": "grid_block",
+            "settings": {
+              "label": true,
+              "labelText": "NEW",
+              "image": "shopify:\/\/shop_images\/Blurred-Mirror__MTHOMPSON_SMOOTH_OVER_FRIZZ_PRO_SOCIAL_8_4243-1-copy_1.jpg",
+              "title": "pro smooth over frizz-<br>fighting treatment​",
+              "description": "<ul class=\"ac-list\">\n  <li>formulated without formaldehyde or protein​<\/li>\n<li>vegan + no harsh smell​<\/li>\n<li>fights frizz for 6-7 weeks*<\/li>\n<li>smooths hair with glyoxylic acid​<\/li>\n<li>2 sets of directions for curly or straight smoothing results ​<\/li>\n<li>easy spray application ​<\/li>\n<\/ul>",
+              "note": "*based on 8-week consumer studies of 30 participants. ​",
+              "grid_inverse": true,
+              "cta-link": "",
+              "cta-text": "Learn More",
+              "block-id": ""
+            }
+          }
+        },
+        "block_order": [
+          "grid_block_UckbnQ"
+        ],
+        "settings": {
+        }
+      },
+      "community-banner": {
+        "type": "community-banner",
+        "blocks": {
+          "grid_block_UJHM46": {
+            "type": "grid_block",
+            "settings": {
+              "label": false,
+              "labelText": "",
+              "image": "shopify:\/\/shop_images\/IMG_6666.png",
+              "title": "it's here!",
+              "description": "the amika pro community is an inspiring space to connect with other stylists, learn from the best + take your salon business to the next level — and did we mention it's free to join?",
+              "note": "",
+              "grid_inverse": true,
+              "cta-link": "https:\/\/community.loveamikapro.com\/",
+              "cta-text": "join the pro community",
+              "block-id": "",
+              "idDownloadBTn": true
+            }
+          }
+        },
+        "block_order": [
+          "grid_block_UJHM46"
+        ],
+        "custom_css": [
+          ".ac-image-text--description {padding: 0 6%;}"
+        ],
         "settings": {
         }
       }
